@@ -15,9 +15,10 @@
     "babel-plugin-import": "^1.11.0",
     "jquery": "^3.3.1",
     "qs": "^6.7.0",
+    "taco": "^1.6.0",
     "vue": "^2.5.2",
     "vue-axios": "^2.1.4",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -64,5 +65,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": "index.js",
+  "repository": "https://gitee.com/colines/Educational_Administration.git",
+  "license": "MIT"
 }

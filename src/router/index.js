@@ -4,7 +4,8 @@ import Login from '@/pages/login/Login'
 import Home from '@/pages/home/Home'
 import Announcement from '@/pages/announcement/Announcement'
 import StudentLeave from '@/pages/studentLeave/StudentLeave'
-
+import Test from '@/pages/test/Test'
+import Person from '@/pages/person/Person'
 
 Vue.use(Router)
 
@@ -30,8 +31,17 @@ export default new Router({
           name: 'StudentLeave',
           component: StudentLeave
         },
-
+        {
+          path: 'person',
+          name: 'Person',
+          component: Person
+        }
       ]
-    }
+    },
+		{
+			path: '/test',
+			name: 'Test',
+			component: Test
+		}
   ]
 })

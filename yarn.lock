@@ -150,8 +150,8 @@ ant-design-palettes@^1.1.3:
 
 ant-design-vue@^1.3.8:
   version "1.3.8"
-  resolved "http://r.cnpmjs.org/ant-design-vue/download/ant-design-vue-1.3.8.tgz#b8c9fc30fd658f134c09d7698f2825a342cfef5f"
-  integrity sha1-uMn8MP1ljxNMCddpjyglo0LP718=
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.3.8.tgz#b8c9fc30fd658f134c09d7698f2825a342cfef5f"
+  integrity sha512-Ouhmayh9gi5mijvd8NG8JnusYvXXC1U4gfme9FFypIOLwwWrYjQOHBF0cdiwI8iSCKI3F6TmkIFRTJz1amvYRw==
   dependencies:
     "@ant-design/icons" "^1.1.15"
     "@ant-design/icons-vue" "^1.0.1"
@@ -306,6 +306,11 @@ async-validator@^1.8.2:
   integrity sha1-9i/RS8yjNvzalubdU9vR3dP8MZg=
   dependencies:
     babel-runtime "6.x"
+
+async@0.1.x:
+  version "0.1.22"
+  resolved "https://registry.yarnpkg.com/async/-/async-0.1.22.tgz#0fc1aaa088a0e3ef0ebe2d8831bab0dcf8845061"
+  integrity sha1-D8GqoIig4+8Ovi2IMbqw3PiEUGE=
 
 async@^1.5.2:
   version "1.5.2"
@@ -1039,10 +1044,20 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
+basic@~0.0.1:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/basic/-/basic-0.0.3.tgz#d53c81a7c5b9851023dc0673f73227a5a9fae0e9"
+  integrity sha1-1TyBp8W5hRAj3AZz9zInpan64Ok=
+
 batch@0.6.1:
   version "0.6.1"
   resolved "http://r.cnpmjs.org/batch/download/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
+
+batch@~0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/batch/-/batch-0.3.2.tgz#8f802c1358be2b33535f8808e0a23c9f0075733b"
+  integrity sha1-j4AsE1i+KzNTX4gI4KI8nwB1czs=
 
 bfj-node4@^5.2.0:
   version "5.3.1"
@@ -1558,6 +1573,13 @@ commander@^2.13.0:
   resolved "http://r.cnpmjs.org/commander/download/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
   integrity sha1-1YuytcHuj4ew00ACfp6U4iLFpCI=
 
+commander@~1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-1.1.1.tgz#50d1651868ae60eccff0a2d9f34595376bc6b041"
+  integrity sha1-UNFlGGiuYOzP8KLZ80WVN2vGsEE=
+  dependencies:
+    keypress "0.1.x"
+
 commander@~2.13.0:
   version "2.13.0"
   resolved "http://r.cnpmjs.org/commander/download/commander-2.13.0.tgz#6964bca67685df7c1f1430c584f07d7597885b9c"
@@ -1957,6 +1979,11 @@ debug@^4.1.0:
   dependencies:
     ms "^2.1.1"
 
+debug@~0.7.2, debug@~0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-0.7.4.tgz#06e1ea8082c2cb14e39806e22e2f6f757f92af39"
+  integrity sha1-BuHqgILCyxTjmAbiLi9vdX+Srzk=
+
 decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "http://r.cnpmjs.org/decamelize/download/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
@@ -2269,6 +2296,11 @@ error-stack-parser@^2.0.0:
   integrity sha1-Sujbqiv5CotFBwe5FJ3KvKE1Ug0=
   dependencies:
     stackframe "^1.0.4"
+
+errs@0.1.x:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/errs/-/errs-0.1.1.tgz#d4493dcccf0848ed75ee4e3205f606058841baf2"
+  integrity sha1-1Ek9zM8ISO117k4yBfYGBYhBuvI=
 
 es-abstract@^1.7.0:
   version "1.13.0"
@@ -2757,6 +2789,24 @@ get-value@^2.0.3, get-value@^2.0.6:
   version "2.0.6"
   resolved "http://r.cnpmjs.org/get-value/download/get-value-2.0.6.tgz#dc15ca1c672387ca76bd37ac0a395ba2042a2c28"
   integrity sha1-3BXKHGcjh8p2vTesCjlbogQqLCg=
+
+getport@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/getport/-/getport-0.1.0.tgz#abddf3d5d1e77dd967ccfa2b036a0a1fb26fd7f7"
+  integrity sha1-q93z1dHnfdlnzPorA2oKH7Jv1/c=
+
+git-http-backend@~0.1.1:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/git-http-backend/-/git-http-backend-0.1.6.tgz#e890134d1128d7ab859ca67a1325fce281d389ce"
+  integrity sha1-6JATTREo16uFnKZ6EyX84oHTic4=
+  dependencies:
+    git-side-band-message "~0.0.3"
+    inherits "~2.0.1"
+
+git-side-band-message@~0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/git-side-band-message/-/git-side-band-message-0.0.3.tgz#b8a5348c2dcbf1949fd295c506014e26c3f26a46"
+  integrity sha1-uKU0jC3L8ZSf0pXFBgFOJsPyakY=
 
 glob-parent@^3.1.0:
   version "3.1.0"
@@ -3536,6 +3586,11 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
+keypress@0.1.x:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/keypress/-/keypress-0.1.0.tgz#4a3188d4291b66b4f65edb99f806aa9ae293592a"
+  integrity sha1-SjGI1CkbZrT2XtuZ+AaqmuKTWSo=
+
 killable@^1.0.0:
   version "1.0.1"
   resolved "http://r.cnpmjs.org/killable/download/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
@@ -3924,10 +3979,27 @@ mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
+mkdirp@~0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.3.5.tgz#de3e5f8961c88c787ee1368df849ac4413eca8d7"
+  integrity sha1-3j5fiWHIjHh+4TaN+EmsRBPsqNc=
+
 moment@^2.21.0:
   version "2.24.0"
   resolved "http://r.cnpmjs.org/moment/download/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha1-DQVdU/UFKqZTyfbraLtdEr9cK1s=
+
+mongroup@~1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/mongroup/-/mongroup-1.2.0.tgz#4a3a803378ed35a4db73e8041c40d7f699cad1aa"
+  integrity sha1-SjqAM3jtNaTbc+gEHEDX9pnK0ao=
+  dependencies:
+    batch "~0.3.2"
+    commander "~1.1.1"
+    debug "~0.7.2"
+    mkdirp "~0.3.5"
+    ms "~0.6.1"
+    printf "~0.1.2"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -3950,6 +4022,11 @@ ms@^2.1.1:
   version "2.1.1"
   resolved "http://r.cnpmjs.org/ms/download/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha1-MKWGTrPrsKZvLr5tcnrwagnYbgo=
+
+ms@~0.6.1:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-0.6.2.tgz#d89c2124c6fdc1353d65a8b77bf1aac4b193708c"
+  integrity sha1-2JwhJMb9wTU9Zai3e/GqxLGTcIw=
 
 multicast-dns-service-types@^1.1.0:
   version "1.1.0"
@@ -4014,6 +4091,25 @@ next-tick@^1.0.0:
   version "1.0.0"
   resolved "http://r.cnpmjs.org/next-tick/download/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
+
+nginx-conf@~0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/nginx-conf/-/nginx-conf-0.1.0.tgz#abf5116645f7f3fd87ad4c69cd3260389fc7700d"
+  integrity sha1-q/URZkX38/2HrUxpzTJgOJ/HcA0=
+
+nginx-reload@~0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/nginx-reload/-/nginx-reload-0.0.7.tgz#fcc6c2c8be7fdcf3c5a4465e31afcae6b02538b0"
+  integrity sha1-/MbCyL5/3PPFpEZeMa/K5rAlOLA=
+  dependencies:
+    procinfo "~0.1.4"
+
+nginx-vhosts@~0.0.2:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/nginx-vhosts/-/nginx-vhosts-0.0.8.tgz#65a498fe9ddcf8166edefe86af9d64ca2c737b2a"
+  integrity sha1-ZaSY/p3c+BZu3v6Gr51kyixzeyo=
+  dependencies:
+    nginx-reload "~0.0.7"
 
 no-case@^2.2.0:
   version "2.3.2"
@@ -4900,6 +4996,11 @@ pretty-error@^2.0.2:
     renderkid "^2.0.1"
     utila "~0.4"
 
+printf@~0.1.2:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/printf/-/printf-0.1.3.tgz#27e935bae4f55db1fdc18368689e9561ce551226"
+  integrity sha1-J+k1uuT1XbH9wYNoaJ6VYc5VEiY=
+
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
   resolved "http://r.cnpmjs.org/private/download/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
@@ -4914,6 +5015,11 @@ process@^0.11.10:
   version "0.11.10"
   resolved "http://r.cnpmjs.org/process/download/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
+
+procinfo@~0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/procinfo/-/procinfo-0.1.4.tgz#532019126114aee41b80997ef888a108319df50f"
+  integrity sha1-UyAZEmEUruQbgJl++IihCDGd9Q8=
 
 promise-inflight@^1.0.1:
   version "1.0.1"
@@ -5073,6 +5179,14 @@ read-cache@^1.0.0:
   integrity sha1-5mTvMRYRZsl1HNvo28+GtftY93Q=
   dependencies:
     pify "^2.3.0"
+
+read-dir-files@~0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/read-dir-files/-/read-dir-files-0.1.1.tgz#d79ecfdf323ac0a4d4ac6e2293387e974ed21782"
+  integrity sha1-157P3zI6wKTUrG4ikzh+l07SF4I=
+  dependencies:
+    async "0.1.x"
+    errs "0.1.x"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -5897,6 +6011,22 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
+taco@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/taco/-/taco-1.6.0.tgz#61c72de1255e9799f381a6ab595c7e0432546010"
+  integrity sha1-Ycct4SVel5nzgaarWVx+BDJUYBA=
+  dependencies:
+    basic "~0.0.1"
+    debug "~0.7.4"
+    getport "~0.1.0"
+    git-http-backend "~0.1.1"
+    mkdirp "~0.3.5"
+    mongroup "~1.2.0"
+    nginx-conf "~0.1.0"
+    nginx-vhosts "~0.0.2"
+    read-dir-files "~0.1.1"
+    through "~2.3.4"
+
 tapable@^0.2.7:
   version "0.2.9"
   resolved "http://r.cnpmjs.org/tapable/download/tapable-0.2.9.tgz#af2d8bbc9b04f74ee17af2b4d9048f807acd18a8"
@@ -5922,6 +6052,11 @@ through2@^2.0.0:
   dependencies:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
+
+through@~2.3.4:
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
+  integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
 thunky@^1.0.2:
   version "1.0.3"
@@ -6268,10 +6403,10 @@ vue-ref@^1.0.4:
   resolved "http://r.cnpmjs.org/vue-ref/download/vue-ref-1.0.6.tgz#b9b3d7d0e290ee2fd3d50d5d7bdac520806cb265"
   integrity sha1-ubPX0OKQ7i/T1Q1de9rFIIBssmU=
 
-vue-router@^3.0.1:
-  version "3.0.3"
-  resolved "http://r.cnpmjs.org/vue-router/download/vue-router-3.0.3.tgz#370ca607475c45a1cfab2d9d2ac846feab1c534c"
-  integrity sha1-NwymB0dcRaHPqy2dKshG/qscU0w=
+vue-router@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.6.tgz#2e4f0f9cbb0b96d0205ab2690cfe588935136ac3"
+  integrity sha512-Ox0ciFLswtSGRTHYhGvx2L44sVbTPNS+uD2kRISuo8B39Y79rOo0Kw0hzupTmiVtftQYCZl87mwldhh2L9Aquw==
 
 vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
   version "3.1.2"

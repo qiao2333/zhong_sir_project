@@ -26,7 +26,10 @@
           {
             key: 'studentLeave',//作为跳转的地址（具有语义的单词拼接）
             title: '在线请假',
-          },
+          },{
+						key: 'person',
+						title: '个人信息',
+					}
           // {//一级菜单
           //   key: 'leaveRecords',
           //   title: '查看请假记录',
