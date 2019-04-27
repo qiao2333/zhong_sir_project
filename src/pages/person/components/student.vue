@@ -81,7 +81,7 @@
 			}
 		},
 		mounted() {
-			this.$axios.post('/person').then((res) => {
+			this.$axios.post('/person/student').then((res) => {
 				const data = res.data
 				this.student_relation = data.data.student_relation
 				this.student = data.data.student
