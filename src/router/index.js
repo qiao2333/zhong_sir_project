@@ -6,6 +6,9 @@ import Announcement from '@/pages/announcement/Announcement'
 import StudentLeave from '@/pages/studentLeave/StudentLeave'
 import Test from '@/pages/test/Test'
 import Person from '@/pages/person/Person'
+import Classmessage from '@/pages/classmessage/Classmessage'
+
+
 
 Vue.use(Router)
 
@@ -25,6 +28,11 @@ export default new Router({
           path: 'announcement',
           name: 'Announcement',
           component: Announcement
+        },
+        {
+          path: 'classmessage',
+          name: 'Classmessage',
+          component: Classmessage
         },
         {
           path: 'studentLeave',

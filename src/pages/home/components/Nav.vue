@@ -30,6 +30,10 @@
 						key: 'person',
 						title: '个人信息',
 					}
+          ,{
+						key: 'classmessage',
+						title: '班级信息',
+					}
           // {//一级菜单
           //   key: 'leaveRecords',
           //   title: '查看请假记录',
