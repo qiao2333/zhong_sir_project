@@ -8,11 +8,14 @@ import axios from 'axios'
 import qs from 'qs'
 import VueAxios from 'vue-axios'
 import {Menu,Icon,Badge,message,DatePicker,Radio,Input,Select,Form,Upload,Tabs,Button,Row,Col,
-Collapse,Card} from 'ant-design-vue'
+Collapse,Card,Table} from 'ant-design-vue'
 import "./assets/styles/css/reset.css"
 import "./assets/styles/css/iconfont.css"
 import './assets/styles/css/content.css'
 
+
+
+Vue.use(Table)
 Vue.use(Card)
 Vue.use(Collapse);
 Vue.use(Row);
