@@ -43,13 +43,14 @@ export default new Router({
           path: 'person',
           name: 'Person',
           component: Person
-        }
+        },
+				{
+					path: 'test',
+					name: 'Test',
+					component: Test
+				}
       ]
-    },
-		{
-			path: '/test',
-			name: 'Test',
-			component: Test
-		}
+    }
+		
   ]
 })
