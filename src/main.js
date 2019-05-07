@@ -8,7 +8,8 @@ import axios from 'axios'
 import qs from 'qs'
 import VueAxios from 'vue-axios'
 import {Modal,Drawer, dropdown, List,Checkbox,Menu,Icon,Badge,message,DatePicker,Radio,Input,Select,Form,Upload,Tabs,Button,Row,Col,
-Collapse,Card,Table,Modal} from 'ant-design-vue'import "./assets/styles/css/reset.css"
+Collapse,Card,Table} from 'ant-design-vue'
+import "./assets/styles/css/reset.css"
 import "./assets/styles/css/iconfont.css"
 import './assets/styles/css/content.css'
 

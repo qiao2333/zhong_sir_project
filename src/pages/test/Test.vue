@@ -104,6 +104,13 @@
 							name: "music",
 							value: "music"
 						}]
+					},
+					{
+						key:8,
+						label:'自定义',
+						type:'text',
+						name:'test',
+						rules:{rules:[{required:true, message:'自定义',pattern:/fuck/i}]}
 					}
 				]
 			}

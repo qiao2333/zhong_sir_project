@@ -13,53 +13,51 @@ import Chouti from '@/pages/chouti/Chouti'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home,
-      children:[
-        {
-          path: 'announcement',
-          name: 'Announcement',
-          component: Announcement
-        },
-        {
-          path: 'classmessage',
-          name: 'Classmessage',
-          component: Classmessage
-        },
-        {
-          path: 'studentLeave',
-          name: 'StudentLeave',
-          component: StudentLeave
-        },
-        {
-          path: 'person',
-          name: 'Person',
-          component: Person
-        }£¬
-		{
-			path: 'applyresult',
-			name: 'Applyresult',
-			component: Applyresult
+	routes: [{
+			path: '/',
+			name: 'Login',
+			component: Login
 		},
 		{
-			path: 'chouti',
-			name: 'Chouti',
-			component: Chouti
-		}£¬
-		{
-			path: 'test',
-			name: 'Test',
-			component: Test
-		}      ]
-    }
-		
-  ]
+			path: '/home',
+			name: 'Home',
+			component: Home,
+			children: [{
+					path: 'announcement',
+					name: 'Announcement',
+					component: Announcement
+				},
+				{
+					path: 'classmessage',
+					name: 'Classmessage',
+					component: Classmessage
+				},
+				{
+					path: 'studentLeave',
+					name: 'StudentLeave',
+					component: StudentLeave
+				},
+				{
+					path: 'person',
+					name: 'Person',
+					component: Person
+				},{
+					path: 'applyresult',
+					name: 'Applyresult',
+					component: Applyresult
+				},
+				{
+					path: 'chouti',
+					name: 'Chouti',
+					component: Chouti
+				},
+				{
+					path: 'test',
+					name: 'Test',
+					component: Test
+				},
+			]
+		}
+
+	]
 })
