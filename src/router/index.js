@@ -43,23 +43,23 @@ export default new Router({
           path: 'person',
           name: 'Person',
           component: Person
-        },
-				{
-					path: 'applyresult',
-					name: 'Applyresult',
-					component: Applyresult
-				},
-				{
-					path: 'chouti',
-					name: 'Chouti',
-					component: Chouti
-				}
-      ]
-    },
+        }£¬
 		{
-			path: '/test',
+			path: 'applyresult',
+			name: 'Applyresult',
+			component: Applyresult
+		},
+		{
+			path: 'chouti',
+			name: 'Chouti',
+			component: Chouti
+		}£¬
+		{
+			path: 'test',
 			name: 'Test',
 			component: Test
-		}
+		}      ]
+    }
+		
   ]
 })

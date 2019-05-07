@@ -67,9 +67,9 @@
 					userName:this.username,
 					password:this.password
 				})).then((res)=>{
-					alert(res.data.data.login)
 					if(res.data.data.login){
-						this.$router.push('/home/announcement');
+						this.$router.push('/home');
+						
 					}
 				}).catch((err)=>{
 					alert(err)

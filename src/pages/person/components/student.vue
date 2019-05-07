@@ -1,7 +1,7 @@
 <template>
 	<div v-if="hasload" style="height: 1000px; background-color: white;">
 		<a-card title="用户主信息表">
-			<a href="#" slot="extra">修改</a>
+			<a-button slot="extra" @click="showModal('用户主信息修改')" >修改</a-button>
 			<a-row>
 				<a-col :span="8">用户名:{{user.user_name}}</a-col>
 				<a-col :span="8">身份证:{{ user.identification}}</a-col>
@@ -18,7 +18,7 @@
 			</a-row>
 		</a-card>
 		<a-card title="学生主要信息">
-			<a href="#" slot="extra">修改</a>
+			<a-button slot="extra" @click="showModal('学生主要信息修改')">修改</a-button>
 			<a-row>
 				<a-col :span="8">学号:{{student.stu_no}}</a-col>
 				<a-col :span="8">年级:{{ student.grade}}</a-col>
@@ -31,27 +31,30 @@
 			</a-row>
 		</a-card>
 		<a-card title="学生通信信息">
-			<a href="#" slot="extra">修改</a>
+			<a-button slot="extra" @click="showModal('学生通信信息修改')">修改</a-button>
 			居住地址:
 			<p>{{address.home_address}}</p>
 			通信方式:
 			<p>{{address.mail_address}}</p>
 		</a-card>
 		<a-card title="学生亲属信息" :loading="loading">
-			<a href="#" slot="extra">修改</a>
+			<a-button slot="extra" @click="showModal('学生亲属信息修改')">修改</a-button>
 			<div v-for="family in student_relation" :key="family.id">
 				关系：{{family.relationship}}
 				亲属名称：{{family.rela_name}}
 			</div>
 		</a-card>
-		
+		<Modal :visible="modal_visible" :title="modal_title" @ok="modalok" @cancel="modalclose"></Modal>
 	</div>
 </template>
 
 <script>
+	import Modal from './modal'
 	export default {
 		data() {
 			return {
+				modal_visible:false,
+				modal_title:'',
 				hasload: false,
 				loading: true,
 				student_relation: [{
@@ -84,6 +87,18 @@
 
 			}
 		},
+		methods: {
+			showModal(val) {
+				this.modal_title = val
+				this.modal_visible = true
+			},
+			modalclose(){
+				this.modal_visible = false
+			},
+			modalok(){
+				this.modal_visible = false
+			}
+		},
 		mounted() {
 			this.$axios.post('/person/student').then((res) => {
 				const data = res.data
@@ -96,6 +111,9 @@
 			}).catch((err) => {
 				console.log(err)
 			})
+		},
+		components: {
+			Modal
 		},
 	
 	}

@@ -33,6 +33,9 @@
           ,{
 						key: 'classmessage',
 						title: '班级信息',
+					},{
+						key: 'test',
+						title: '测试页面'
 					}
           ,{
 						key: 'applyresult',
