@@ -9,15 +9,21 @@
 <script>
 	import ExportJsonExcel from 'js-export-excel';
 	const columns = [
-
- {
+ 	{
 		title: '学号',
 		dataIndex: 'stu_no',
 		scopedSlots: { customRender: 'stu_no' },
 	}, {
 		title: '姓名',
 		dataIndex: 'user_name',
-	}];
+	},{
+		title: '性别',
+		dataIndex: 'stu_sex',
+	},{
+		title: '移动电话号码',
+		dataIndex: 'stu_phone',
+	}
+	];
 	export default {
 		methods: {
 			onSearch(value) {

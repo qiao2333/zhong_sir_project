@@ -7,20 +7,21 @@ import $ from 'jquery'
 import axios from 'axios'
 import qs from 'qs'
 import VueAxios from 'vue-axios'
-import {Menu,Icon,Badge,message,DatePicker,Radio,Input,Select,Form,Upload,Tabs,Button,Row,Col,
+import {Modal,Drawer, dropdown, List, Menu,Icon,Badge,message,DatePicker,Radio,Input,Select,Form,Upload,Tabs,Button,Row,Col,
 Collapse,Card,Table} from 'ant-design-vue'
 import "./assets/styles/css/reset.css"
 import "./assets/styles/css/iconfont.css"
 import './assets/styles/css/content.css'
 
-
-
-Vue.use(Table)
-Vue.use(Card)
+Vue.use(Modal);
+Vue.use(List);
+Vue.use(Table);
+Vue.use(Card);
 Vue.use(Collapse);
 Vue.use(Row);
-Vue.use(Col)
+Vue.use(Col);
 Vue.use(DatePicker);
+Vue.use(Drawer);
 Vue.use(Radio);
 Vue.use(Select);
 Vue.use(Input);
@@ -32,6 +33,7 @@ Vue.use(Menu);
 Vue.use(Icon);
 Vue.use(Badge);
 Vue.use(message);
+Vue.use(dropdown);
 Vue.prototype.$message = message;
 Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;

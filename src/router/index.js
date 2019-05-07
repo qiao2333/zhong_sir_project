@@ -7,8 +7,8 @@ import StudentLeave from '@/pages/studentLeave/StudentLeave'
 import Test from '@/pages/test/Test'
 import Person from '@/pages/person/Person'
 import Classmessage from '@/pages/classmessage/Classmessage'
-
-
+import Applyresult from '@/pages/applyresult/Applyresult'
+import Chouti from '@/pages/chouti/Chouti'
 
 Vue.use(Router)
 
@@ -43,7 +43,17 @@ export default new Router({
           path: 'person',
           name: 'Person',
           component: Person
-        }
+        },
+				{
+					path: 'applyresult',
+					name: 'Applyresult',
+					component: Applyresult
+				},
+				{
+					path: 'chouti',
+					name: 'Chouti',
+					component: Chouti
+				}
       ]
     },
 		{

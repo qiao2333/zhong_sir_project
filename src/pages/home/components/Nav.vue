@@ -34,6 +34,13 @@
 						key: 'classmessage',
 						title: '班级信息',
 					}
+          ,{
+						key: 'applyresult',
+						title: '申请结果',
+					},{
+						key: 'chouti',
+						title: '测试用的',
+					}
           // {//一级菜单
           //   key: 'leaveRecords',
           //   title: '查看请假记录',
