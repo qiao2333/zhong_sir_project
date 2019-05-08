@@ -13,6 +13,7 @@ import "./assets/styles/css/reset.css"
 import "./assets/styles/css/iconfont.css"
 import './assets/styles/css/content.css'
 
+
 Vue.use(Modal);
 Vue.use(List);
 Vue.use(Table);

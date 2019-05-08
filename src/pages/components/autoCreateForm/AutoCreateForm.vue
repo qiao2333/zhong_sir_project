@@ -2,7 +2,7 @@
 	<div>
 		<div v-if="form.type==='select'">
 			<a-form-item :label="form.label" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-				<a-select style="width: 120px" v-decorator="[form.name,form.rules]">
+				<a-select style="width: 240px" v-decorator="[form.name,form.rules]">
 					<template v-for="option in form.options">
 						<a-select-option :key="option.key" :value="option.value">{{option.name}}</a-select-option>
 					</template>
@@ -21,13 +21,12 @@
 		</div>
 		<div v-else-if="form.type==='checkbox'">
 			<a-form-item :label="form.label" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-				<a-checkbox-group v-decorator="[form.name,form.rules]" style="width: 100%;">
+				<a-checkbox-group :defaultValue="form.value" v-decorator="[form.name,form.rules]" style="width: 100%;">
 					<template v-for="option in form.options">
-						<a-checkbox :key="option.key" :value="option.value">
+						<a-checkbox :defaultChecked="option.check" :key="option.key" :value="option.value">
 							{{option.name}}
 						</a-checkbox>
 					</template>
-					
 				</a-checkbox-group>
 			</a-form-item>
 		</div>
@@ -45,7 +44,7 @@
 		props: ['form'],
 		data() {
 			return {
-
+				
 			}
 		},
 

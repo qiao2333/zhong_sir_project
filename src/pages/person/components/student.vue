@@ -1,7 +1,7 @@
 <template>
 	<div v-if="hasload" style="height: 1000px; background-color: white;">
 		<a-card title="用户主信息表">
-			<a-button slot="extra" @click="showModal('用户主信息修改')" >修改</a-button>
+			<a-button slot="extra" @click="showModal('用户主信息修改申请',1)" >修改</a-button>
 			<a-row>
 				<a-col :span="8">用户名:{{user.user_name}}</a-col>
 				<a-col :span="8">身份证:{{ user.identification}}</a-col>
@@ -18,7 +18,7 @@
 			</a-row>
 		</a-card>
 		<a-card title="学生主要信息">
-			<a-button slot="extra" @click="showModal('学生主要信息修改')">修改</a-button>
+			<a-button slot="extra" @click="showModal('学生主要信息修改申请',2)">修改</a-button>
 			<a-row>
 				<a-col :span="8">学号:{{student.stu_no}}</a-col>
 				<a-col :span="8">年级:{{ student.grade}}</a-col>
@@ -31,25 +31,26 @@
 			</a-row>
 		</a-card>
 		<a-card title="学生通信信息">
-			<a-button slot="extra" @click="showModal('学生通信信息修改')">修改</a-button>
+			<a-button slot="extra" @click="showModal('学生通信信息修改',3)">修改</a-button>
 			居住地址:
 			<p>{{address.home_address}}</p>
 			通信方式:
 			<p>{{address.mail_address}}</p>
 		</a-card>
 		<a-card title="学生亲属信息" :loading="loading">
-			<a-button slot="extra" @click="showModal('学生亲属信息修改')">修改</a-button>
+			<a-button slot="extra" @click="showModal('学生亲属信息修改',4)">修改</a-button>
 			<div v-for="family in student_relation" :key="family.id">
 				关系：{{family.relationship}}
 				亲属名称：{{family.rela_name}}
 			</div>
 		</a-card>
-		<Modal :visible="modal_visible" :title="modal_title" @ok="modalok" @cancel="modalclose"></Modal>
+		<Modal v-if="modal_visible" :visible="modal_visible" :forms="forms" :title="modal_title" @ok="modalok" @cancel="modalclose"></Modal>
 	</div>
 </template>
 
 <script>
 	import Modal from './modal'
+	import Form from '@/pages/components/autoCreateForm/forms/Form'
 	export default {
 		data() {
 			return {
@@ -57,55 +58,32 @@
 				modal_title:'',
 				hasload: false,
 				loading: true,
-				student_relation: [{
-					id:'1',
-					relationship: "未加载",
-					rela_name: "未加载"
-				}],
-				address: {
-					home_address: "未加载",
-					mail_address: "未加载"
-				},
-				student: {
-					stu_no: "未加载",
-					grade: "未加载",
-					class_id: "未加载",
-					major_id: "未加载",
-					political_id: "未加载",
-					live_room: "未加载"
-				},
-				user: {
-					user_name: "未加载",
-					identification: "未加载",
-					user_sex: "未加载",
-					user_birthday: "未加载 ",
-					regist: "未加载",
-					university_id: "未加载",
-					user_type: "未加载",
-					name: "未加载"
-				},
-
+				myform: null,
+				forms: [],
+				userInfo:{}
 			}
 		},
 		methods: {
-			showModal(val) {
+			showModal(val,choice) {
 				this.modal_title = val
+				switch(choice){	
+					case 1:this.forms = Form.data().forms1;break;
+					case 2:this.forms = Form.data().forms2;break;
+				}
+				
 				this.modal_visible = true
 			},
 			modalclose(){
 				this.modal_visible = false
 			},
 			modalok(){
+				
 				this.modal_visible = false
 			}
 		},
 		mounted() {
 			this.$axios.post('/person/student').then((res) => {
-				const data = res.data
-				this.student_relation = data.data.student_relation
-				this.student = data.data.student
-				this.user = data.data.user
-				this.address = data.data.address
+				const user_info = res.data
 				this.hasload = true
 				this.loading = false
 			}).catch((err) => {
