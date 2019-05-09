@@ -6,7 +6,8 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
+	  // http://120.79.163.179:8080
+	// "https://www.easy-mock.com/mock/5cc11e068556aa38e0757c15/qiao"
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

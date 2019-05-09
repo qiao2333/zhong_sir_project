@@ -10,7 +10,6 @@
 			</a-form-item>
 		</div>
 		<div v-else-if="form.type==='radio'">
-
 			<a-form-item :label="form.label" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
 				<a-radio-group size="large" v-decorator="[ form.name,form.rules]">
 					<template v-for="option in form.options">
@@ -21,7 +20,7 @@
 		</div>
 		<div v-else-if="form.type==='checkbox'">
 			<a-form-item :label="form.label" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-				<a-checkbox-group :defaultValue="form.value" v-decorator="[form.name,form.rules]" style="width: 100%;">
+				<a-checkbox-group  v-decorator="[form.name,form.rules]" style="width: 100%;">
 					<template v-for="option in form.options">
 						<a-checkbox :defaultChecked="option.check" :key="option.key" :value="option.value">
 							{{option.name}}

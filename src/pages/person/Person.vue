@@ -40,9 +40,11 @@
 			},
 			handleCancel(){
 				this.visible=false
+				this.modalDisable=false
 			},
 			handleOk(){
 				this.visible=false
+				this.modalDisable=false
 			}
 		},
 		mounted() {
