@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-	  <AddressSelect></AddressSelect>
+	  <AddressSelect ></AddressSelect>
   </div>
 </template>
 <script>
