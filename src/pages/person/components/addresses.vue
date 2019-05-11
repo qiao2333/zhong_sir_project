@@ -1,12 +1,13 @@
 <template>
 	<div>
 		<a-card title="用户地址表">
-			<a-list bordered>
+			<a-spin v-if="hasload == false" />
+			<a-list v-else bordered>
 				<div slot="地址信息">Header</div>
-				<a-list-item v-for="add in addresses" :key="add.id">
+				<a-list-item v-for="(item, index) in address" :key="index">
 					<a slot="actions">修改</a>
-					<a-list-item-meta :description="description(add)">
-						<a slot="title">{{flag(add.flag)}}</a>
+					<a-list-item-meta :description="item.description">
+						<a slot="title">{{item.title}}</a>
 					</a-list-item-meta>
 				</a-list-item>
 
@@ -21,44 +22,32 @@
 		data() {
 			return {
 				myAddress: [],
+				address: [],
+				count: 0,
+				hasload: false,
 			}
 		},
-		methods: {
-			description(add) {
+		mounted() {
+			for (var add in this.addresses) {
+				console.log(add)
 				var country = this.Countries(add.country)
 				var state = this.States(add.state)
 				var city = this.Cities(add.city)
 				var area = this.Areas(add.area)
 				var street = this.Streets(add.street)
-				var adds = {
-					id: add.id,
-					country: {
-						id: add.country,
-						val: country
-					},
-					state: {
-						id: add.state,
-						val: state
-					},
-					city: {
-						id: add.city,
-						val: city
-					},
-					area: {
-						id: add.area,
-						val: area
-					},
-					street: {
-						id: add.street,
-						val: street
-					}
+				var adds = [add.country, add.state, add.city, add.area, add.street]
+				var ad = {
+					title: this.flag(add.flag),
+					description: '地址：' + country + state + city + area + street + '\n详细尾缀：' + add.detail + '邮政编码：' + add.zipCode +
+						'手机号码：' +
+						add.telephone
 				}
+				this.address.push(ad)
 				this.myAddress.push(adds)
-				var s = '地址：' + country + state + city + area + street + '\n详细尾缀：' + add.detail + '邮政编码：' + add.zipCode + '手机号码：' +
-					add.telephone
-
-				return s
-			},
+				this.hasload = true
+			}
+		},
+		methods: {
 			Areas(id) {
 				for (var i = 0; i < this.addrAreas.length; i++) {
 					if (id == this.addrAreas[i].id) {
@@ -115,8 +104,9 @@
 						break;
 				}
 				return s
-			}
 
+
+			},
 		},
 	}
 </script>

@@ -1,13 +1,13 @@
 <template>
   <div class="content">
 	  <a-form :form="form">
-		  <addStudent></addStudent>
+		  <address_fuck :addressvalue="[]"></address_fuck>
 	  </a-form>
   </div>
   
 </template>
 <script>
-	import addStudent from '@/pages/person/applyresult/addStudent'
+	import address_fuck from '@/pages/components/addressSelect/AddressSelectUpdate'
 	export default{
 		data() {
 			return {
@@ -15,7 +15,7 @@
 			}
 		},
 		components: {
-			addStudent
+			address_fuck 
 		},
 	}
 </script>

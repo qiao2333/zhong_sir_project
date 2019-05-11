@@ -63,18 +63,7 @@
         
       },
       userLogin() {
-				this.$axios.post('/login', this.$qs.stringify({
-					userName:this.username,
-					password:this.password
-				})).then((res)=>{
-					if(res.data.data.login){
-						this.$router.push('/home');
-						
-					}
-				}).catch((err)=>{
-					alert(err)
-				})
-        
+        this.$router.push('/home/announcement');
       }
     },
 

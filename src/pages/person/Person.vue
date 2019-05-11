@@ -1,11 +1,11 @@
 <template>
 	<div class="content">
 		<div v-if="userinfo!=null" style="height: 2000px;" >
-			<User v-if="userinfo.users != null" @showModal="showModal" :users="userinfo.users[0]"></User>
-			<Employee v-if="userinfo.employees!=null" @showModal="showModal" :employees="userinfo.employees[0]"></Employee>
-			<Students v-if="userinfo.students!=null" @showModal="showModal" :students="userinfo.students[0]"></Students>
-			<Addresses v-if="userinfo.addresses!=null" @showModal="showModal" :addresses="userinfo.addresses" :addrAreas="userinfo.addrAreas" :addrStreets="userinfo.addrStreets" :addrCities="userinfo.addrCities" :addrStates="userinfo.addrStates" :addrCountries="userinfo.addrCountries"></Addresses>
-			<Modal v-if="modalDisable==true" :visible="visible" :mydatas="mydatas" @ok="handleOk" @cancel="handleCancel"></Modal>
+			<User v-if="userinfo.users != null" @showModal="showModal(1)" :users="userinfo.users[0]"></User>
+			<Employee v-if="userinfo.employees!=null" @showModal="showModal(2)" :employees="userinfo.employees[0]"></Employee>
+			<Students v-if="userinfo.students!=null" @showModal="showModal(3)" :students="userinfo.students[0]"></Students>
+			<Addresses v-if="userinfo.addresses!=null" @showModal="showModal(4)" :addresses="userinfo.addresses" :addrAreas="userinfo.addrAreas" :addrStreets="userinfo.addrStreets" :addrCities="userinfo.addrCities" :addrStates="userinfo.addrStates" :addrCountries="userinfo.addrCountries"></Addresses>
+			<Modal ref="modal" @ok="handleOk" :oldvalue="oldvalue" @cancel="handleCancel"></Modal>
 		</div>
 	</div>
 </template>
@@ -30,27 +30,17 @@
 				mydatas:null,
 				visible:false,
 				modalDisable:false,
+				oldvalue:null,
 			}
 		},
 		methods: {
-			showModal(data) {
-				this.mydatas = data
-				this.modalDisable = true
-				this.visible=true
-			},
-			handleCancel(){
-				this.visible=false
-				this.modalDisable=false
-			},
-			handleOk(){
-				this.visible=false
-				this.modalDisable=false
+			showModal(chioce){
+				this.$refs.modal.select(chioce)
 			}
 		},
 		mounted() {
-			this.$axios.post('/person/student').then((res) => {
-				const user_info = res.data.data
-				console.log(user_info.userInfo)
+			this.$axios.get('/json/user/userInfoListAll/2').then((res) => {
+				const user_info = res.data
 				this.userinfo = user_info.userInfo
 			}).catch((err) => {
 				console.log(err)
