@@ -1,13 +1,21 @@
 <template>
   <div class="content">
-	  <AddressSelect ></AddressSelect>
+	  <a-form :form="form">
+		  <addStudent></addStudent>
+	  </a-form>
   </div>
+  
 </template>
 <script>
-	import AddressSelect from '@/pages/components/addressSelect/AddressSelect'
-export default {
-  components: {
-  	AddressSelect
-  },
-}
+	import addStudent from '@/pages/person/applyresult/addStudent'
+	export default{
+		data() {
+			return {
+				form:this.$form.createForm(this),
+			}
+		},
+		components: {
+			addStudent
+		},
+	}
 </script>

@@ -5,7 +5,6 @@
 				<template>
 					<AutoInput v-for="form in mydatas.forms" :key="form.key" :form="form"></AutoInput>
 				</template>
-				<a-button type="primary" html-type="submit">提交</a-button>
 			</a-form>
 		</a-modal>
 	</div>
@@ -26,7 +25,7 @@
 		},
 		methods: {
 			handleSubmit() {
-				
+				alert("fuck")
 			}
 		},
 		
