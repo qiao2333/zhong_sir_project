@@ -1,21 +1,42 @@
 <template>
   <div class="content">
-	  <a-form :form="form">
-		  <address_fuck :addressvalue="[]"></address_fuck>
-	  </a-form>
+	  <relation :studentRelations="studentRelations"></relation>
   </div>
   
 </template>
 <script>
-	import address_fuck from '@/pages/components/addressSelect/AddressSelectUpdate'
+	import relation from '@/pages/person/components/relation'
 	export default{
 		data() {
 			return {
-				form:this.$form.createForm(this),
+				studentRelations:[
+					{
+						relaName:"fuck",
+						relationship:2
+					},
+					{
+						relaName:"cao",
+						relationship:3
+					},
+					{
+						relaName:"rinima",
+						relationship:1
+					},
+					{
+						relaName:"草泥马",
+						relationship:6
+					},
+					{
+						relaName:"草泥马",
+						relationship:6
+					},
+					
+					
+				]
 			}
 		},
 		components: {
-			address_fuck 
+			relation 
 		},
 	}
 </script>

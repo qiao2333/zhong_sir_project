@@ -7,7 +7,7 @@ import StudentLeave from '@/pages/studentLeave/StudentLeave'
 import Test from '@/pages/test/Test'
 import Person from '@/pages/person/Person'
 import Classmessage from '@/pages/classmessage/Classmessage'
-import Apply from '@/pages/applyresult/Applyresult'
+import Applyresult from '@/pages/applyresult/Applyresult'
 import Chouti from '@/pages/chouti/Chouti'
 
 Vue.use(Router)
@@ -52,6 +52,11 @@ export default new Router({
 					name: 'Test',
 					component: Test
 				},
+				{
+					path: 'applyresult',
+					name: '申请结果',
+					component: Applyresult
+				}
 			]
 		}
 

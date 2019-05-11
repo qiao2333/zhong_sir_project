@@ -63,7 +63,7 @@
 			getCountryData(code, children) {
 				var datas = new Array()
 				this.$axios.get('/json/addrCountry/addrCountrys/listAll').then((res) => {
-					const countrys = res.data.addrCountrys
+					var countrys = res.data.addrCountrys
 					for (var i = 0; i < countrys.length; i++) {
 						var data = new Object()
 						data.value = countrys[i].code
@@ -80,7 +80,7 @@
 				var url = "/json/address/address/addrState/" + targetOption.value
 				this.$axios.get(url).then((res) => {
 					var datas = new Array()
-					const states = res.data.addrStates
+					var states = res.data.addrStates
 					for (var i = 0; i < states.length; i++) {
 						var data = new Object()
 						data.value = states[i].code
@@ -98,7 +98,7 @@
 				var datas = new Array()
 				var url = "/json/address/address/addrState/" + code
 				this.$axios.get(url).then((res) => {
-					const states = res.data.addrStates
+					var states = res.data.addrStates
 					for (var i = 0; i < states.length; i++) {
 						var data = new Object()
 						data.value = states[i].code
@@ -115,7 +115,7 @@
 				var url = "/json/address/address/addrStreet/" + targetOption.value
 				this.$axios.get(url).then((res) => {
 					var datas = new Array()
-					const streets = res.data.addrStreets
+					var streets = res.data.addrStreets
 					for (var i = 0; i < streets.length; i++) {
 						var data = new Object()
 						data.value = streets[i].code
@@ -132,7 +132,7 @@
 				var datas = new Array()
 				var url = "/json/address/address/addrStreet/" + code
 				this.$axios.get(url).then((res) => {
-					const streets = res.data.addrStreets
+					var streets = res.data.addrStreets
 					for (var i = 0; i < streets.length; i++) {
 						var data = new Object()
 						data.value = streets[i].code
@@ -148,7 +148,7 @@
 				var url = "/json/address/address/addrArea/" + targetOption.value
 				this.$axios.get(url).then((res) => {
 					var datas = new Array()
-					const areas = res.data.addrAreas
+					var areas = res.data.addrAreas
 					for (var i = 0; i < areas.length; i++) {
 						var data = new Object()
 						data.value = areas[i].code
@@ -166,7 +166,7 @@
 				var datas = new Array()
 				var url = "/json/address/address/addrArea/" + code
 				this.$axios.get(url).then((res) => {
-					const areas = res.data.addrAreas
+					var areas = res.data.addrAreas
 					for (var i = 0; i < areas.length; i++) {
 						var data = new Object()
 						data.value = areas[i].code
@@ -182,7 +182,7 @@
 				var datas = new Array()
 				var url = "/json/address/address/addrCity/" + targetOption.value
 				this.$axios.get(url).then((res) => {
-					const cities = res.data.addrCities
+					var cities = res.data.addrCities
 					for (var i = 0; i < cities.length; i++) {
 						var data = new Object()
 						data.value = cities[i].code
@@ -202,7 +202,7 @@
 				var datas = new Array()
 				var url = "/json/address/address/addrCity/" + code
 				this.$axios.get(url).then((res) => {
-					const cities = res.data.addrCities
+					var cities = res.data.addrCities
 					for (var i = 0; i < cities.length; i++) {
 						var data = new Object()
 						data.value = cities[i].code

@@ -5,6 +5,7 @@
 			<Employee v-if="userinfo.employees!=null" @showModal="showModal(2)" :employees="userinfo.employees[0]"></Employee>
 			<Students v-if="userinfo.students!=null" @showModal="showModal(3)" :students="userinfo.students[0]"></Students>
 			<Addresses v-if="userinfo.addresses!=null" @showModal="showModal(4)" :addresses="userinfo.addresses" :addrAreas="userinfo.addrAreas" :addrStreets="userinfo.addrStreets" :addrCities="userinfo.addrCities" :addrStates="userinfo.addrStates" :addrCountries="userinfo.addrCountries"></Addresses>
+			<Relation v-if="userinfo.studentRelations.length > 0" :studentRelations="userinfo.studentRelations"></Relation>
 			<Modal ref="modal" @ok="handleOk" :oldvalue="oldvalue" @cancel="handleCancel"></Modal>
 		</div>
 	</div>
@@ -15,6 +16,7 @@
 	import Students from './components/students'
 	import Addresses from './components/addresses'
 	import Employee from './components/employees'
+	import Relation from './components/relation'
 	import Modal from './components/modal'
 	export default{
 		components: {
