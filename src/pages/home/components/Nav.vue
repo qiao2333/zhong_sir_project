@@ -43,6 +43,9 @@
 					},{
 						key: 'chouti',
 						title: '测试用的',
+					},{
+						key: 'approvalcenter',
+						title: '审批中心',
 					}
           // {//一级菜单
           //   key: 'leaveRecords',

@@ -9,6 +9,7 @@ import Person from '@/pages/person/Person'
 import Classmessage from '@/pages/classmessage/Classmessage'
 import Applyresult from '@/pages/applyresult/Applyresult'
 import Chouti from '@/pages/chouti/Chouti'
+import Approvalcenter from '@/pages/approvalcenter/Approvalcenter'
 
 Vue.use(Router)
 
@@ -56,7 +57,12 @@ export default new Router({
 					path: 'applyresult',
 					name: '申请结果',
 					component: Applyresult
-				}
+				},
+{
+					path: 'approvalcenter',
+					name: 'Approvalcenter',
+					component: Approvalcenter
+				},
 			]
 		}
 
