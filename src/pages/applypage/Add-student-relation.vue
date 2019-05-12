@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<a-card title="申请修改学生亲属页面">
+		<a-card title="申请添加学生亲属页面">
 			<a-form :form="myform">
 				<a-form-item label="选择游客用户" >
 					<a-select showSearch placeholder="搜索游客用户，根据姓名和身份证" :showArrow="false" :notFoundContent="null" @search="handleSearch" @change="handleChange">
@@ -18,11 +18,6 @@
 <script>
 	import AutoInput from '@/pages/components/autoCreateForm/AutoCreateForm'
 	export default {
-		props: {
-			oldvalue: {
-				type: Object,
-			},
-		},
 		data() {
 			return {
 				data: [],
@@ -36,7 +31,6 @@
 							rules: [{
 								required: true,
 							}],
-							initialValue: this.oldvalue.relationship
 						},
 						options: [{
 								key: 1,

@@ -37,6 +37,7 @@
 		},
 		methods: {
 			showModal(){
+				this.oldvalue = this.users
 				this.visible = true
 			},
 			formatDate(data){

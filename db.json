@@ -143,7 +143,25 @@
 				"byWho": 1,
 				"deleted": false
 			}],
-			"employees": null,
+			"employees": [
+				{
+					"byWho": 0,
+					"datetime": "2019-05-12T02:02:20.525Z",
+					"deleted": true,
+					"departmentId": 0,
+					"disciplineId": 0,
+					"empNo": "string",
+					"employHistoryId": 0,
+					"homeAddressId": 0,
+					"id": 0,
+					"mailAddressId": 0,
+					"politicalId": 0,
+					"positionId": 0,
+					"subdepartmentId": 0,
+					"universityId": 0,
+					"userId": 0
+				}
+			],
 			"userinfoApplies": null,
 			"politicalAffiliations": [{
 				"id": 0,

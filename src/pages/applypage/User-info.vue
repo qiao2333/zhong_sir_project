@@ -13,6 +13,11 @@
 <script>
 	import AutoInput from '@/pages/components/autoCreateForm/AutoCreateForm'
 	export default {
+		props: {
+			oldvalue: {
+				type: Object,
+			},
+		},
 		data() {
 			return {
 				myform: this.$form.createForm(this),
@@ -27,30 +32,21 @@
 								required: true,
 								
 							}],
+							initialValue: this.oldvalue.userName
 						},
-						options:[
-							{key:1,name:"QQ号",value:0},
-							{key:2,name:"微信号",value:1},
-							{key:3,name:"电子邮箱",value:2},
-							{key:4,name:"移动电话号码",value:3},
-							{key:5,name:"办公室号码",value:4},
-							{key:6,name:"家庭电话",value:5},
-						]
 					},
 					{
 						key: 2,
 						label: "账号",
 						type: "text",
-						name: "content",
+						name: "name",
 						rules: {
 							rules: [{
 								required: true,
 								max: 20,
 								message: '请输入你的账号!',
-								
-								
 							}],
-							initialValue:"草泥马"
+							initialValue: this.oldvalue.name
 						},
 					},
 					{
@@ -63,6 +59,7 @@
 								required: true,
 								
 							}],
+							initialValue: this.oldvalue.userSex
 						},
 						options:[
 							{key:1,name:"女",value:0},
@@ -71,7 +68,7 @@
 						]
 					},
 					{
-						key: 5,
+						key: 4,
 						label: "申请理由",
 						type: "textarea",
 						name: "reason",
@@ -80,10 +77,7 @@
 								required: true,
 								max: 20,
 								message: '请输入你的申请理由 20字符以内!',
-								
-								
 							}],
-							initialValue:"草泥马"
 						},
 					},
 					

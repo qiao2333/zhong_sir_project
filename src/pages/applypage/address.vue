@@ -1,12 +1,11 @@
 <template>
 	<div>
 		<a-card title="申请修改地址页面">
-		<a-form :form="myform" @submit="handleSubmit">
+		<a-form :form="myform" >
 			<addressSelect :addressvalue="oldvalue.address"></addressSelect>
 			<template>
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
-			<a-button type="primary" html-type="submit">提交</a-button>
 		</a-form>
 		</a-card>
 	</div>

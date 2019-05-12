@@ -3,33 +3,40 @@
 		<a-card title="用户亲属表">
 			<a-list bordered itemLayout="horizontal" >
 				<div slot="header">亲属信息</div>
-				<div slot="footer"><a-button type="primary">添加</a-button></div>
+				<div slot="footer"><a-button type="primary" @click="showModal(null,2)">添加</a-button></div>
 				<a-list-item v-for="(item, index) in datas" :key="index">
 					<a-list-item-meta :description="'亲属名称：' + item.name">
-						<a-button slot="extra" @click="showModal(studentRelations[index])" >修改</a-button>
 						<div slot="title">{{item.relationship}}</div>
 					</a-list-item-meta >
-					<div><a-button type="primary">详细</a-button><a-button type="danger">修改</a-button></div>
+					<div><a-button type="primary">详细</a-button><a-button type="danger" @click="showModal(studentRelations[index],1)" >修改</a-button></div>
 				</a-list-item>
 			</a-list>
 		</a-card>
 		<a-modal width="1000px" @ok="handleOk" @cancel="handleCancel" :visible="visible">
-			<StudentRelation ref="StudentRelation" v-if="visible" :oldvalue="oldvalue"></StudentRelation>
+			<template v-if="AddOrUpdate">
+				<StudentRelation ref="StudentRelation"  :oldvalue="oldvalue"></StudentRelation>
+			</template>
+			<template v-else>
+				<AddStudentRelation ref="AddStudentRelation"></AddStudentRelation>
+			</template>
 		</a-modal>
 	</div>
 </template>
 <script>
 	import StudentRelation from '@/pages/applypage/Student-relation'
+	import AddStudentRelation from '@/pages/applypage/Add-student-relation'
 	export default {
 		props: ['studentRelations'],
 		components: {
-			StudentRelation
+			StudentRelation,
+			AddStudentRelation
 		},
 		data() {
 			return {
 				datas:[],
 				oldvalue:null,
-				visible:false
+				visible:false,
+				AddOrUpdate:false
 			}
 		},
 		mounted(){
@@ -57,12 +64,23 @@
 				}
 				return s
 			},
-			showModal(value){
-				this.oldvalue = value
-				this.visible = false
+			showModal(value,chioce){
+				if(chioce == 1){
+					this.AddOrUpdate = true
+					this.oldvalue = value
+				}else{
+					this.AddOrUpdate = false
+				}
+				
+				this.visible = true
 			},
 			handleOk(){
-				console.log(this.$refs.StudentRelation.myform.getFieldsValue())
+				if(this.AddOrUpdate == 1){
+					console.log(this.$refs.StudentRelation.myform.getFieldsValue())
+				}else{
+					console.log(this.$refs.AddStudentRelation.myform.getFieldsValue())
+				}
+				
 				this.visible = false
 			},
 			handleCancel(){
