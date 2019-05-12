@@ -1,42 +1,21 @@
 <template>
-  <div class="content">
-	  <relation :studentRelations="studentRelations"></relation>
-  </div>
-  
+	<div class="content">
+		<Student :oldvalue="oldvalue"></Student>
+	</div>
 </template>
 <script>
-	import relation from '@/pages/person/components/relation'
-	export default{
-		data() {
-			return {
-				studentRelations:[
-					{
-						relaName:"fuck",
-						relationship:2
-					},
-					{
-						relaName:"cao",
-						relationship:3
-					},
-					{
-						relaName:"rinima",
-						relationship:1
-					},
-					{
-						relaName:"草泥马",
-						relationship:6
-					},
-					{
-						relaName:"草泥马",
-						relationship:6
-					},
-					
-					
-				]
+	import Student from '@/pages/applypage/Update-Student'
+	export default {
+		data(){
+			return{
+				oldvalue:{
+					flag:2,
+					content:"打开手机拨打110"
+				}
 			}
 		},
-		components: {
-			relation 
-		},
+		components:{
+			Student
+		}
 	}
 </script>

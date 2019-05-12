@@ -2,7 +2,7 @@
 	<div>
 		<a-card title="申请修改地址页面">
 		<a-form :form="myform" @submit="handleSubmit">
-			<addressSelect :addressvalue="null"></addressSelect>
+			<addressSelect :addressvalue="oldvalue.address"></addressSelect>
 			<template>
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
@@ -16,6 +16,11 @@
 	import AutoInput from '@/pages/components/autoCreateForm/AutoCreateForm'
 	import addressSelect from '@/pages/components/addressSelect/AddressSelectUpdate'
 	export default {
+		props: {
+			oldvalue: {
+				type: Object,
+			},
+		},
 		data() {
 			return {
 				myform: this.$form.createForm(this),
@@ -31,7 +36,7 @@
 								max:20,
 								message:'请输入你的具体位置 20字符以内'
 							}],
-							initialValue:"草泥马"
+							initialValue:this.oldvalue.detail
 						},
 					},
 					{
@@ -46,7 +51,7 @@
 								pattern:/^[0-9]{6}$/,
 								message: '请输入6位数字邮箱编码!',
 							}],
-							initialValue:"526108"
+							initialValue:this.oldvalue.zipCode
 						},
 					},
 					{
@@ -61,6 +66,7 @@
 								pattern:/^\d$/,
 								message: '请输入13位手机号!',
 							}],
+							initialValue:this.oldvalue.telephone
 						},
 					},
 					{
@@ -76,7 +82,6 @@
 								
 								
 							}],
-							initialValue:"草泥马"
 						},
 					},
 					

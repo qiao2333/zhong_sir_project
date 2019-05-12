@@ -13,45 +13,47 @@
 				<a-col :span="8">学校:{{users.universityId}}</a-col>
 			</a-row>
 			<a-row>
-				<a-col :span="8">用户类型:{{userTypeToString(users.userType)}}</a-col>
+				<a-col :span="8">用户类型:{{userTypeToString}}</a-col>
 			</a-row>
 		</a-card>
+		<a-modal width="1000px" @ok="handleOk" @cancel="handleCancel" :visible="visible">
+			<User_info ref="user_info" v-if="visible" :oldvalue="oldvalue"></User_info>
+		</a-modal>
 	</div>
 </template>
 
 <script>
+	import User_info from "@/pages/applypage/User-info"
 	export default{
 		props: ['users'],
 		data() {
 			return {
-				mydatas: {
-					forms: [
-					{
-						key: 1,
-						label: "性别",
-						type: "radio",
-						name: "userSex",
-						rules:{rules: [{ required: true,message: '请选择你的性别!' }],initialValue:this.users.userSex},
-						options:[
-							{key:1,name:"不详",value:2},
-							{key:2,name:"男",value:1},
-							{key:3,name:"女",value:0},
-						]
-					},
-					{
-						key: 2,
-						label: "出生日期",
-						type: "date",
-						name: "userBirthday",
-						rules:{rules: [{ required: true, message: '请输入你的出生日期!' }],initialValue:this.formatDate(this.users.userBirthday)},
-					},
-				],
-				title:"用户主信息修改申请"
-				}
+				visible:false,
+				oldvalue:null,
 			}
 		},
+		components: {
+			User_info
+		},
 		methods: {
-			userTypeToString(data) {
+			showModal(){
+				this.visible = true
+			},
+			formatDate(data){
+				var s = data.replace(/\//g,"-");
+				return s
+			},
+			handleCancel(){
+				this.visible = false
+			},
+			handleOk(){
+				console.log(this.$refs.user_info.myform.getFieldsValue())
+				this.visible = false
+			}
+		},
+		computed: {
+			userTypeToString() {
+				var data = this.users.userType
 				var s = ''
 				switch(data){
 					case 0:s = '游客';break;
@@ -63,16 +65,8 @@
 					case 6:s = '学校信息主管';break;
 				}
 				return s
-			},
-			showModal(){
-				console.log(this.mydatas)
-				this.$emit('showModal',this.mydatas)
-			},
-			formatDate(data){
-				var s = data.replace(/\//g,"-");
-				return s
 			}
-		}
+		},
 	}
 </script>
 

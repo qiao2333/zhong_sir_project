@@ -1,11 +1,10 @@
 <template>
 	<div>
-		<a-card title="申请修改电子通信方式页面">
-		<a-form :form="myform" @submit="handleSubmit">
+		<a-card title="申请修改用户主信息页面">
+		<a-form :form="myform" >
 			<template>
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
-			<a-button type="primary" html-type="submit">提交</a-button>
 		</a-form>
 		</a-card>
 	</div>
@@ -16,11 +15,6 @@
 	export default {
 		data() {
 			return {
-				// 用户姓名
-				// 账号
-				// 性别
-				// 出生日期
-				// 申请理由
 				myform: this.$form.createForm(this),
 				forms: [
 					{
@@ -94,6 +88,11 @@
 					},
 					
 				],
+			}
+		},
+		methods: {
+			getValue() {
+				return this.myform.getFieldsValue
 			}
 		},
 		components: {

@@ -5,31 +5,37 @@
 			<a-list v-else bordered>
 				<div slot="地址信息">Header</div>
 				<a-list-item v-for="(item, index) in address" :key="index">
-					<a slot="actions">修改</a>
+					<a slot="actions" @click="showModal(addresses[index])">修改</a>
 					<a-list-item-meta :description="item.description">
-						<a slot="title">{{item.title}}</a>
+						<a slot="title" v-html="item.title"></a>
 					</a-list-item-meta>
 				</a-list-item>
-
 			</a-list>
 		</a-card>
+		<a-modal width="1000px" @ok="handleOk" @cancel="handleCancel" :visible="visible">
+			<Address v-if="visible" :oldvalue="oldvalue"></Address>
+		</a-modal>
 	</div>
 </template>
 
 <script>
+	import Address from "@/pages/applypage/Address"
 	export default {
 		props: ['addresses', 'addrAreas', 'addrStreets', 'addrCities', 'addrStates', 'addrCountries'],
 		data() {
 			return {
-				myAddress: [],
 				address: [],
 				count: 0,
 				hasload: false,
+				visible:false,
+				oldvalue:null,
 			}
 		},
+		components: {
+			Address
+		},
 		mounted() {
-			for (var add in this.addresses) {
-				console.log(add)
+			for (var add of this.addresses) {
 				var country = this.Countries(add.country)
 				var state = this.States(add.state)
 				var city = this.Cities(add.city)
@@ -38,16 +44,31 @@
 				var adds = [add.country, add.state, add.city, add.area, add.street]
 				var ad = {
 					title: this.flag(add.flag),
-					description: '地址：' + country + state + city + area + street + '\n详细尾缀：' + add.detail + '邮政编码：' + add.zipCode +
-						'手机号码：' +
-						add.telephone
+					description: '地址：' + country + state + city + area + street + '   详细尾缀：' + add.detail + '   邮政编码：' + add.zipCode +
+						'    手机号码：' +
+						add.telephone 
 				}
 				this.address.push(ad)
-				this.myAddress.push(adds)
 				this.hasload = true
 			}
 		},
 		methods: {
+			showModal(item){
+				var object = {
+					address:[item.country, item.state, item.city, item.area, item.street],
+					detail:item.detail,
+					zipCode:item.zipCode,
+					telephone:item.telephone,
+				}
+				this.oldvalue = object
+				this.visible = true
+			},
+			handleCancel(){
+				this.visible = false
+			},
+			handleOk(){
+				this.visible = false
+			},
 			Areas(id) {
 				for (var i = 0; i < this.addrAreas.length; i++) {
 					if (id == this.addrAreas[i].id) {

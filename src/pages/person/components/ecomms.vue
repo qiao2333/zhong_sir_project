@@ -1,35 +1,46 @@
 <template>
 	<div>
+		<a-spin v-if="hasload == false"/>
 		<a-card title="用户地址表">
 			<a-list bordered>
 				<div slot="地址信息">Header</div>
 				<a-list-item v-for="(item, index) in eco" :key="index">
-					<a slot="actions">修改</a>
+					<a slot="actions" @click="showModal(ecomms[index])">修改</a>
 					<a-list-item-meta :description="item.content">
 						<a slot="title">{{item.title}}</a>
 					</a-list-item-meta>
 				</a-list-item>
-
 			</a-list>
 		</a-card>
+		<a-modal width="1000px" @ok="handleOk" @cancel="handleCancel" :visible="visible">
+			<Ecomm ref="Ecomm" v-if="visible" :oldvalue="oldvalue"></Ecomm>
+		</a-modal>
 	</div>
 </template>
 <script>
+	import Ecomm from '@/pages/applypage/Ecomm'
 	export default {
 		props: ['ecomms'],
+		components: {
+			Ecomm
+		},
 		data() {
 			return {
+				hasload:false,
+				oldvalue:null,
+				visible:false,
 				eco:[]
 			}
 		},
 		mounted(){
-			for(var e in this.ecomms){
+			for(var e of this.ecomms){
 				var object = {
 					content: e.content,
 					title: this.flag(e.flag)
 				}
 				this.eco.push(object)
 			}
+			this.hasload = true
 		},
 		methods: {
 			// 根据ecomm表的flag返回电子通讯的类型
@@ -43,6 +54,18 @@
 					case 4:s = "办公室号码";break;
 					case 5:s = "家庭电话";break;
 				}
+				return s
+			},
+			showModal(value){
+				this.oldvalue = value
+				this.visible = true
+			},
+			handleCancel(){
+				this.visible = false
+			},
+			handleOk(){
+				console.log(this.$refs.Ecomm.myform.getFieldsValue())
+				this.visible = false
 			}
 		},
 	}

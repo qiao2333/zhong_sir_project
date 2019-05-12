@@ -1,7 +1,7 @@
 <template>
-	<div>
+	<div >
 		<div v-if="Autoform.type==='select'">
-			<a-form-item :label="Autoform.label" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+			<a-form-item :label="Autoform.label" >
 				<a-select style="width: 240px" v-decorator="[Autoform.name,Autoform.rules]">
 					<template v-for="option in Autoform.options">
 						<a-select-option :key="option.key" :value="option.value">{{option.name}}</a-select-option>
@@ -10,7 +10,7 @@
 			</a-form-item>
 		</div>
 		<div v-else-if="Autoform.type==='radio'">
-			<a-form-item :label="Autoform.label" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+			<a-form-item :label="Autoform.label" >
 				<a-radio-group size="large" v-decorator="[ Autoform.name,Autoform.rules]">
 					<template v-for="option in Autoform.options">
 						<a-radio-button :key="option.key" :value="option.value">{{option.name}}</a-radio-button>
@@ -19,7 +19,7 @@
 			</a-form-item>
 		</div>
 		<div v-else-if="Autoform.type==='checkbox'">
-			<a-form-item :label="Autoform.label" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+			<a-form-item :label="Autoform.label" >
 				<a-checkbox-group  v-decorator="[Autoform.name,Autoform.rules]" style="width: 100%;">
 					<template v-for="option in Autoform.options">
 						<a-checkbox :defaultChecked="option.check" :key="option.key" :value="option.value">
@@ -30,7 +30,7 @@
 			</a-form-item>
 		</div>
 		<div v-else>
-			<a-form-item :label="Autoform.label" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+			<a-form-item :label="Autoform.label" >
 				<a-input :type="Autoform.type" v-decorator="[Autoform.name,Autoform.rules]" />
 			</a-form-item>
 		</div>

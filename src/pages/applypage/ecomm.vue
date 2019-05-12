@@ -1,11 +1,10 @@
 <template>
-	<div>
+	<div >
 		<a-card title="申请修改电子通信方式页面">
-		<a-form :form="myform" @submit="handleSubmit">
+		<a-form :form="myform">
 			<template>
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
-			<a-button type="primary" html-type="submit">提交</a-button>
 		</a-form>
 		</a-card>
 	</div>
@@ -14,6 +13,11 @@
 <script>
 	import AutoInput from '@/pages/components/autoCreateForm/AutoCreateForm'
 	export default {
+		props: {
+			oldvalue: {
+				type: Object,
+			},
+		},
 		data() {
 			return {
 				// 业务名称
@@ -32,6 +36,7 @@
 								required: true,
 								
 							}],
+							initialValue:this.oldvalue.flag
 						},
 						options:[
 							{key:1,name:"QQ号",value:0},
@@ -55,7 +60,7 @@
 								
 								
 							}],
-							initialValue:"草泥马"
+							initialValue:this.oldvalue.content
 						},
 					},
 					{
@@ -68,10 +73,7 @@
 								required: true,
 								max: 20,
 								message: '请输入你的申请理由 20字符以内!',
-								
-								
 							}],
-							initialValue:"草泥马"
 						},
 					},
 					

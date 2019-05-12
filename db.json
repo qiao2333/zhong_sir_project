@@ -1,0 +1,193 @@
+{
+	"person": [{
+		"msg": "操作成功",
+		"userInfo": {
+			"users": [{
+				"id": 2,
+				"userName": "运营者2",
+				"identification": "441202199901014511",
+				"userSex": 1,
+				"userBirthday": "1999-01-01 00:00:00",
+				"name": "13822611001",
+				"pwd": "b38e2bf274239ff5dd2b45ee9ae099c9",
+				"salt": "1234",
+				"universityId": 1,
+				"userType": 5,
+				"status": 0,
+				"regist": "2117-12-31 16:00:00"
+			}],
+			"ecomms": [{
+					"id": 16,
+					"userId": 2,
+					"content": "手机号13169350037",
+					"flag": 2,
+					"datetime": "2019-05-09 08:13:45",
+					"byWho": 0,
+					"deleted": false
+				},
+				{
+					"id": 16,
+					"userId": 2,
+					"content": "QQ号13169350037",
+					"flag": 4,
+					"datetime": "2019-05-09 08:13:45",
+					"byWho": 0,
+					"deleted": false
+				},
+				{
+					"id": 16,
+					"userId": 2,
+					"content": "24235253234@qq.com",
+					"flag": 3,
+					"datetime": "2019-05-09 08:13:45",
+					"byWho": 0,
+					"deleted": false
+				}
+			],
+			"addresses": [{
+					"id": 2,
+					"userId": 2,
+					"country": 1,
+					"state": 71,
+					"city": 29,
+					"area": 14,
+					"street": 24,
+					"detail": "第二条地址记录的详细尾缀",
+					"zipCode": "526108",
+					"telephone": "13048243591",
+					"flag": 0,
+					"datetime": "2019-05-09 08:12:11",
+					"byWho": 0,
+					"deleted": false
+				},
+				{
+					"id": 2,
+					"userId": 2,
+					"country": 1,
+					"state": 71,
+					"city": 29,
+					"area": 14,
+					"street": 24,
+					"detail": "第二条地址记录的详细尾缀",
+					"zipCode": "526108",
+					"telephone": "13048243591",
+					"flag": 1,
+					"datetime": "2019-05-09 08:12:11",
+					"byWho": 0,
+					"deleted": false
+				},
+				{
+					"id": 2,
+					"userId": 2,
+					"country": 1,
+					"state": 71,
+					"city": 29,
+					"area": 14,
+					"street": 24,
+					"detail": "第二条地址记录的详细尾缀",
+					"zipCode": "526108",
+					"telephone": "13048243591",
+					"flag": 2,
+					"datetime": "2019-05-09 08:12:11",
+					"byWho": 0,
+					"deleted": false
+				}
+			],
+			"pictures": [
+				null
+			],
+			"studentRelations": [{
+				"id": 1,
+				"userId": 100,
+				"relaName": "欧金金年",
+				"relaId": 2,
+				"relationship": 1,
+				"datetime": "2019-05-09 01:23:28",
+				"byWho": 1,
+				"deleted": false
+			}, {
+				"id": 1,
+				"userId": 100,
+				"relaName": "蔡徐坤",
+				"relaId": 2,
+				"relationship": 3,
+				"datetime": "2019-05-09 01:23:28",
+				"byWho": 1,
+				"deleted": false
+			}, {
+				"id": 1,
+				"userId": 100,
+				"relaName": "老司机",
+				"relaId": 2,
+				"relationship": 2,
+				"datetime": "2019-05-09 01:23:28",
+				"byWho": 1,
+				"deleted": false
+			}],
+			"learningDegrees": [],
+			"employeeHistories": [],
+			"students": [{
+				"id": 1624,
+				"userId": 2,
+				"universityId": 0,
+				"stuNo": "0",
+				"beginLearnDate": "2019-05-09 08:12:47",
+				"grade": "0",
+				"majorId": 0,
+				"classId": 0,
+				"politicalId": 0,
+				"liveRoom": 0,
+				"homeAddress": 2,
+				"mailAddress": 1,
+				"datetime": "2019-05-09 08:13:00",
+				"byWho": 1,
+				"deleted": false
+			}],
+			"employees": null,
+			"userinfoApplies": null,
+			"politicalAffiliations": [{
+				"id": 0,
+				"political": "0"
+			}],
+			"addrCountries": [{
+				"id": 1,
+				"countryZh": "中国",
+				"countryEn": "China",
+				"code": 1
+			}],
+			"addrStates": [{
+				"id": 71,
+				"countryCode": 1,
+				"stateZh": "内蒙古自治区",
+				"stateEn": null,
+				"code": 15
+			}],
+			"addrCities": [{
+				"id": 29,
+				"cityZh": "邢台市",
+				"cityEn": null,
+				"code": 1305,
+				"stateCode": 13
+			}],
+			"addrAreas": [{
+				"id": 14,
+				"cityCode": 1101,
+				"areaZh": "石景山区",
+				"areaEn": null,
+				"code": 110107
+			}],
+			"addrStreets": [{
+				"id": 24,
+				"areaCode": 110102,
+				"streetZh": "德胜街道办事处",
+				"streetEn": null,
+				"code": 110102010
+			}],
+			"academics": null,
+			"academicDegrees": null,
+			"getAddrDetails": null
+		},
+		"code": 0
+	}]
+
+}

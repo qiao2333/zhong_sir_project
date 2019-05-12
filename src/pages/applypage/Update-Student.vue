@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div style="height:1000px">
 		<a-spin v-if="hasload" />
 		<a-card v-else title="申请修改学生主要信息页面">
 			<a-form :form="myform" @submit="handleSubmit">
@@ -56,17 +56,6 @@
 				grades: [],//年级数据
 				classes: [],//主修专业数据
 				politicals: [],//政治面貌数据
-				// 业务名称
-				// 学号
-				// 入学日期
-				// 年级
-				// 主修专业
-				// 专业班级
-				// 政治面貌（下拉框选择）
-				// 宿舍
-				// 住址
-				// 通信地址
-				// 申请理由
 				myform: this.$form.createForm(this),
 				forms: [{
 						key: 1,
