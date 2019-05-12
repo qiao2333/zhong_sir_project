@@ -1,3 +1,5 @@
+<!--查看所带班级（主修专业）所有学生的所有信息
+查看所授课班级学生信息（看到所有这个教师授课的班级，同时看到这个班级里的所有学生，而且能看到这个学生的学号，姓名，通信方式和照片）-->
 <template>
 	<div class="content" style="background-color: white;">
 		<a-dropdown-button @click="handleMenuClick">
@@ -51,6 +53,12 @@
 			this.fetch()
 		},
 		methods: {
+			handleButtonClick(e) {
+				console.log('click left button', e);
+			},
+			handleMenuClick(e) {
+				console.log('click', e);
+			},
 			fetch() {
 				this.$axios.post('/classmessage/classic').then((res) => {
 					const data = res.data.data
