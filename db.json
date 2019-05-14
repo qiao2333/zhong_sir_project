@@ -143,25 +143,23 @@
 				"byWho": 1,
 				"deleted": false
 			}],
-			"employees": [
-				{
-					"byWho": 0,
-					"datetime": "2019-05-12T02:02:20.525Z",
-					"deleted": true,
-					"departmentId": 0,
-					"disciplineId": 0,
-					"empNo": "string",
-					"employHistoryId": 0,
-					"homeAddressId": 0,
-					"id": 0,
-					"mailAddressId": 0,
-					"politicalId": 0,
-					"positionId": 0,
-					"subdepartmentId": 0,
-					"universityId": 0,
-					"userId": 0
-				}
-			],
+			"employees": [{
+				"byWho": 0,
+				"datetime": "2019-05-12T02:02:20.525Z",
+				"deleted": true,
+				"departmentId": 0,
+				"disciplineId": 0,
+				"empNo": "1298419517",
+				"employHistoryId": 0,
+				"homeAddressId": 0,
+				"id": 0,
+				"mailAddressId": 0,
+				"politicalId": 0,
+				"positionId": 0,
+				"subdepartmentId": 0,
+				"universityId": 0,
+				"userId": 0
+			}],
 			"userinfoApplies": null,
 			"politicalAffiliations": [{
 				"id": 0,
@@ -206,6 +204,45 @@
 			"getAddrDetails": null
 		},
 		"code": 0
+	}],
+	"approval": [{
+		"approvalInfo": [{
+			"key": 1,
+			"name": "John Brown",
+			"infoType": 1,
+			"startTime": "2018-7-12",
+			"checkWho": "毛时代",
+			"next": 1,
+			"applyResult": 1
+
+		},{
+			"key": 2,
+			"name": "曹操",
+			"infoType": 1,
+			"startTime": "2023-6-12",
+			"checkWho": "犬瘟热群",
+			"next": 1,
+			"applyResult": 1
+
+		},{
+			"key": 3,
+			"name": "章党",
+			"infoType": 1,
+			"startTime": "2016-12-12",
+			"checkWho": "自行车",
+			"next": 2,
+			"applyResult": 0
+
+		},{
+			"key": 4,
+			"name": "铁蛋儿",
+			"infoType": 1,
+			"startTime": "2012-03-13",
+			"checkWho": "八法",
+			"next": 3,
+			"applyResult": 0
+
+		}]
 	}]
 
 }

@@ -1,21 +1,17 @@
 <template>
 	<div class="content">
-		<Student :oldvalue="oldvalue"></Student>
+		<addressSelect :addressvalue="null"></addressSelect>
 	</div>
 </template>
 <script>
-	import Student from '@/pages/applypage/Update-Student'
+	import addressSelect from '@/pages/components/addressSelect/AddressSelectUpdate'
 	export default {
 		data(){
 			return{
-				oldvalue:{
-					flag:2,
-					content:"打开手机拨打110"
-				}
 			}
 		},
 		components:{
-			Student
+			addressSelect
 		}
 	}
 </script>

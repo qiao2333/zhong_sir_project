@@ -10,7 +10,12 @@
 
 <script>
 	export default {
-		props: ['addressvalue'],
+		props: {
+			addressvalue: {
+				type: Array,
+				default: null
+			},
+		},
 		data() {
 			return {
 				options: [],
@@ -85,6 +90,7 @@
 						var data = new Object()
 						data.value = states[i].code
 						data.label = states[i].stateZh
+						data.code= states[i].code
 						data.isLeaf = false
 						datas[i] = data
 					}
