@@ -37,7 +37,7 @@
     },
     methods: {
       changeUrl(url){
-       this.$router.push('/home/'+url);F
+       this.$router.push('/home/'+url);
       }
     },
   };

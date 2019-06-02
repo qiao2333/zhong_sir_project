@@ -41,8 +41,6 @@ Vue.prototype.$message = message;
 Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = '/api'
-axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-axios.defaults.headers.post['Content-Type'] = 'application/json';//解决sessionId不一致问题：跨域共享session
 Vue.prototype.$qs = qs;                //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
 Vue.prototype.$axios = axios;         //axios结合vue-axios使用
 Vue.prototype.$VueAxios = VueAxios;

@@ -26,27 +26,35 @@
           {
             key: 'studentLeave',//作为跳转的地址（具有语义的单词拼接）
             title: '在线请假',
-          },{
-						key: 'person',
-						title: '个人信息',
-					}
-          ,{
-						key: 'classmessage',
-						title: '班级信息',
-					},{
-						key: 'test',
-						title: '测试页面'
-					}
-          ,{
-						key: 'applyresult',
-						title: '申请结果',
-					},{
-						key: 'chouti',
-						title: '测试用的',
-					},{
-						key: 'approvalcenter',
-						title: '审批中心',
-					}
+          },
+					{
+						key:'baseinfo',
+						title:'基本信息',
+						children:[
+							{
+								key: 'baseinfo/person',
+								title: '个人信息',
+							}
+							,{
+								key: 'baseinfo/classmessage',
+								title: '班级信息',
+							},{
+								key: 'baseinfo/test',
+								title: '测试页面'
+							}
+							,{
+								key: 'baseinfo/applyresult',
+								title: '申请结果',
+							},{
+								key: 'baseinfo/chouti',
+								title: '测试用的',
+							},{
+								key: 'baseinfo/approvalcenter',
+								title: '审批中心',
+							}
+						]
+					},
+					
           // {//一级菜单
           //   key: 'leaveRecords',
           //   title: '查看请假记录',
