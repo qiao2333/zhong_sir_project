@@ -1,12 +1,12 @@
 <template>
 	<div class="content">
 		<div v-if="userinfo!=null" style="height: 2000px;" >
-			<User v-if="userinfo.users != null"  :users="userinfo.users[0]"></User>
-			<Employee v-if="userinfo.employees!=null" :employees="userinfo.employees[0]"></Employee>
-			<Students v-if="userinfo.students!=null"  :students="userinfo.students[0]"></Students>
-			<Addresses v-if="userinfo.addresses!=null"  :addresses="userinfo.addresses" :addrAreas="userinfo.addrAreas" :addrStreets="userinfo.addrStreets" :addrCities="userinfo.addrCities" :addrStates="userinfo.addrStates" :addrCountries="userinfo.addrCountries"></Addresses>
-			<Relation v-if="userinfo.studentRelations.length > 0" :studentRelations="userinfo.studentRelations"></Relation>
-			<Ecomm v-if="userinfo.ecomms.length > 0" :ecomms="userinfo.ecomms"></Ecomm>
+			<User @tip="tip" v-if="userinfo.users != null"  :users="userinfo.users[0]"></User>
+			<Employee @tip="tip" v-if="userinfo.employees!=null" :employees="userinfo.employees[0]"></Employee>
+			<Students @tip="tip" v-if="userinfo.students!=null"  :students="userinfo.students[0]"></Students>
+			<Addresses @tip="tip" v-if="userinfo.addresses!=null"  :addresses="userinfo.addresses" :addrAreas="userinfo.addrAreas" :addrStreets="userinfo.addrStreets" :addrCities="userinfo.addrCities" :addrStates="userinfo.addrStates" :addrCountries="userinfo.addrCountries"></Addresses>
+			<Relation @tip="tip" v-if="userinfo.studentRelations.length > 0" :studentRelations="userinfo.studentRelations"></Relation>
+			<Ecomm @tip="tip"  v-if="userinfo.ecomms.length > 0" :ecomms="userinfo.ecomms"></Ecomm>
 		</div>
 	</div>
 </template>
@@ -76,6 +76,9 @@
 			}
 		},
 		methods: {
+			tip(data){
+				this.$emit("tip",data)
+			}
 		},
 		mounted() {
 			// this.$axios.get('/person').then((res) => {

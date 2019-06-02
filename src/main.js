@@ -13,7 +13,6 @@ import "./assets/styles/css/reset.css"
 import "./assets/styles/css/iconfont.css"
 import './assets/styles/css/content.css'
 
-
 Vue.use(Spin)
 Vue.use(Cascader)
 Vue.use(Modal);

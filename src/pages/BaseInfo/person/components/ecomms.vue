@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<a-spin v-if="hasload == false"/>
+		<a-spin v-if="hasload == false" />
 		<a-card title="用户地址表">
 			<a-list bordered>
 				<div slot="地址信息">Header</div>
@@ -26,11 +26,11 @@
 		},
 		data() {
 			return {
-				hasload:false,
-				modal:{
-					visible:false
+				hasload: false,
+				modal: {
+					visible: false
 				},
-				flags:[
+				flags: [
 					"QQ号",
 					"微信号",
 					"电子邮箱",
@@ -38,12 +38,12 @@
 					"办公室号码",
 					"家庭电话",
 				],
-				oldvalue:null,
-				eco:[]
+				oldvalue: null,
+				eco: []
 			}
 		},
-		mounted(){
-			for(var e of this.ecomms){
+		mounted() {
+			for (var e of this.ecomms) {
 				var object = {
 					content: e.content,
 					title: this.flags[e.flag]
@@ -53,14 +53,18 @@
 			this.hasload = true
 		},
 		methods: {
-			showModal(value){
+			showModal(value) {
 				this.oldvalue = value
 				this.modal.visible = true
 			},
-			handleCancel(){
+			handleCancel() {
 				this.modal.visible = false
 			},
-			handleOk(data){
+			handleOk(data) {
+				this.$emit("tip", {
+					type: "success",//success   error   warning
+					text: "提交电子信息申请表成功！" 
+				})
 				console.log(data)
 				this.modal.visible = false
 			}
