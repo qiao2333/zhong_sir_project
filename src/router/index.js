@@ -11,6 +11,7 @@ import Applyresult from '@/pages/BaseInfo/applyresult/Applyresult'
 import Chouti from '@/pages/BaseInfo/chouti/Chouti'
 import Approvalcenter from '@/pages/BaseInfo/approvalcenter/Approvalcenter'
 import BaseInfo from '@/pages/BaseInfo/BaseInfo'
+import ApplyRule from '@/pages/BaseInfo/applyrule/applyrule'
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
 							name: 'Classmessage',
 							component: Classmessage
 						},
+						{
+							path: 'applyrule',
+							name: '审批规定管理页面',
+							component: ApplyRule
+						}
 					]
 				},
 				{

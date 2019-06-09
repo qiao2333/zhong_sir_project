@@ -7,12 +7,15 @@ import $ from 'jquery'
 import axios from 'axios'
 import qs from 'qs'
 import VueAxios from 'vue-axios'
-import {Spin,Cascader, Modal,Drawer, dropdown, List,Checkbox,Menu,Icon,Badge,message,DatePicker,Radio,Input,Select,Form,Upload,Tabs,Button,Row,Col,
+import moment from 'moment'
+import lodash from 'lodash'
+import {Popconfirm,Spin,Cascader, Modal,Drawer, dropdown, List,Checkbox,Menu,Icon,Badge,message,DatePicker,Radio,Input,Select,Form,Upload,Tabs,Button,Row,Col,
 Collapse,Card,Table} from 'ant-design-vue'
 import "./assets/styles/css/reset.css"
 import "./assets/styles/css/iconfont.css"
 import './assets/styles/css/content.css'
 
+Vue.use(Popconfirm)
 Vue.use(Spin)
 Vue.use(Cascader)
 Vue.use(Modal);
@@ -37,6 +40,8 @@ Vue.use(Badge);
 Vue.use(message);
 Vue.use(dropdown);
 Vue.prototype.$message = message;
+Vue.prototype.$moment = moment;
+Vue.prototype.$lodash = lodash;
 Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = '/api'

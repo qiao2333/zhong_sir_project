@@ -40,6 +40,7 @@
 
 <script>
 	export default {
+		name:"AutoForm",
 		props: ['Autoform'],
 		data() {
 			return {

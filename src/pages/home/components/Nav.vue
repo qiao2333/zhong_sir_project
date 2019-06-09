@@ -51,6 +51,10 @@
 							},{
 								key: 'baseinfo/approvalcenter',
 								title: '审批中心',
+							},
+							{
+								key: 'baseinfo/applyrule',
+								title: '审批规定'
 							}
 						]
 					},

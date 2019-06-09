@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<p>学号:{{info.stuNo}}</p>
-		<p>入学日期:{{info.beginLearnDate}}</p>
+		<p>学号:{{info.student_no}}</p>
+		<p>入学日期:{{info.begin_learn_date}}</p>
 		<p>年级:{{info.grade}}</p>
-		<p>主修专业:{{info.specialtyId}}</p>
-		<p>班级:{{info.classId}}</p>
-		<p>政治面貌:{{info.politicalId}}</p>
-		<p>宿舍:{{info.liveRoom}}</p>
+		<p>主修专业:{{info.specialty}}</p>
+		<p>班级:{{info.class}}</p>
+		<p>政治面貌:{{info.political.political}}</p>
+		<p>宿舍:{{info.live_room.name}}</p>
 	</div>
 </template>
 
@@ -17,6 +17,7 @@
 				type: Object,
 			},
 		},
+		
 	}
 </script>
 

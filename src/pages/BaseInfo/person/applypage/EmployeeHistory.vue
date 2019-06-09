@@ -1,13 +1,17 @@
 <template>
 	<div>
-		<a-card title="申请修改雇员简历页面">
+		<a-modal @cancel="handleCancel" :maskClosable="false" width="1000px" :footer="null" :visible="modal.visible">
+		<span slot="title">申请修改职员雇历页面</span>
 		<a-form :form="myform" @submit="handleSubmit">
 			<template>
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
-			<a-button type="primary" html-type="submit">提交</a-button>
+			<a-button-group>
+				<a-button html-type="submit" type="primary">提交</a-button>
+				<a-button type="danger" @click="handleCancel">关闭</a-button>
+			</a-button-group>
 		</a-form>
-		</a-card>
+		</a-modal>
 	</div>
 </template>
 
@@ -20,6 +24,9 @@
 				// 描述
 				// 申请理由
 				myform: this.$form.createForm(this),
+				modal:{
+					visible:false
+				},
 				forms: [
 					{
 						key:1,
@@ -31,7 +38,6 @@
 								required: true,
 								message: "请输入雇佣结束时间！"
 							}],
-							initialValue:'2019-05-08'
 						},
 						
 					},
@@ -48,7 +54,6 @@
 								
 								
 							}],
-							initialValue:"草泥马"
 						},
 					},
 					{
@@ -62,7 +67,6 @@
 								max: 20,
 								message: '请输入你的申请理由 20字符以内!',
 							}],
-							initialValue:"草泥马"
 						},
 					},
 					
@@ -73,9 +77,22 @@
 			AutoInput
 		},
 		methods:{
-			handleSubmit(){
-				console.log(this.myform.getFieldsValue())
-				
+			showModal(info){
+				this.forms[0].rules.initialValue = info.end_time
+				this.forms[1].rules.initialValue = info.descript
+				this.modal.visible = true
+			},
+			handleCancel(){
+				this.modal.visible = false
+			},
+			handleSubmit(e){
+				e.preventDefault();
+				this.myform.validateFields((err, values) => {
+					if (!err) {
+						console.log(this.myform.getFieldsValue())
+						this.modal.visible = false
+					}
+				});
 			}
 		}
 

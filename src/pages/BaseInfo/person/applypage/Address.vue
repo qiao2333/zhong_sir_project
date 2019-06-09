@@ -1,13 +1,18 @@
 <template>
 	<div>
-		<a-card title="申请修改地址页面">
-		<a-form :form="myform" >
-			<addressSelect :addressvalue="oldvalue.address"></addressSelect>
+		<a-modal @cancel="handleCancel" :maskClosable="false" width="1000px" :footer="null" :visible="modal.visible">
+		<span slot="title">申请修改地址页面</span>
+		<a-form v-if="modal.visible" @submit="handleSubmit" :form="myform" >
+			<addressSelect :addressvalue="address"></addressSelect>
 			<template>
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
+			<a-button-group>
+				<a-button html-type="submit" type="primary">提交</a-button>
+				<a-button type="danger" @click="handleCancel">关闭</a-button>
+			</a-button-group>
 		</a-form>
-		</a-card>
+		</a-modal>
 	</div>
 </template>
 
@@ -15,14 +20,13 @@
 	import AutoInput from '@/pages/Baseinfo/components/autoCreateForm/AutoCreateForm'
 	import addressSelect from '@/pages/Baseinfo/components/addressSelect/AddressSelectUpdate'
 	export default {
-		props: {
-			oldvalue: {
-				type: Object,
-			},
-		},
 		data() {
 			return {
 				myform: this.$form.createForm(this),
+				modal:{
+					visible:false
+				},
+				address:null,
 				forms: [
 					{
 						key:1,
@@ -35,7 +39,6 @@
 								max:20,
 								message:'请输入你的具体位置 20字符以内'
 							}],
-							initialValue:this.oldvalue.detail
 						},
 					},
 					{
@@ -50,7 +53,6 @@
 								pattern:/^[0-9]{6}$/,
 								message: '请输入6位数字邮箱编码!',
 							}],
-							initialValue:this.oldvalue.zipCode
 						},
 					},
 					{
@@ -65,7 +67,6 @@
 								pattern:/^\d$/,
 								message: '请输入13位手机号!',
 							}],
-							initialValue:this.oldvalue.telephone
 						},
 					},
 					{
@@ -78,8 +79,6 @@
 								required: true,
 								max: 20,
 								message: '请输入你的申请理由 20字符以内!',
-								
-								
 							}],
 						},
 					},
@@ -90,6 +89,29 @@
 		components: {
 			AutoInput,
 			addressSelect
+		},
+		methods:{
+			showModal(info){
+				if(info!=null){
+					this.address = info.address
+					this.forms[0].rules.initialValue = info.detail
+					this.forms[1].rules.initialValue = info.zipCode
+					this.forms[2].rules.initialValue = info.telephone
+				}
+				this.modal.visible = true
+			},
+			handleCancel(){
+				this.modal.visible = false
+			},
+			handleSubmit(){
+				e.preventDefault();
+				this.myform.validateFields((err, values) => {
+					if (!err) {
+						console.log(this.myform.getFieldsValue())
+						this.modal.visible = false
+					}
+				});
+			}
 		}
 
 	}

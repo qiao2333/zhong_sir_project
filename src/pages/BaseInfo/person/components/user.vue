@@ -16,9 +16,7 @@
 				<a-col :span="8">用户类型:{{userTypes[users.userType]}}</a-col>
 			</a-row>
 		</a-card>
-		<a-modal @cancel="handleCancel" :maskClosable="false" width="1000px" :footer="null" :visible="modal.visible">
-			<UserInfo @submit="handleOk" @close="handleCancel" ref="UserInfo" v-if="modal.visible" :oldvalue="oldvalue"></UserInfo>
-		</a-modal>
+		<UserInfo @tip="tip" ref="UserInfo" ></UserInfo>
 	</div>
 </template>
 
@@ -28,9 +26,6 @@
 		props: ['users'],
 		data() {
 			return {
-				modal:{
-					visible:false,
-				},
 				userTypes:[
 					'游客',
 					'学生',
@@ -40,7 +35,6 @@
 					'系统运营者',
 					'学校信息主管',
 				],
-				oldvalue:null,
 			}
 		},
 		components: {
@@ -48,18 +42,20 @@
 		},
 		methods: {
 			showModal(){
-				this.oldvalue = this.users
-				this.modal.visible = true
+				this.$refs.UserInfo.showModal(this.users)
 			},
-			formatDate(data){
-				var s = data.replace(/\//g,"-");
-				return s
+			tip(data){
+				this.$emit("tip",data)
 			},
 			handleCancel(){
 				this.modal.visible = false
 			},
 			handleOk(data){
-				console.log(data)
+				this.$axios.post("").then((res)=>{
+					this.$qs.stringify(data)
+				}).catch((err)=>{
+					this.$emit("tip",{type:"error",text:"申请表提交发送错误"})
+				})
 				this.modal.visible = false
 			}
 		},

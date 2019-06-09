@@ -10,9 +10,7 @@
 				</a-list-item-meta>
 			</a-list-item>
 		</a-list>
-		<a-modal @cancel="handleCancel" :maskClosable="false" width="1000px" :footer="null" :visible="modal.visible">
-			<Address @submit="handleOk" @close="handleCancel" v-if="visible" :oldvalue="oldvalue"></Address>
-		</a-modal>
+		<Address @tip="tip" ref="addressModal"></Address>
 	</div>
 </template>
 
@@ -28,7 +26,13 @@
 				modal:{
 					visible: false,
 				},
-				oldvalue: null,
+				flags:[
+					'当前住址',
+					'收件地址',
+					'曾经住址',
+					'通信地址',
+					'办公地址',
+				]
 			}
 		},
 		components: {
@@ -43,7 +47,7 @@
 				var street = this.Streets(add.street)
 				var adds = [add.country, add.state, add.city, add.area, add.street]
 				var ad = {
-					title: this.flag(add.flag),
+					title: this.flags[add.flag],
 					description: '地址：' + country + state + city + area + street + '  邮政编码：' + add.zipCode +
 						'    手机号码：' +
 						add.telephone
@@ -60,8 +64,7 @@
 					zipCode: item.zipCode,
 					telephone: item.telephone,
 				}
-				this.oldvalue = object
-				this.visible = true
+				this.$refs.addressModal.showModal(object)
 			},
 			handleCancel() {
 				this.visible = false
@@ -104,29 +107,8 @@
 					}
 				}
 			},
-			// 0: 当前住址  1: 收件地址\\n2: 曾经住址  3: 通信地址\\n4: 办公地址
-			flag(id) {
-				var s = ''
-				switch (id) {
-					case 0:
-						s = '当前住址';
-						break;
-					case 1:
-						s = '收件地址';
-						break;
-					case 2:
-						s = '曾经住址';
-						break;
-					case 3:
-						s = '通信地址';
-						break;
-					case 4:
-						s = '办公地址';
-						break;
-				}
-				return s
-
-
+			tip(data){
+				this.$emit("tip",data)
 			},
 		},
 	}
