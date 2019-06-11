@@ -1,31 +1,43 @@
 <template>
 	<div>
-		<a-card title="用户主信息表">
-			<a-button slot="extra" @click="showModal" >修改</a-button>
-			<a-row>
-				<a-col :span="8">用户名:{{users.userName}}</a-col>
-				<a-col :span="8">身份证:{{users.identification}}</a-col>
-				<a-col :span="8">性别:{{users.userSex == '0' ? '女': (users.userSex == '1'? '男':'不详') }}</a-col>
-			</a-row>
-			<a-row>
-				<a-col :span="8">出生日期:{{users.userBirthday}}</a-col>
-				<a-col :span="8">注册时间:{{users.regist}}</a-col>
-				<a-col :span="8">学校:{{users.universityId}}</a-col>
-			</a-row>
-			<a-row>
-				<a-col :span="8">用户类型:{{userTypes[users.userType]}}</a-col>
-			</a-row>
-		</a-card>
-		<UserInfo @tip="tip" ref="UserInfo" ></UserInfo>
+		<a-spin v-if="users == null" />
+		<div v-else>
+			<a-card title="用户主信息表">
+				<a-button v-if="canUpdate" slot="extra" @click="showModal" >修改</a-button>
+				<a-row>
+					<a-col :span="8">用户名:{{users.userName}}</a-col>
+					<a-col :span="8">身份证:{{users.identification}}</a-col>
+					<a-col :span="8">性别:{{users.userSex == '0' ? '女': (users.userSex == '1'? '男':'不详') }}</a-col>
+				</a-row>
+				<a-row>
+					<a-col :span="8">出生日期:{{users.userBirthday}}</a-col>
+					<a-col :span="8">注册时间:{{users.regist}}</a-col>
+					<a-col :span="8">学校:{{users.universityId}}</a-col>
+				</a-row>
+				<a-row>
+					<a-col :span="8">用户类型:{{userTypes[users.userType]}}</a-col>
+				</a-row>
+			</a-card>
+			<UserInfo v-if="canUpdate" @tip="tip" ref="UserInfo" ></UserInfo>
+		</div>
 	</div>
 </template>
 
 <script>
 	import UserInfo from "@/pages/Baseinfo/person/applypage/User-info"
 	export default{
-		props: ['users'],
+		props: {
+			UserId:{
+				type: Number,
+				default:0
+			},
+			canUpdate: {
+				type: Boolean,
+			},
+		},
 		data() {
 			return {
+				users:null,
 				userTypes:[
 					'游客',
 					'学生',
@@ -40,26 +52,27 @@
 		components: {
 			UserInfo
 		},
+		mounted(){
+			this.fetch(this.UserId)
+		},
 		methods: {
+			fetch(id){
+				this.axios.get("" + id).then((res)=>{
+					if(res.data.code==0){
+						this.users = res.data.users
+					}else{
+						this.$emit("tip",{type:"error",text:"获取用户信息失败"})
+					}
+				}).catch((err)=>{
+					this.$emit("tip",{type:"warning",text:"发生未知错误"})
+				})
+			},
 			showModal(){
 				this.$refs.UserInfo.showModal(this.users)
 			},
 			tip(data){
 				this.$emit("tip",data)
 			},
-			handleCancel(){
-				this.modal.visible = false
-			},
-			handleOk(data){
-				this.$axios.post("").then((res)=>{
-					this.$qs.stringify(data)
-				}).catch((err)=>{
-					this.$emit("tip",{type:"error",text:"申请表提交发送错误"})
-				})
-				this.modal.visible = false
-			}
-		},
-		computed: {
 		},
 	}
 </script>

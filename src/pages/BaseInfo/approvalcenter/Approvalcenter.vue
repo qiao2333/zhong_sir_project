@@ -110,7 +110,7 @@
 		
 		methods: {
 			fetch(obj){
-				this.$axios.post("/json/userinfoApplyApproval/getByRoleName", obj).then((res) => {
+				this.axios.post("/json/userinfoApplyApproval/getByRoleName", obj).then((res) => {
 					console.log(res.data.apply_list)
 					this.datas = res.data.apply_list
 					this.userNames = res.data.Name

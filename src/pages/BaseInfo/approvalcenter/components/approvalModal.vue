@@ -150,7 +150,7 @@
 		},
 		methods: {
 			getMore(record) { //获取详细信息（新旧信息（如果旧信息没有就不显示）
-				this.$axios.get("/json/userinfoApplyApproval/getOldInfoAndNewInfoByApply/" + record.userinfoApplyId).then((
+				this.axios.get("/json/userinfoApplyApproval/getOldInfoAndNewInfoByApply/" + record.userinfoApplyId).then((
 					res) => {
 					if (res.data.code == 0){
 						this.moreData = res.data
@@ -173,7 +173,7 @@
 			},
 			approvalSubmit(ok) {
 				this.postMessage.flag = ok?1:0
-				this.$axios.put("/json/student/judgeApply", this.postMessage).then((res) => {
+				this.axios.put("/json/student/judgeApply", this.postMessage).then((res) => {
 					console.log(this.postMessage)
 					if (res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"审批提交完毕"})

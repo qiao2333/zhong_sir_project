@@ -25,7 +25,7 @@
 		},
 		methods: {
 			fetch(path) {
-				this.$axios.get("/json/picture/getImage?path=" + path, {
+				this.axios.get("/json/picture/getImage?path=" + path, {
 					responseType: "arraybuffer"
 				}).then(async (res) => {
 					var imagedata = res.data

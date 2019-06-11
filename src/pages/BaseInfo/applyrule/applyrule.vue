@@ -86,7 +86,7 @@
 		},
 		methods: {
 			fetch(data) {
-				this.$axios.post("/json/approvalMain/getApprovalMains",data).then((res)=>{
+				this.axios.post("/json/approvalMain/getApprovalMains",data).then((res)=>{
 					if (res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"搜索成功"})
 						this.data = res.data.approvalMains
@@ -113,7 +113,7 @@
 				this.search()
 			},
 			deleterule(id,index){
-				this.$axios.delete("/json/approvalMain/approvalMain/" + id).then((res)=>{
+				this.axios.delete("/json/approvalMain/approvalMain/" + id).then((res)=>{
 					if (res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"删除成功"})
 						this.reload()
@@ -126,7 +126,7 @@
 			},
 			updateRuler(data,id,index){
 				data.id = id
-				this.$axios.put("/json/approvalMain/approvalMain",data).then((res)=>{
+				this.axios.put("/json/approvalMain/approvalMain",data).then((res)=>{
 					if(res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"修改成功"})
 						this.reload()
@@ -148,7 +148,7 @@
 				this.fetch(obj)
 			},
 			addRuler(data){
-				this.$axios.post("/json/approvalMain/approvalMain",data).then((res)=>{
+				this.axios.post("/json/approvalMain/approvalMain",data).then((res)=>{
 					switch (res.data.code){
 						case 0:{
 							this.$emit("tip",{type:"success",text:"添加成功"})

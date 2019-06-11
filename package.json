@@ -16,6 +16,7 @@
     "jquery": "^3.3.1",
     "js-export-excel": "^1.1.2",
     "lodash": "^4.17.11",
+    "mockjs": "^1.0.1-beta3",
     "moment": "^2.24.0",
     "qs": "^6.7.0",
     "taco": "^1.6.0",

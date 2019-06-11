@@ -4,7 +4,7 @@
 		<span slot="title">申请添加学生页面</span>
 			<a-form v-if="modal.visible"  :form="myform" @submit="handleSubmit">
 				<a-form-item  label="学生账户信息表">
-					<a-upload v-decorator="['upload', { }]" name="logo">
+					<a-upload id="upload" name="logo">
 						<a-button>
 							<a-icon type="upload" /> Click to upload
 						</a-button>

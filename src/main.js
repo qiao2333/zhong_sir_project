@@ -15,6 +15,9 @@ import "./assets/styles/css/reset.css"
 import "./assets/styles/css/iconfont.css"
 import './assets/styles/css/content.css'
 
+//可以删除
+import mock from 'mockjs'
+
 Vue.use(Popconfirm)
 Vue.use(Spin)
 Vue.use(Cascader)
@@ -46,8 +49,9 @@ Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = '/api'
 Vue.prototype.$qs = qs;                //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
-Vue.prototype.$axios = axios;         //axios结合vue-axios使用
+Vue.prototype.axios = axios;         //axios结合vue-axios使用
 Vue.prototype.$VueAxios = VueAxios;
+Vue.prototype.$mock = mock; 
 Vue.use({axios,VueAxios});
 
 
@@ -55,9 +59,6 @@ Vue.use({axios,VueAxios});
 new Vue({
   el: '#app',
   router,
-  data:{
-	  userName:"caonima"
-  },
   components: { App },
   template: '<App/>',
   

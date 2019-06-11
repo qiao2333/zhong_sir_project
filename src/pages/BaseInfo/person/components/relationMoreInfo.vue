@@ -18,11 +18,11 @@
 			}
 		},
 		methods:{
-			async showModal(info){
+			showModal(info){
 				this.modal.visible = true
 			},
 			fetch(value){
-				this.$axios.get("" + value).then((res)=>{
+				this.axios.get("" + value).then((res)=>{
 					if (res.data.code == 0){
 						
 					}else{

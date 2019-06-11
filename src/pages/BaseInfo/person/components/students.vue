@@ -1,54 +1,85 @@
 <template>
 	<div>
-<!-- 		用户姓名，身份证，性别，出生日，账号（user表中名为name的字段），密码，学校，用户类型，照片，地址，电子通信方式
-学号，入学日期，当前院系，当前年级,，当前主修专业，当前班级专业，政治面貌，当前宿舍，当前地址，当前通讯地址。 -->
-		<a-card title="学生主要信息">
-			<a-button @click="showModal" slot="extra">修改</a-button>
-			<a-row>
-				<a-col :span="8">学号:{{students.stuNo}}</a-col>
-				<a-col :span="8">入学日期:{{students.beginLearnDate}}</a-col>
-				<a-col :span="8">当前年级:{{students.grade}}</a-col>
-			</a-row>
-			<a-row>
-				<a-col :span="8">当前班级:{{students.classId}}</a-col>
-				<a-col :span="8">当前主修专业:{{students.majorId}}</a-col>
-				<a-col :span="8">当前班级专业:等待接口</a-col>
-			</a-row>
-			<a-row>
-				<a-col :span="8">宿舍:{{students.liveRoom}}</a-col>
-				<a-col :span="8">当前院校:等待接口</a-col>
-				<a-col :span="8">政治面貌:{{students.politicalId}}</a-col>
-			</a-row>
-		</a-card>
-		<StudentModal ref="studentModal" />
+		<a-spin v-if="studentInfo==null" />
+		<div v-else>
+			<a-card title="学生主要信息">
+				<a-button v-if="canUpdate" :loading="updateLoading" @click="showModal" slot="extra">修改</a-button>
+				<a-row>
+					<a-col :span="8">学号:{{studentInfo.student_no}}</a-col>
+					<a-col :span="8">入学日期:{{studentInfo.begin_learn}}</a-col>
+					<a-col :span="8">当前年级:{{studentInfo.grade}}</a-col>
+				</a-row>
+				<a-row>
+					<a-col :span="8">当前班级:{{studentInfo.class}}</a-col>
+					<a-col :span="8">当前主修专业:{{studentInfo.specialty}}</a-col>
+					<a-col :span="8">政治面貌:{{studentInfo.political}}</a-col>
+				</a-row>
+				<a-row>
+					<a-col :span="8">宿舍:{{studentInfo.dormitory}}</a-col>
+				</a-row>
+			</a-card>
+			<StudentModal v-if="studentmodalreload&&canUpdate" @tip="tip" ref="studentModal" />
+		</div>
+		
 	</div>
 </template>
 
 <script>
 	import StudentModal from '../applypage/student'
 	export default{
-		props: ['students'],
 		data() {
 			return {
+				updateLoading:false,
+				studentmodalreload:true,
+				studentInfo:null,
+				students:null,
 			}
+		},
+		props: {
+			UserId:{
+				type: Number,
+				default:0
+			},
+			canUpdate: {
+				type: Boolean,
+			},
 		},
 		components: {
 			StudentModal
 		},
+		mounted(){
+			this.fetch(this.UserId)
+		},
 		methods: {
-			showModal(){
-				this.$refs.studentModal.showModal(this.students)
+			tip(data){
+				this.$emit("tip",data)
 			},
-			handleCancel(){
-				this.modal.visible = false
-			},
-			handleOk(data){
-				this.$axios.post("").then((res)=>{
-					this.$qs.stringify(data)
+			fetch(id){
+				this.axios.get("/json/student/getStudentInformation/" + id).then((res)=>{
+					if (res.data.code == 0){
+						console.log(res.data)
+						this.studentInfo = res.data.studentInfo
+						this.student = res.data.student
+					}else{
+						this.$emit("tip",{type:"error",text:"获取学生主信息失败"})
+					}
 				}).catch((err)=>{
-					this.$emit("tip",{type:"error",text:"申请表提交发送错误"})
+					this.$emit("tip",{type:"warning",text:"发生未知错误"})
 				})
-				this.modal.visible = false
+				
+			},
+			showModal(){
+				this.studentmodalreload = false
+				setTimeout(()=>{
+					this.studentmodalreload = true
+				},500)
+				this.updateLoading = true
+				setTimeout(()=>{
+					this.updateLoading = false
+					this.$refs.studentModal.showModal(this.student,this.studentInfo)
+				},500)
+
+				
 			},
 		},
 	}

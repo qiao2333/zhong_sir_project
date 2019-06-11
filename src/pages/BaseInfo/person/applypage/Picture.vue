@@ -43,7 +43,7 @@
 				this.imageUrl = null
 			},
 			submit(){
-				this.$axios.post("").then((res)=>{
+				this.axios.post("").then((res)=>{
 					if(res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"修改申请提交成功"})
 					}else{

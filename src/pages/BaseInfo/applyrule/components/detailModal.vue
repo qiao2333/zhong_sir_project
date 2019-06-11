@@ -83,7 +83,7 @@
 				this.modal.visible = true
 			},
 			fetch(id) {
-				this.$axios.get("/json/approvalStepIncharge/approvalStepIncharge/list/" + id).then((res) => {
+				this.axios.get("/json/approvalStepIncharge/approvalStepIncharge/list/" + id).then((res) => {
 					if (res.data.code == 0) {
 						this.$emit("tip", {
 							type: "success",
@@ -116,7 +116,7 @@
 			},
 			addDetail(data,roleId){
 				data.approvalMainId = this.id
-				this.$axios.post("/json/approvalStepIncharge/approvalStepIncharge",data).then((res)=>{
+				this.axios.post("/json/approvalStepIncharge/approvalStepIncharge",data).then((res)=>{
 					if (res.data.code == 0) {
 						this.$emit("tip", {
 							type: "success",
@@ -139,7 +139,7 @@
 			},
 			updateDetail(data,id,index){
 				data.id = id
-				this.$axios.put("/json/approvalStepIncharge/approvalStepIncharge",data).then((res)=>{
+				this.axios.put("/json/approvalStepIncharge/approvalStepIncharge",data).then((res)=>{
 					if (res.data.code == 0) {
 						this.$emit("tip", {
 							type: "success",

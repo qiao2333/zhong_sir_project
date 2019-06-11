@@ -12,6 +12,17 @@ import Chouti from '@/pages/BaseInfo/chouti/Chouti'
 import Approvalcenter from '@/pages/BaseInfo/approvalcenter/Approvalcenter'
 import BaseInfo from '@/pages/BaseInfo/BaseInfo'
 import ApplyRule from '@/pages/BaseInfo/applyrule/applyrule'
+import OnlineLeave from '@/pages/onlineLeave/OnlineLeave'
+import RoleManage from '@/pages/permissionSetting/RoleManage'
+import UserPermission from '@/pages/permissionSetting/UserPermission'
+import ManagerSetting from '@/pages/admin/Administrator'
+import TuneAplay from '@/pages/lessonAplay/TuneAplay'
+import AddOrStopAplay from '@/pages/lessonAplay/AddOrStopAplay'
+import LeaveRecord from '@/pages/leaveRecord/LeaveRecord'
+import LeaveRecord2 from '@/pages/leaveRecord/LeaveRecord2'
+import LeaveRecord3 from '@/pages/leaveRecord/LeaveRecord3'
+import StuAttendanceCheck from '@/pages/stuAttendanceCheck/StuAttendanceCheck'
+import TeaAttendanceCheck from '@/pages/teaAttendanceCheck/TeaAttendanceCheck'
 
 Vue.use(Router)
 
@@ -31,7 +42,7 @@ export default new Router({
 					component: BaseInfo,
 					children: [{
 							path: 'person',
-							name: 'Person',
+							name: 'person',
 							component: Person
 						},
 						{
@@ -46,7 +57,7 @@ export default new Router({
 						},
 						{
 							path: 'applyresult',
-							name: '申请结果',
+							name: 'applyresult',
 							component: Applyresult
 						},
 						{
@@ -61,7 +72,7 @@ export default new Router({
 						},
 						{
 							path: 'applyrule',
-							name: '审批规定管理页面',
+							name: 'applyrule',
 							component: ApplyRule
 						}
 					]
@@ -76,9 +87,67 @@ export default new Router({
 					name: 'StudentLeave',
 					component: StudentLeave
 				},
-
+				{
+					path: 'announcement',
+					name: 'announcement',
+					component: Announcement
+				},
+				{
+					path: 'onlineLeave',
+					name: 'onlineLeave',
+					component: OnlineLeave
+				},
+				{
+					path: 'roleManage',
+					name: 'roleManage',
+					component: RoleManage
+				},
+				{
+					path: 'userPermission',
+					name: 'userPermission',
+					component: UserPermission
+				},
+				{
+					path: 'managerSetting',
+					name: 'managerSetting',
+					component: ManagerSetting
+				},
+				{
+					path: 'tuneAplay',
+					name: 'tuneAplay',
+					component: TuneAplay
+				},
+				{
+					path: 'addOrStopAplay',
+					name: 'addOrStopAplay',
+					component: AddOrStopAplay
+				},
+				{
+					path: 'leaveRecord',
+					name: 'leaveRecord',
+					component: LeaveRecord
+				},
+				{
+					path: 'leaveRecord2',
+					name: 'leaveRecord2',
+					component: LeaveRecord2
+				},
+				{
+					path: 'leaveRecord3',
+					name: 'leaveRecord3',
+					component: LeaveRecord3
+				},
+				{
+					path: 'stuAttendanceCheck',
+					name: 'stuAttendanceCheck',
+					component: StuAttendanceCheck
+				},
+				{
+					path: 'teaAttendanceCheck',
+					name: 'teaAttendanceCheck',
+					component: TeaAttendanceCheck,
+				},
 			]
 		}
-
 	]
 })

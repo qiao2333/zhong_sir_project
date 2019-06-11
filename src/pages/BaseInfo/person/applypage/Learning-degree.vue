@@ -110,7 +110,7 @@
 				this.modal.visible = false
 			},
 			getCountry(){
-				// this.$axios.get("/json/addrCountry/addrCountrys/listAll").then((res)=>{
+				// this.axios.get("/json/addrCountry/addrCountrys/listAll").then((res)=>{
 				// 	if(res.data.code==0){
 				// 		const data = res.data.addrCountrys
 				// 		var options = new Array()
@@ -131,25 +131,20 @@
 				// })
 			},
 			getCity(value){
-				var arr = new Array()
-				for (var i = 0; i < 1000; i++){
-					arr.push({value:i,label:'河西' + i})
-				}
-				this.forms.cityOptions = arr
-				// this.$axios.get("" + value).then((res)=>{
-				// 	if (res.data.code == 0){
-				// 		this.forms.cityOptions = res.data.xx
-				// 	}else{
-				// 		this.$emit("tip",{type:"error",text:"信息获取失败"})
-				// 		this.handleCancel()
-				// 	}
-				// }).catch((err)=>{
-				// 	this.$emit("tip",{type:"warning",text:"发生未知错误"})
-				// 	this.handleCancel()
-				// })
+				this.axios.get("" + value).then((res)=>{
+					if (res.data.code == 0){
+						this.forms.cityOptions = res.data.xx
+					}else{
+						this.$emit("tip",{type:"error",text:"信息获取失败"})
+						this.handleCancel()
+					}
+				}).catch((err)=>{
+					this.$emit("tip",{type:"warning",text:"发生未知错误"})
+					this.handleCancel()
+				})
 			},
 			getSchool(value){
-				this.$axios.get("" + value).then((res)=>{
+				this.axios.get("" + value).then((res)=>{
 					
 				}).catch((err)=>{
 					

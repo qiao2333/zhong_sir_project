@@ -70,7 +70,7 @@
 		},
 		methods: {
 			fetch() {
-				this.$axios.post('/Applyresult/apply').then((res) => {
+				this.axios.post('/Applyresult/apply').then((res) => {
 					const data = res.data.data
 					//					console.log(data)
 					this.rows = data.rows

@@ -4,7 +4,7 @@
 			<span slot="title">申请添加学生亲属页面</span>
 			<a-form v-if="modal.visible" @submit="handleSubmit"   :form="myform">
 				<a-form-item label="选择游客用户" >
-					<a-select showSearch placeholder="搜索游客用户，根据姓名和身份证" :showArrow="false" :notFoundContent="null" @search="handleSearch" @change="handleChange" 
+					<a-select showSearch placeholder="搜索游客用户，根据姓名或身份证" :showArrow="false" :notFoundContent="null" @search="handleSearch" @change="handleChange" 
 					v-decorator="['userName',{rules: [{ required: true, message: '入学日期不能为空' }]}]" :options="parentOptions">
 					</a-select>
 				</a-form-item>
