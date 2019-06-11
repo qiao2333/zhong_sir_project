@@ -18,6 +18,8 @@ import './assets/styles/css/content.css'
 //可以删除
 import mock from 'mockjs'
 
+
+Vue.use(Checkbox)
 Vue.use(Popconfirm)
 Vue.use(Spin)
 Vue.use(Cascader)

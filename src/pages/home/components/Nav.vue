@@ -60,9 +60,6 @@
 							}, {
 								key: 'approvalcenter',
 								title: '审批中心',
-							},{
-								key: 'baseinfo/studentInfo',
-								title: '学生主要信息',
 							},
 							{
 								key: 'applyrule',

@@ -58,9 +58,9 @@
 			this.fetch(this.UserId)
 			
 		},
-		methods: {
+		methods: {	
 			fetch(id){
-				this.axios.get("" + id).then((res)=>{
+				this.axios.get("/json/address/getOwnAddress/" + -1).then((res)=>{
 					for (var add of this.addresses) {
 						var country = this.Countries(add.country)
 						var state = this.States(add.state)

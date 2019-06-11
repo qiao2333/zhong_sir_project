@@ -47,12 +47,12 @@ export default new Router({
 						},
 						{
 							path: 'chouti',
-							name: 'Chouti',
+							name: 'chouti',
 							component: Chouti
 						},
 						{
 							path: 'test',
-							name: 'Test',
+							name: 'test',
 							component: Test
 						},
 						{
@@ -62,12 +62,12 @@ export default new Router({
 						},
 						{
 							path: 'approvalcenter',
-							name: 'Approvalcenter',
+							name: 'approvalcenter',
 							component: Approvalcenter
 						},
 						{
 							path: 'classmessage',
-							name: 'Classmessage',
+							name: 'classmessage',
 							component: Classmessage
 						},
 						{
