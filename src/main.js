@@ -42,7 +42,7 @@ Vue.config.productionTip = false;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = '/api'
 Vue.prototype.$qs = qs;                //qs.stringify()将对象 序列化成URL的形式，以&进行拼接
-Vue.prototype.$axios = axios;         //axios结合vue-axios使用
+Vue.prototype.axios = axios;         //axios结合vue-axios使用
 Vue.prototype.$VueAxios = VueAxios;
 Vue.use({axios,VueAxios});
 

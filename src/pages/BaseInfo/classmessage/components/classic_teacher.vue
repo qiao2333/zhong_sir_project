@@ -2,7 +2,7 @@
 	<div class="content" style="background-color: white;">
 		<a-input-search @search="onSearch" placeholder="输入学号姓名搜索" style="width: 200px" />
 		<a-table :columns="columns" :dataSource="datas1" :loading="loading" @change="handleTableChange()" bordered>
-			<a slot="class_no" slot-scope="text" @click="toStudent(text)" >{{text}}</a>
+			<a slot="code" slot-scope="text" @click="toStudent(text)" >{{text}}</a>
 			<span slot="customTitle">班级编号</span>
 		</a-table>
 	</div>
@@ -10,26 +10,26 @@
 </template>
 <script>
 	const columns = [{
-			dataIndex: 'class_no',
-			key: 'class_no',
+			dataIndex: 'code',
+			key: 'code',
 			slots: {
 				title: 'customTitle'
 			},
 			scopedSlots: {
-				customRender: 'class_no'
+				customRender: 'code'
 			},
 		}, {
 			title: '班级名称',
-			dataIndex: 'class_name',
+			dataIndex: 'name',
 		}, {
 			title: '班级人数',
-			dataIndex: 'class_num',
+			dataIndex: 'number',
 		}, {
 			title: '班主任',
-			dataIndex: 'headmaster',
+			dataIndex: 'headteacher',
 		}, {
 			title: '班长',
-			dataIndex: 'class_monitor',
+			dataIndex: 'moniter',
 		}
 	];
 	export default {
@@ -48,10 +48,9 @@
 		},
 		methods: {
 			fetch() {
-				this.$axios.post('/classmessage/classic_teacher').then((res) => {
-					const data = res.data.data
-					this.rows = data.rows
-					this.datas = data.datas
+				this.$axios.get('/json/class/employee/class/allClassmates/1949').then((res) => {
+					this.datas=res.datas.classBean
+					console.log(res.datas.classBean)
 					this.hasload = true
 					this.loading = false
 				}).catch((err) => {
@@ -65,14 +64,14 @@
 				var patt = /^\d{1,}$/;
 				if(patt.test(value)) {
 					this.datas1 = this.datas.filter(item => {
-						if(item.class_no.toString().includes(value)) {
+						if(item.code.toString().includes(value)) {
 							return item
 						}
 
 					})
 				} else {
 					this.datas1 = this.datas.filter(item => {
-						if(item.class_name.includes(value)) {
+						if(item.name.includes(value)) {
 							return item
 						}
 
@@ -80,7 +79,7 @@
 				}
 			},
 			toStudent(text){
-				this.$router.push({path:'/home/classic_teacher_student',query:{classNo:text}})
+				this.$router.push({path:'/home/BaseeInfo/aatest',query:{code:text}})
 			}
 		},
 	}
