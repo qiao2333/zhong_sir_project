@@ -1,179 +1,234 @@
-<!--辅导员查看班级学生信息，与老师界面一样
-院级学生信息-->
+<!--院长查看院级信息-->
 <template>
 	<div class="content" style="background-color: white;">
-		<a-input-search placeholder="输入学号或姓名搜索" style="width: 200px" @search="onSearch" />
-		<a-button type="primary" @click="showDrawer">
-			<a-icon type="plus" />高级筛选
-		</a-button>
-		<a-drawer title="高级筛选" :width="720" @close="onClose" :visible="visible" :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}">
-			<div style="width: auto; height: 360px;">
-				<a-form :form="form" layout="vertical" hideRequiredMark>
-					<a-row :gutter="16">
-						<a-col :span="12">
-							<a-form-item label="学院">
-								<a-select placeholder="输入你要搜索的学院名称">
-									<a-select-option value="aa">肇庆学院</a-select-option>
-									<a-select-option value="bb">清华大学</a-select-option>
-									<a-select-option value="xiao">北京大学</a-select-option>
-									<a-select-option value="mao">中山大学</a-select-option>
-								</a-select>
-							</a-form-item>
-						</a-col>
+		<a-spin v-if="hasload == false" />
+		<div v-else>
+			<a-input-search @search="onSearch()" placeholder="输入学号或姓名搜索" style="width: 200px" />
+			<a-button type="primary" @click="showDrawer">高级筛选</a-button>
+			<a-table rowKey="studentNo" :columns="columns" :dataSource="datas" :loading="loading" @change="handleTableChange()" bordered>
+				<a slot="studentNo" slot-scope="text1" @click()="toStudentInfo(text1)">{{ text1 }}</a>
+				<span slot="customTitle">学号</span>
+				<span slot="action" slot-scope="text, record"><a-button size="small">学业成绩</a-button></span>
+				<span slot="action1" slot-scope="text, record"><a-button size="small">奖惩情况</a-button></span>
+			</a-table>
+		</div>
+		<div>
+			<a-drawer title="高级筛选" @close="onClose" :visible="drawerOpen" width="560" :mask-closable="false">
+				<a-form>
+					<a-row>
 						<a-col :span="12">
 							<a-form-item label="年级">
-								<a-select placeholder="输入你要搜索的年级">
-									<a-select-option value="private">2018级</a-select-option>
-									<a-select-option value="public">2017级</a-select-option>
-									<a-select-option value="private">2016级</a-select-option>
-									<a-select-option value="public">2015级</a-select-option>
+								<a-select>
+									<a-select-option value="grade">2016</a-select-option>
+									<a-select-option value="grade">2016</a-select-option>
 								</a-select>
 							</a-form-item>
 						</a-col>
 					</a-row>
-					<a-row :gutter="16">
+					<a-row>
 						<a-col :span="12">
 							<a-form-item label="专业">
-								<a-select placeholder="输入你要搜索的专业名称">
-									<a-select-option value="aa">软件工程</a-select-option>
-									<a-select-option value="bb">物联网工程</a-select-option>
-									<a-select-option value="xiao">网络工程</a-select-option>
-									<a-select-option value="mao">计算机科技</a-select-option>
+								<a-select>
+									<a-select-option value="specialty">2016</a-select-option>
+									<a-select-option value="specialty">2016</a-select-option>
 								</a-select>
 							</a-form-item>
 						</a-col>
+					</a-row>
+					<a-row>
 						<a-col :span="12">
 							<a-form-item label="班级">
-								<a-select placeholder="输入你要搜索的专业">
-									<a-select-option value="private">软件工程一班</a-select-option>
-									<a-select-option value="public">软件工程二班</a-select-option>
-									<a-select-option value="public">软件工程三班</a-select-option>
+								<a-select>
+									<a-select-option value="className">2016</a-select-option>
+									<a-select-option value="className">2016</a-select-option>
 								</a-select>
 							</a-form-item>
 						</a-col>
 					</a-row>
-					<a-row :gutter="16">
+					<a-row>
+						<a-col :span="12">
+							<a-form-item label="岗位">
+								<a-select>
+									<a-select-option value="position">学生</a-select-option>
+									<a-select-option value="position">班长</a-select-option>
+								</a-select>
+							</a-form-item>
+						</a-col>
+					</a-row>
+					<a-row>
 						<a-col :span="12">
 							<a-form-item label="学号">
-								<a-input placeholder="输入你要搜索的学生学号" />
+								<a-select>
+									<a-select-option value="studentNo">2016</a-select-option>
+									<a-select-option value="studentNo">2016</a-select-option>
+								</a-select>
 							</a-form-item>
 						</a-col>
-
+					</a-row>
+					<a-row>
 						<a-col :span="12">
 							<a-form-item label="姓名">
-								<a-input placeholder="输入你要搜索的学生姓名" />
+								<a-select>
+									<a-select-option value="studentName">2016</a-select-option>
+									<a-select-option value="studentName">2016</a-select-option>
+								</a-select>
 							</a-form-item>
 						</a-col>
-
+					</a-row>
+					<a-row>
+						<a-col :span="12">
+							<a-form-item label="性别">
+								<a-select>
+									<a-select-option value="user_sex">男</a-select-option>
+									<a-select-option value="user_sex">女</a-select-option>
+									<a-select-option value="user_sex">不祥</a-select-option>
+								</a-select>
+							</a-form-item>
+						</a-col>
+					</a-row>
+					<a-row>
+						<a-col :span="12">
+							<a-form-item label="政治面貌">
+								<a-select>
+									<a-select-option value="political">共青团员</a-select-option>
+									<a-select-option value="political">党员</a-select-option>
+									<a-select-option value="political">无</a-select-option>
+								</a-select>
+							</a-form-item>
+						</a-col>
 					</a-row>
 				</a-form>
-			</div>
-
-			<div align="right">
-				<a-button :style="{marginRight: '10px'}"  @click="onClose" size="large">
-					取消
-				</a-button>
-				<a-button icon="search" @click="onClose" type="primary" size="large">搜索</a-button>
-			</div>
-		</a-drawer>
-		<a-table :columns="columns" :dataSource="datas1" :loading="loading" @change="handleTableChange()" bordered>
-		</a-table>
+				<a-button :style="{ marginRight: '8px' }" @click="onClose">取消</a-button>
+				<a-button @click="onClose" type="primary">查找</a-button>
+			</a-drawer>
+		</div>
 	</div>
 </template>
 <script>
-	const columns = [{
-			title: '学院',
-			dataIndex: 'college_id',
+const columns = [
+	{
+		slots: {
+			title: 'customTitle'
 		},
-		{
-			title: '年级',
-			dataIndex: 'grade',
+		scopedSlots: {
+			customRender: 'studentNo'
 		},
-		{
-			title: '专业',
-			dataIndex: 'major_id',
-		},
-		{
-			title: '班级',
-			dataIndex: 'class_id',
-		},
-		{
-			title: '学号',
-			dataIndex: 'stu_no',
-			scopedSlots: {
-				customRender: 'stu_no'
-			},
-		}, {
-			title: '姓名',
-			dataIndex: 'user_name',
-		}, {
-			title: '性别',
-			dataIndex: 'stu_sex',
-		}, {
-			title: '移动电话号码',
-			dataIndex: 'stu_phone',
-		}, {
-			title: '当前住址',
-			dataIndex: 'home_address',
+		dataIndex: 'studentNo',
+		key: 'studentNo'
+	},
+	{
+		title: '姓名',
+		dataIndex: 'studentName',
+		key: 'studentName'
+	},
+	{
+		title: '入学日期',
+		dataIndex: 'beginLearnDate',
+		key: 'beginLearnDate'
+	},
+	{
+		title: '主修专业',
+		dataIndex: 'specialty',
+		key: 'specialty'
+	},
+	{
+		title: '所在年级',
+		dataIndex: 'grade',
+		key: 'grade'
+	},
+	{
+		title: '性别',
+		dataIndex: 'sex',
+		key: 'sex'
+	},
+	{
+		title: '联系电话',
+		dataIndex: 'phone',
+		key: 'phone'
+	},
+	{
+		title: '政治面貌',
+		dataIndex: 'political',
+		key: 'political'
+	},
+	{
+		title: '岗位',
+		dataIndex: 'position',
+		key: 'position'
+	},
+	{
+		title: '学业情况',
+		scopedSlots: {
+			customRender: 'action'
 		}
-	];
-	export default {
-		data() {
-			return {
-				form: this.$form.createForm(this),
-				visible: false,
-				rows: 0,
-				datas: [],
-				datas1: [],
-				hasload: false,
-				columns,
-				loading: true
-			}
-		},
-		mounted() {
-			this.fetch()
-		},
-		methods: {
-
-			showDrawer() {
-				this.visible = true
-			},
-			onClose() {
-				this.visible = false
-			},
-			fetch() {
-				this.$axios.post('/classmessage/classic_college').then((res) => {
-					const data = res.data.data
-					this.rows = data.rows
-					this.datas = data.datas
-					this.hasload = true
-					this.loading = false
-				}).catch((err) => {
-					console.log(err)
-				})
-			},
-			handleTableChange() {
-				this.fetch()
-			},
-			onSearch(value, event) {
-				var patt = /^\d{1,}$/;
-				if(patt.test(value)) {
-					this.datas1 = this.datas.filter(item => {
-						if(item.stu_no.toString().includes(value)) {
-							return item
-						}
-
-					})
-				} else {
-					this.datas1 = this.datas.filter(item => {
-						if(item.user_name.includes(value)) {
-							return item
-						}
-
-					})
-				}
-
-			}
-		},
+	},
+	{
+		title: '奖惩情况',
+		scopedSlots: {
+			customRender: 'action1'
+		}
 	}
+];
+export default {
+	data() {
+		return {
+			rows: 0,
+			datas: [],
+			datas1: [],
+			columns,
+			hasload: false,
+			loading: true,
+			visible: false,
+			drawerOpen: false
+		};
+	},
+	mounted() {
+		// console.log(this.$route.query.code);
+		this.fetch();
+	},
+	methods: {
+		fetch() {
+			this.$axios
+				.get('/json/employee/student/allClassmates/2106')
+				.then(res => {
+					console.log(res.data.classmateBeans);
+					this.datas = res.data.classmateBeans;
+					this.loading = false;
+					this.hasload = true;
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		},
+		handleTableChange() {
+			this.fetch();
+		},
+		showDrawer() {
+			this.drawerOpen = true;
+		},
+		onClose() {
+			this.visible = false;
+		},
+		toStudentInfo(text1) {
+			this.$router.push({ path: '/home/baseinfo/studentInfo', query: { studentNo: text1 } });
+		},
+		onSearch(value, event) {
+			var patt = /^\d{1,}$/;
+			if (patt.test(value)) {
+				this.datas1 = this.datas.filter(item => {
+					if (item.studentNo.toString().includes(value)) {
+						return item;
+					}
+				});
+			} else {
+				this.datas1 = this.datas.filter(item => {
+					if (item.studentName.includes(value)) {
+						return item;
+					}
+				});
+			}
+		}
+	}
+};
 </script>
+<style></style>

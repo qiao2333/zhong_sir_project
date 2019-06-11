@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<Classic_teacher></Classic_teacher>
+		<Classic_college></Classic_college>
 	</div>
 </template>
 
