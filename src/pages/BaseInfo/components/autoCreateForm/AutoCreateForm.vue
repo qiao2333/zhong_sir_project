@@ -18,6 +18,12 @@
 				</a-radio-group>
 			</a-form-item>
 		</div>
+		<div v-else-if="Autoform.type==='date'">
+			<a-form-item :label="Autoform.label">
+				<a-date-picker :showTime="Autoform.showTime" v-decorator="[ Autoform.name,Autoform.rules]"
+				 :format="Autoform.format" />
+			</a-form-item>
+		</div>
 		<div v-else-if="Autoform.type==='checkbox'">
 			<a-form-item :label="Autoform.label" >
 				<a-checkbox-group  v-decorator="[Autoform.name,Autoform.rules]" style="width: 100%;">

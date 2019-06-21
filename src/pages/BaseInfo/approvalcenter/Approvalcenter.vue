@@ -88,6 +88,7 @@
 	];
 	import ApprovalModal from './components/approvalModal'
 	export default {
+		name:'Approvalcenter',
 		components: {
 			ApprovalModal
 		},

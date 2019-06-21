@@ -87,7 +87,6 @@
 				this.drawerOpen = false
 			},
 			handleSubmit(e) {
-				console.log("高级筛选中")
 				e.preventDefault();
 				this.myform.validateFields((err, values) => {
 					if (!err) {
@@ -95,6 +94,7 @@
 						}
 						obj = this.$lodash.omitBy(obj, this.$lodash.isEmpty)
 						console.log(obj)
+						this.$emit("heightSearch",obj)
 					}
 				});
 			}

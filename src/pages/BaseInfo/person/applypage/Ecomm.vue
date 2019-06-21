@@ -2,6 +2,8 @@
 	<div>
 		<a-modal @cancel="handleCancel" :maskClosable="false" width="1000px" :footer="null" :visible="modal.visible">
 		<span slot="title">申请修改电子通信方式页面</span>
+			<h1>修改{{flags[flag]}}:</h1>
+			<hr />
 			<a-form v-if="modal.visible" @submit="handleSubmit" :form="myform">
 				<template>
 					<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
@@ -25,54 +27,21 @@
 				// 联系方式类型
 				// 申请理由
 				myform: this.$form.createForm(this),
+				flag:null,
+				flags:[
+					"QQ号",
+					"微信号",
+					"电子邮箱",
+					"移动电话号码",
+					"办公室号码",
+					"家庭电话",
+				],
 				modal:{
 					visible:false
 				},
-				forms: [{
-						key: 1,
-						label: "联系方式类型",
-						type: "select",
-						name: "flag",
-						rules: {
-							rules: [{
-								required: true,
-
-							}],
-						},
-						options: [{
-								key: 1,
-								name: "QQ号",
-								value: 0
-							},
-							{
-								key: 2,
-								name: "微信号",
-								value: 1
-							},
-							{
-								key: 3,
-								name: "电子邮箱",
-								value: 2
-							},
-							{
-								key: 4,
-								name: "移动电话号码",
-								value: 3
-							},
-							{
-								key: 5,
-								name: "办公室号码",
-								value: 4
-							},
-							{
-								key: 6,
-								name: "家庭电话",
-								value: 5
-							},
-						]
-					},
+				forms: [
 					{
-						key: 2,
+						key: 1,
 						label: "具体联系方式",
 						type: "textarea",
 						name: "content",
@@ -87,7 +56,7 @@
 						},
 					},
 					{
-						key: 3,
+						key: 2,
 						label: "申请理由",
 						type: "textarea",
 						name: "reason",
@@ -108,8 +77,8 @@
 		},
 		methods: {
 			showModal(info){
-				this.forms[0].rules.initialValue = info.flag
-				this.forms[1].rules.initialValue = info.content
+				this.flag = info.flag;
+				this.forms[0].rules.initialValue = info.content
 				this.modal.visible = true
 			},
 			handleCancel(){

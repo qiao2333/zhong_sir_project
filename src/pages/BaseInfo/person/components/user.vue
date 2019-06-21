@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<a-spin v-if="users == null" />
+		<div v-if="users == null">
+			用户主信息获取失败
+		</div>
 		<div v-else>
 			<a-card title="用户主信息表">
 				<a-button v-if="canUpdate" slot="extra" @click="showModal" >修改</a-button>
@@ -57,9 +59,10 @@
 		},
 		methods: {
 			fetch(id){
-				this.axios.get("" + id).then((res)=>{
+				this.axios.get("/json/user/getUserInformation/" + id).then((res)=>{
 					if(res.data.code==0){
-						this.users = res.data.users
+						console.log(res.data)
+						this.users = res.data.user
 					}else{
 						this.$emit("tip",{type:"error",text:"获取用户信息失败"})
 					}

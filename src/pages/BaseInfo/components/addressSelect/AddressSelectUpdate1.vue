@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<a-spin v-if="hasOk==false" size="large" />
-		<a-form-item v-else label="地址选择">
-			<a-cascader v-decorator="['id',{initialValue:this.addressvalue},]" style="width: 500px;" :options="options" @change="onChange"
-			 :loadData="loadData" placeholder="Please select" changeOnSelect />
+		<a-spin :spinning="hasOk" size="large" >
+		<a-form-item  label="地址选择">
+			<a-cascader  :defaultValue="addressvalue==null?[]:addressvalue" style="width: 500px;" :options="options" @change="onChange" :loadData="loadData" placeholder="Please select" changeOnSelect />
 		</a-form-item>
+		</a-spin>
 	</div>
 </template>
 
@@ -13,17 +13,17 @@
 		props: {
 			addressvalue: {
 				type: Array,
-				default: null
 			},
 		},
 		data() {
 			return {
 				options: [],
-				hasOk: false,
+				hasOk: true,
 			}
 		},
 		methods: {
 			onChange(value) {
+				console.log(value)
 				this.$emit("change", value)
 			},
 			async loadData(selectedOptions) {
@@ -44,36 +44,36 @@
 						data = await this.getStreet(targetOption.value);
 						break;
 				}
-				targetOption.children = data
-				console.log(this.options)
-				setTimeout(()=>{
+				setTimeout(function() {
 					targetOption.loading = false
-					this.options = [...this.options]
-				},1000)
-				
+					targetOption.children = data
+				}, 1000)
+
 			},
 			async getCountry() {
-				this.axios.get('/json/addrCountry/addrCountrys/listAll').then((res) => {
-					var datas = new Array()
+				var datas = new Array()
+				await this.axios.get('/json/addrCountry/addrCountrys/listAll').then((res) => {
 					const countrys = res.data.addrCountrys
 					for (var i = 0; i < countrys.length; i++) {
-						var data = new Object()
-						data.value = countrys[i].code
-						data.label = countrys[i].countryZh
-						data.isLeaf = false
-						datas.push(data)
+						
+						if(countrys[i].code!=null){
+							var data = new Object()
+							data.value = countrys[i].code
+							data.label = countrys[i].countryZh
+							data.isLeaf = false
+							datas.push(data)
+						}
+						
 					}
-					this.options = datas
-					this.hasOk = true
-					
 				}).catch((err) => {
 					console.log(err)
 				})
+				return datas
 			},
 			async getState(code) {
 				var datas = new Array()
 				var url = "/json/address/address/addrState/" + code
-				this.axios.get(url).then((res) => {
+				await this.axios.get(url).then((res) => {
 					var states = res.data.addrStates
 					for (var i = 0; i < states.length; i++) {
 						var data = new Object()
@@ -90,7 +90,7 @@
 			async getStreet(code) {
 				var datas = new Array()
 				var url = "/json/address/address/addrStreet/" + code
-				this.axios.get(url).then((res) => {
+				await this.axios.get(url).then((res) => {
 					var streets = res.data.addrStreets
 					for (var i = 0; i < streets.length; i++) {
 						var data = new Object()
@@ -106,7 +106,7 @@
 			async getArea(code) {
 				var datas = new Array()
 				var url = "/json/address/address/addrArea/" + code
-				this.axios.get(url).then((res) => {
+				await this.axios.get(url).then((res) => {
 					var areas = res.data.addrAreas
 					for (var i = 0; i < areas.length; i++) {
 						var data = new Object()
@@ -123,7 +123,7 @@
 			async getCity(code) {
 				var datas = new Array()
 				var url = "/json/address/address/addrCity/" + code
-				this.axios.get(url).then((res) => {
+				await this.axios.get(url).then((res) => {
 					var cities = res.data.addrCities
 					for (var i = 0; i < cities.length; i++) {
 						var data = new Object()
@@ -137,72 +137,58 @@
 				})
 				return datas
 			},
+			deep(obj) {
+				let objName1 = JSON.stringify(obj),objName2 = JSON.parse(objName1);
+				return objName2
+			},
+			connect(data1, childrenValue) {
+				var index = this.$lodash.findIndex(data1, function(data) {
+					return data.value == childrenValue
+				})
+				return index
+			},
 			
+			async updateinfo(selectinfos) {
+				var data1, data2, data3, data4, data5
+				data1 = await this.getStreet(selectinfos[3])
+				data2 = await this.getArea(selectinfos[2])
+				data3 = await this.getCity(selectinfos[1])
+				data4 = await this.getState(selectinfos[0])
+				data5 = await this.getCountry()
+				setTimeout(()=>{
+					var index = 0
+					index = this.connect(data5, selectinfos[0])
+					data5[index].children = data4
+					index = this.connect(data4, selectinfos[1])
+					data4[index].children = data3
+					index = this.connect(data3, selectinfos[2])
+					data3[index].children = data2
+					index = this.connect(data2, selectinfos[3])
+					data2[index].children = data1
+					this.options = data5
+					setTimeout(()=>{
+						this.hasOk = false
+					},3000)
+				},1000)
+				
+			},
+
+
 		},
 
-		mounted() {
-			const data = this.addressvalue
-			if (data == null) {
-				this.getCountry()
-				this.hasOk = true
+		async mounted() {
+			if (this.addressvalue == null) {
+				var data =  await this.getCountry()
+				
+				setTimeout(()=>{
+					this.options = data;
+					this.hasOk = false
+				},1000)
 				return
+			} else {
+				this.updateinfo(this.addressvalue)
 			}
-			// var countrys = this.getCountryData()
-			// var states = this.getStateData(data[0])
-			// var citys = this.getCityData(data[1])
-			// var areas = this.getAreaData(data[2])
-			// var streets = this.getStreetData(data[3])
-			// 
-// 			setTimeout(() => {
-// 				for (var i = 0; i < countrys.length; i++) {
-// 					if (countrys[i].value == data[0]) {
-// 						var c = new Object()
-// 						c.value = countrys[i].value
-// 						c.label = countrys[i].label
-// 						c.isLeaf = countrys[i].isLeaf
-// 						c.children = states
-// 						countrys[i] = c
-// 						break
-// 					}
-// 				}
-// 				for (var i = 0; i < states.length; i++) {
-// 					if (states[i].value == data[1]) {
-// 						var c = new Object()
-// 						c.value = states[i].value
-// 						c.label = states[i].label
-// 						c.isLeaf = states[i].isLeaf
-// 						c.children = citys
-// 						states[i] = c
-// 						break
-// 					}
-// 
-// 				}
-// 				for (var i = 0; i < citys.length; i++) {
-// 					if (citys[i].value == data[2]) {
-// 						var c = new Object()
-// 						c.value = citys[i].value
-// 						c.label = citys[i].label
-// 						c.isLeaf = citys[i].isLeaf
-// 						c.children = areas
-// 						citys[i] = c
-// 						break
-// 					}
-// 				}
-// 				for (var i = 0; i < areas.length; i++) {
-// 					if (areas[i].value == data[3]) {
-// 						var c = new Object()
-// 						c.value = areas[i].value
-// 						c.label = areas[i].label
-// 						c.isLeaf = areas[i].isLeaf
-// 						c.children = streets
-// 						areas[i] = c
-// 						break
-// 					}
-// 				}
-// 				
-// 				this.options = countrys
-// 				this.hasOk = true
-// 			}, 4000)
+
 		}
 	}
 </script>

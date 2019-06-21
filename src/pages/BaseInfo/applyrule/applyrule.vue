@@ -66,6 +66,7 @@
 	import DetailModal from './components/detailModal'
 	import UpdateModal from './components/updateRuler'
 	export default {
+		name:'ApplyRuler',
 		components: {
 			AddRulerModal,
 			DetailModal,

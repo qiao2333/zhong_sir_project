@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<a-spin v-if="datas == null" />
+		<div v-if="datas == null">
+			用户亲属信息获取失败
+		</div>
 		<div v-else>
 			<a-card title="用户亲属表">
 				<div slot="extra" v-if="canUpdate"><a-button type="primary" @click="showModal(null,2)">添加</a-button></div>
@@ -15,20 +17,18 @@
 							<div slot="title">{{'亲属关系：' + item.relationType}}</div>
 						</a-list-item-meta >
 						<div>
-							<a-button type="primary">详细</a-button>
+							<a-button type="primary" @click="lookrelationInfo(item.relationUserId)" >详细</a-button>
 							<a-button v-if="canUpdate" type="danger" @click="showModal(item,1)" >修改</a-button>
 						</div>
 					</a-list-item>
 				</a-list>
 			</a-card>
 			<StudentRelation v-if="canUpdate" @tip="tip" ref="StudentRelation" />
-			<AddStudentRelation v-if="canUpdate" @tip="tip" ref="AddStudentRelation" />
 		</div>
 	</div>
 </template>
 <script>
 	import StudentRelation from '@/pages/Baseinfo/person/applypage/Student-relation'
-	import AddStudentRelation from '@/pages/Baseinfo/person/applypage/Add-student-relation'
 	export default {
 		props: {
 			UserId:{
@@ -38,10 +38,12 @@
 			canUpdate: {
 				type: Boolean,
 			},
+			usertype:{
+				type:Number,
+			}
 		},
 		components: {
 			StudentRelation,
-			AddStudentRelation
 		},
 		data() {
 			return {
@@ -55,15 +57,7 @@
 					"妹",
 					"其他"
 				],
-				objectflags:{
-					'母':'0',
-					'父':'1',
-					'兄':'2',
-					'弟':'3',
-					'姐':'4',
-					'妹':'5',
-					'其他':'6',
-				}
+				
 			}
 		},
 		mounted(){
@@ -72,8 +66,9 @@
 		methods: {
 			// 根据ecomm表的flag返回电子通讯的类型
 			fetch(id){
-				this.axios.get("/json/studentRelation/getStuRelation/" + id).then((res)=>{
+				this.axios.get("/json/studentRelation/getStudentRelationInformation/" + id).then((res)=>{
 					if (res.data.code == 0){
+						console.log(res.data)
 						this.datas = res.data.Relation.relationList
 					}else{
 						this.$emit("tip",{type:"error",text:"获取学生亲属信息失败"})
@@ -81,19 +76,18 @@
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
 				})
-				
+			},
+			lookrelationInfo(userId){
+				this.$router.push({name:'otherPerson',params:{OtherPersonType:4,OtherPersonId:userId,MyPersonType:this.usertype}})
 			},
 			tip(data){
 				this.$emit("tip",data)
 			},
 			showModal(value,chioce){
 				if(chioce == 1){
-					var obj = new Object()
-					obj.relationship = Number(this.objectflags[value.relationType])
-					obj.relaName = value.relationName
-					this.$refs.StudentRelation.showModal(obj)
+					this.$refs.StudentRelation.showModal(value)
 				}else{
-					this.$refs.AddStudentRelation.showModal()
+					this.$refs.StudentRelation.showModal(null)
 				}
 			},
 		},

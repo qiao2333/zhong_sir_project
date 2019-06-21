@@ -5,32 +5,32 @@
 			<div v-if="modal.visible">
 				<a-form :form="myform" @submit="submit">
 					<a-form-item label="开始时间">
-						<a-date-picker v-decorator="['begin_time',{rules: [{ required: true, message: '请输入开始时间' }],initialValue:initValue.begin_time}]"
+						<a-date-picker v-decorator="['begin_time',{rules: [{ required: true, message: '请输入开始时间' }],initialValue:initValue.beginTime}]"
 						 format="YYYY-MM-DD HH:mm:ss" showTime />
 					</a-form-item>
 					<a-form-item label="结束时间">
-						<a-date-picker v-decorator="['end_time',{rules: [{ required: true, message: '请输入结束时间' }],initialValue:initValue.end_time}]"
+						<a-date-picker v-decorator="['end_time',{rules: [{ required: true, message: '请输入结束时间' }],initialValue:initValue.endTime}]"
 						 format="YYYY-MM-DD HH:mm:ss" showTime />
 					</a-form-item>
 					<a-form-item label="国家">
-						<a-select allowClear @change="countrySelect" v-decorator="['country_id',{rules: [{ required: true, message: '请选择学校所在国家' }],initialValue:initValue.country_id}]"
+						<a-select allowClear @change="countrySelect" v-decorator="['country_id',{rules: [{ required: true, message: '请选择学校所在国家' }],initialValue:initValue.countryId}]"
 						 :options="forms.countryOptions">
 						</a-select>
 					</a-form-item>
 					<a-form-item  label="城市">
-						<a-select showSearch allowClear v-decorator="['city_id',{rules: [{ required: true, message: '请选择学校所在城市' }],initialValue:initValue.city_id}]"
+						<a-select showSearch allowClear v-decorator="['city_id',{rules: [{ required: true, message: '请选择学校所在城市' }],initialValue:initValue.cityId}]"
 						 :options="forms.cityOptions" :disabled="forms.countrySelect" optionFilterProp="children" :filterOption="CityfilterOption"></a-select>
 					</a-form-item>
 					<a-form-item label="学校">
-						<a-select allowClear v-decorator="['school_id',{rules: [{ required: true, message: '请选择学校' }],initialValue:initValue.school_id}]"
+						<a-select allowClear v-decorator="['school_id',{rules: [{ required: true, message: '请选择学校' }],initialValue:initValue.schoolId}]"
 						 :options="forms.schoolOptions" :disabled="forms.schoolSelect"></a-select>
 					</a-form-item>
 					<a-form-item label="受教育程度">
-						<a-select allowClear v-decorator="['academic_id',{rules: [{ required: true, message: '请选择你的受教育程度' }],initialValue:initValue.academic_id}]"
+						<a-select allowClear v-decorator="['academic_id',{rules: [{ required: true, message: '请选择你的受教育程度' }],initialValue:initValue.academicId}]"
 						 :options="forms.academicOptions"></a-select>
 					</a-form-item>
 					<a-form-item label="学历">
-						<a-select allowClear v-decorator="['degree_id',{rules: [{ required: true, message: '请选择你的学历' }],initialValue:initValue.degree_id}]"
+						<a-select allowClear v-decorator="['degree_id',{rules: [{ required: true, message: '请选择你的学历' }],initialValue:initValue.degreeId}]"
 						 :options="forms.degreeOptions"></a-select>
 					</a-form-item>
 					<a-form-item label="申请理由">
@@ -61,14 +61,14 @@
 					degrees: [],
 				},
 				initValue: {
-					user_id: 1,
-					begin_time: null,
-					end_time: null,
-					country_id: 1,
-					city_id: 1,
-					school_id: 1,
-					academic_id: 1,
-					degree_id: 1
+					userId: 1,
+					beginTime: null,
+					endTime: null,
+					countryId: 1,
+					cityId: 1,
+					schoolId: 1,
+					academicId: 1,
+					degreeId: 1
 				},
 				forms: {
 					countrySelect: true,
@@ -92,15 +92,19 @@
 			}
 		},
 		methods: {
+			changeDate(value) {
+				return this.$moment(value,'YYYY-MM-DD HH:mm:ss');
+			},
 			showModal(info) {
-				console.log(info)
-				this.initValue = info
-				if(info.country_id != null){
-					this.getCountry()
+				this.initValue = {...info}
+				this.initValue.endTime = this.changeDate(info.endTime)
+				this.initValue.beginTime = this.changeDate(info.beginTime)
+				if(info.countryId != null){
+					// this.getCountry()
 					this.forms.countrySelect = false
 				}
-				if(info.city_id != null){
-					this.getCity(info.country_id)
+				if(info.cityId != null){
+					// this.getCity(info.cityId)
 					this.forms.schoolSelect = false
 				}
 				this.myform = this.$form.createForm(this)

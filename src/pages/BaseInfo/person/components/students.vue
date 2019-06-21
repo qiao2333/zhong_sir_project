@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<a-spin v-if="studentInfo==null" />
+		<div v-if="studentInfo==null">
+			获取学生主要信息失败
+		</div>
 		<div v-else>
 			<a-card title="学生主要信息">
 				<a-button v-if="canUpdate" :loading="updateLoading" @click="showModal" slot="extra">修改</a-button>
@@ -40,6 +42,9 @@
 				type: Number,
 				default:0
 			},
+			isOther:{
+				type:Boolean,
+			},
 			canUpdate: {
 				type: Boolean,
 			},
@@ -48,7 +53,12 @@
 			StudentModal
 		},
 		mounted(){
-			this.fetch(this.UserId)
+			if(this.isOther){
+				this.fetch(this.UserId)
+			}else{
+				this.fetch(-1)
+			}
+			
 		},
 		methods: {
 			tip(data){

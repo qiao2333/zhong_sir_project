@@ -18,7 +18,7 @@
 
 <script>
 	import AutoInput from '@/pages/Baseinfo/components/autoCreateForm/AutoCreateForm'
-	import addressSelect from '@/pages/Baseinfo/components/addressSelect/AddressSelectUpdate'
+	import addressSelect from '@/pages/Baseinfo/components/addressSelect/AddressSelectUpdate1'
 	export default {
 		data() {
 			return {
@@ -49,7 +49,6 @@
 						rules: {
 							rules: [{
 								required: true,
-								max: 16,
 								pattern:/^[0-9]{6}$/,
 								message: '请输入6位数字邮箱编码!',
 							}],
@@ -63,9 +62,8 @@
 						rules:{
 							rules:[{
 								required: true,
-								max: 13,
-								pattern:/^\d$/,
-								message: '请输入13位手机号!',
+								pattern:/^[0-9]{11}$/,
+								message: '请输入11位手机号!',
 							}],
 						},
 					},
@@ -103,12 +101,12 @@
 			handleCancel(){
 				this.modal.visible = false
 			},
-			handleSubmit(){
+			handleSubmit(e){
 				e.preventDefault();
 				this.myform.validateFields((err, values) => {
 					if (!err) {
 						console.log(this.myform.getFieldsValue())
-						this.modal.visible = false
+						// this.modal.visible = false
 					}
 				});
 			}

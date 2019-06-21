@@ -27,8 +27,35 @@
 		components: {
 			'sub-menu': SubMenu,
 		},
+		props: {
+			usertype: {
+				type: Number,
+			},
+		},
 		data() {
 			return {
+				baseinfos: [{
+						key: 'person',
+						title: '个人信息',//0
+					}, {
+						key: 'classmessage',
+						title: '班级信息',//1
+					}, {
+						key: 'employee',
+						title: '职员信息'//2
+					},{
+						key: 'applyresult',
+						title: '申请结果',//3
+					}, {
+						key: 'approvalcenter',
+						title: '审批中心',//4
+					},{
+						key: 'applyrule',
+						title: '审批规定管理,'//5
+					}
+				],
+				userTypes:[[0],[0,1,3],[0,1,2,4],[0],[0],[0],[0,5]],
+
 				navList: [{
 						key: 'onlineLeave', //作为跳转的地址（具有语义的单词拼接）
 						title: '在线请假',
@@ -39,33 +66,7 @@
 
 						title: '基本信息',
 
-						children: [
-							{
-								key: 'person',
-								title: '个人信息',
-							}
-							, {
-								key: 'classmessage',
-								title: '班级信息',
-							}, {
-								key: 'test',
-								title: '测试页面'
-							}
-							, {
-								key: 'applyresult',
-								title: '申请结果',
-							}, {
-								key: 'chouti',
-								title: '测试用的',
-							}, {
-								key: 'approvalcenter',
-								title: '审批中心',
-							},
-							{
-								key: 'applyrule',
-								title: '审批规定'
-							}
-						]
+						children: null,
 					},
 					{
 						key: 'leaveRecord',
@@ -169,13 +170,24 @@
 				],
 			}
 		},
+		mounted(){
+			this.navinit()
+		},
 		methods: {
 			changeUrl(url) {
 				console.log(url)
 				this.$router.push({
 					name: url
 				});
-			}
+			},
+			navinit(){
+				var nav  = this.userTypes[this.usertype]
+				var navs = new Array()
+				for (var i = 0; i < nav.length; i++){
+					navs.push(this.baseinfos[nav[i]])
+				}
+				this.navList[1].children = navs
+			},
 
 		},
 

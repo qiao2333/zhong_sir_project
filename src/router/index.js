@@ -12,6 +12,7 @@ import Chouti from '@/pages/BaseInfo/chouti/Chouti'
 import Approvalcenter from '@/pages/BaseInfo/approvalcenter/Approvalcenter'
 import BaseInfo from '@/pages/BaseInfo/BaseInfo'
 import ApplyRule from '@/pages/BaseInfo/applyrule/applyrule'
+import OtherPerson from '@/pages/BaseInfo/person/otherperson'
 import OnlineLeave from '@/pages/onlineLeave/OnlineLeave'
 import RoleManage from '@/pages/permissionSetting/RoleManage'
 import UserPermission from '@/pages/permissionSetting/UserPermission'
@@ -23,6 +24,8 @@ import LeaveRecord2 from '@/pages/leaveRecord/LeaveRecord2'
 import LeaveRecord3 from '@/pages/leaveRecord/LeaveRecord3'
 import StuAttendanceCheck from '@/pages/stuAttendanceCheck/StuAttendanceCheck'
 import TeaAttendanceCheck from '@/pages/teaAttendanceCheck/TeaAttendanceCheck'
+
+
 
 Vue.use(Router)
 
@@ -49,6 +52,11 @@ export default new Router({
 							path: 'chouti',
 							name: 'chouti',
 							component: Chouti
+						},
+						{
+							path: 'otherPerson',
+							name: 'otherPerson',
+							component: OtherPerson
 						},
 						{
 							path: 'test',

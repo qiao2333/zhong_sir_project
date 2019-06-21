@@ -20,9 +20,6 @@
 	export default {
 		data() {
 			return {
-				// 结束时间
-				// 描述
-				// 申请理由
 				myform: this.$form.createForm(this),
 				modal:{
 					visible:false
@@ -30,37 +27,54 @@
 				forms: [
 					{
 						key:1,
-						label: "结束时间",
+						label: "开始时间",
 						type:"date",
-						name:"endTime",
+						name:"beginTime",
+						showTime:true,
+						format:'YYYY-MM-DD HH:mm:ss',
 						rules:{
 							rules:[{
 								required: true,
+								message: "请输入雇佣开始时间！"
+							}],
+						},
+						
+					},
+					{
+						key:2,
+						label: "结束时间",
+						type:"date",
+						name:"endTime",
+						showTime:true,
+						format:'YYYY-MM-DD HH:mm:ss',
+						rules:{
+							rules:[{
+								required: false,
 								message: "请输入雇佣结束时间！"
 							}],
 						},
 						
 					},
 					{
-						key: 2,
+						key: 3,
 						label: "描述",
 						type: "textarea",
 						name: "descript",
+						
 						rules: {
 							rules: [{
 								required: true,
 								max: 100,
 								message: '请输入描述内容 100字符以内!',
-								
-								
 							}],
 						},
 					},
 					{
-						key: 3,
+						key: 4,
 						label: "申请理由",
 						type: "textarea",
 						name: "reason",
+						
 						rules: {
 							rules: [{
 								required: true,
@@ -76,11 +90,16 @@
 		components: {
 			AutoInput
 		},
+		
 		methods:{
 			showModal(info){
-				this.forms[0].rules.initialValue = info.end_time
-				this.forms[1].rules.initialValue = info.descript
+				this.forms[0].rules.initialValue = this.changeDate(info.beginTime)
+				this.forms[1].rules.initialValue = this.changeDate(info.endTime)
+				this.forms[2].rules.initialValue = info.descript
 				this.modal.visible = true
+			},
+			changeDate(value) {
+				return this.$moment(value,'YYYY-MM-DD HH:mm:ss');
 			},
 			handleCancel(){
 				this.modal.visible = false

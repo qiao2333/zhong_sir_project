@@ -30,7 +30,7 @@
 			},
 		},
 		data() {
-			this.handleSearch = this.$lodash.debounce(this.handleSearch, 800)
+			this.handleSearch = this.$lodash.debounce(this.handleSearch, 2000)
 			return {
 				data: [],
 				modal:{
@@ -40,6 +40,15 @@
 				parentOptionsFetch:false,
 				parentName:'',
 				myform: null,
+				objectflags:{
+					'母':0,
+					'父':1,
+					'兄':2,
+					'弟':3,
+					'姐':4,
+					'妹':5,
+					'其他':6,
+				},
 				forms: [{
 						key: 1,
 						label: "关系",
@@ -52,6 +61,7 @@
 							}],
 							initialValue: null
 						},
+						
 						options: [{
 								key: 1,
 								name: "母",
@@ -111,10 +121,16 @@
 		},
 		methods: {
 			showModal(info){
-				this.forms[0].rules.initialValue = info.relationship
-				this.parentName = info.relaName
-				this.myform = this.$form.createForm(this)
-				this.modal.visible = true
+				if(info!=null){
+					this.forms[0].rules.initialValue = this.objectflags[info.relationType]
+					this.parentOptions = [{value:info.relationUserId,label:info.relationName}]
+					this.parentName = info.relationUserId
+				}
+				setTimeout(()=>{
+					this.myform = this.$form.createForm(this)
+					this.modal.visible = true
+				},1000)
+				
 			},
 			handleCancel() {
 				this.modal.visible = false
@@ -124,7 +140,7 @@
 				this.myform.validateFields((err, values) => {
 					if (!err) {
 						console.log(this.myform.getFieldsValue())
-						this.modal.visible = false
+						// this.modal.visible = false
 					}
 				});
 				
@@ -132,20 +148,28 @@
 			handleSearch(value){
 				this.parentOptionsFetch = true
 				this.parentOptions = []
-				if (/\d+/.test(value)){
-					console.log("是身份证")
+				var obj = new Object()
+				if (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(value)){
+					obj.identity = value
 				}else{
-					console.log("是人名")
+					obj.name = value
 				}
 				
-				this.axios.post("").then((res)=>{
+				this.axios.post("/json/user/getTouristByNameAndIdentity",obj).then((res)=>{
 					if(res.data.code == 0){
-
+						var data = res.data.Tourist
+						for(var i = 0; i < data.length; i++){
+							console.log(data[i])
+							this.parentOptions.push({label:data[i].userName + '|' + data[i].identification,value:data[i].id})
+						}
+						console.log(this.parentOptions)
 					}else{
+						
 						this.$emit("tip",{type:"error",text:"获取游客失败"})
 					}
 					this.parentOptionsFetch = false
 				}).catch((err)=>{
+					console.log(err)
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
 				})
 			},

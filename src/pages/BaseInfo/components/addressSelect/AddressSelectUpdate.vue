@@ -2,7 +2,7 @@
 	<div>
 		<a-spin v-if="hasOk==false" size="large" />
 		<a-form-item v-else label="地址选择">
-			<a-cascader v-decorator="['id',{initialValue:this.addressvalue},]" style="width: 500px;" :options="options" @change="onChange"
+			<a-cascader v-decorator="['id',{initialValue:addressvalue},]" style="width: 500px;" :options="options" @change="onChange"
 			 :loadData="loadData" placeholder="Please select" changeOnSelect />
 		</a-form-item>
 	</div>

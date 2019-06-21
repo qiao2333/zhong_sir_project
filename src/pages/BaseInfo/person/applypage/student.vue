@@ -103,8 +103,6 @@
 						}
 						this.forms.politicalOptions = politicalOptions
 						this.forms.politicalOptionsFetch = false
-						console.log(res.data)
-						console.log(this.forms)
 					}else{
 						this.$emit("tip",{type:"error",text:"获取基本数据失败"})
 					}

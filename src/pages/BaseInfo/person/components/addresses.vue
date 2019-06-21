@@ -1,16 +1,30 @@
 <template>
 	<div>
-		<a-spin v-if="address == null" />
+		<div v-if="address == null">
+			地址信息获取失败
+		</div>
 		<div v-else>
-			<a-list bordered>
-				<div slot="地址信息">Header</div>
-				<a-list-item v-for="(item, index) in address" :key="index">
-					<a slot="actions" v-if="canUpdate" @click="showModal(addresses[index])">修改</a>
-					<a-list-item-meta :description="item.description">
-						<a slot="title" v-html="item.title"></a>
-					</a-list-item-meta>
-				</a-list-item>
-			</a-list>
+			<a-card title="地址信息">
+				<a-list bordered>
+					<a-list-item v-for="(item, index) in address" :key="index">
+							<a slot="actions" v-if="canUpdate" @click="showModal(item)">{{item[0]==null?'添加':'修改'}}</a>
+							<a-list-item-meta >
+								<a slot="title" v-html="flags[item.flag]"></a>
+								<div slot="description" v-if="item[0] == null">
+									没有该地址信息
+								</div>
+								<div v-else slot="description">
+									地址:{{item[0].name + item[1].name  + item[2].name  + item[3].name +item[4].name }}<br />
+									详细:{{item[5].detail}}<br />
+									邮政编码:{{item[6].zip_code}}<br />
+									联系电话:{{item[7].telephone}}<br />
+								</div>
+							</a-list-item-meta>
+						
+					</a-list-item>
+				</a-list>
+			</a-card>
+			
 			<Address v-if="canUpdate" @tip="tip" ref="addressModal"></Address>
 		</div>
 	</div>
@@ -56,37 +70,33 @@
 		},
 		mounted() {
 			this.fetch(this.UserId)
-			
 		},
 		methods: {	
 			fetch(id){
-				this.axios.get("/json/address/getOwnAddress/" + -1).then((res)=>{
-					for (var add of this.addresses) {
-						var country = this.Countries(add.country)
-						var state = this.States(add.state)
-						var city = this.Cities(add.city)
-						var area = this.Areas(add.area)
-						var street = this.Streets(add.street)
-						var adds = [add.country, add.state, add.city, add.area, add.street]
-						var ad = {
-							title: this.flags[add.flag],
-							description: '地址：' + country + state + city + area + street + '  邮政编码：' + add.zipCode +
-								'    手机号码：' +
-								add.telephone
+				this.axios.get("json/address/getAddressInformation/" + id).then((res)=>{
+					if(res.data.code == 0){
+						
+						var objs = [[],[],[],[],[]]
+						for (var i = 0; i < 5; i++){
+							objs[i][8] = {flag:i}
 						}
-						this.address.push(ad)
-						this.hasload = true
+						this.address = this.$lodash.unionWith(res.data.address,objs,function(value,other){
+							return value[8].flag == other[8].flag
+						})
 					}
 				}).catch((err)=>{
 					
 				})
 			},
 			showModal(item) {
-				var object = {
-					address: [item.country, item.state, item.city, item.area, item.street],
-					detail: item.detail,
-					zipCode: item.zipCode,
-					telephone: item.telephone,
+				var object = null
+				if(item[0]!=null){
+					object = {
+						address: [item[0].code, item[1].code, item[2].code, item[3].code, item[4].code],
+						detail: item[5].detail,
+						zipCode: item[6].zip_code,
+						telephone: item[7].telephone,
+					}
 				}
 				this.$refs.addressModal.showModal(object)
 			},
@@ -95,41 +105,6 @@
 			},
 			handleOk() {
 				this.visible = false
-			},
-			Areas(id) {
-				for (var i = 0; i < this.addrAreas.length; i++) {
-					if (id == this.addrAreas[i].id) {
-						return this.addrAreas[i].areaZh
-					}
-				}
-			},
-			Streets(id) {
-				for (var i = 0; i < this.addrStreets.length; i++) {
-					if (id == this.addrStreets[i].id) {
-						return this.addrStreets[i].streetZh
-					}
-				}
-			},
-			Cities(id) {
-				for (var i = 0; i < this.addrCities.length; i++) {
-					if (id == this.addrCities[i].id) {
-						return this.addrCities[i].cityZh
-					}
-				}
-			},
-			States(id) {
-				for (var i = 0; i < this.addrStates.length; i++) {
-					if (id == this.addrStates[i].id) {
-						return this.addrStates[i].stateZh
-					}
-				}
-			},
-			Countries(id) {
-				for (var i = 0; i < this.addrCountries.length; i++) {
-					if (id == this.addrCountries[i].id) {
-						return this.addrCountries[i].countryZh
-					}
-				}
 			},
 			tip(data){
 				this.$emit("tip",data)

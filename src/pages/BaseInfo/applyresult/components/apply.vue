@@ -70,7 +70,7 @@
 		},
 		methods: {
 			fetch() {
-				this.$axios.get('/json/userinfoApplyApproval/userinfoApplyApproval/listAll').then((res) => {
+				this.axios.get('/json/userinfoApplyApproval/userinfoApplyApproval/listAll').then((res) => {
 					if (res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"获取成功"})
 						this.datas = res.data.userinfoApplyApprovals

@@ -7,8 +7,7 @@
 			<a-button type="primary" @click="showDrawer">高级筛选</a-button>
 			<a-table rowKey="studentNo" :columns="columns" :dataSource="datas" :loading="loading" @change="handleTableChange()"
 			 bordered>
-				<a slot="studentNo" slot-scope="text1" @click()="toStudentInfo(text1)">{{ text1 }}</a>
-				<span slot="customTitle">学号</span>
+				<a slot="studentNo" slot-scope="text1,record" @click="toStudentInfo(record)">{{ text1 }}</a>
 				<span slot="action" slot-scope="text, record">
 					<a-button size="small">学业成绩</a-button>
 				</span>
@@ -17,15 +16,13 @@
 				</span>
 			</a-table>
 		</div>
-		<HeightSearch ref="heightSearch" />
+		<StudentHeightSearch @heightSearch="HeightSearchMethod" ref="heightSearch" />
 	</div>
 </template>
 <script>
-	import HeightSearch from './HeightSearch'
+	import StudentHeightSearch from './StudentHeightSearch'
 	const columns = [{
-			slots: {
-				title: 'customTitle'
-			},
+			title: '学号',
 			scopedSlots: {
 				customRender: 'studentNo'
 			},
@@ -98,7 +95,7 @@
 			};
 		},
 		components: {
-			HeightSearch
+			StudentHeightSearch
 		},
 		mounted() {
 			// console.log(this.$route.query.code);
@@ -124,13 +121,23 @@
 			onClose() {
 				this.visible = false;
 			},
-			toStudentInfo(text1) {
+			toStudentInfo(record) {
+				console.log(record)
 				this.$router.push({
-					path: '/home/baseinfo/studentInfo',
-					query: {
-						studentNo: text1
+					name:'otherPerson',
+					params:{
+						OtherPersonType:1,
+						OtherPersonId:record.studentId
 					}
 				});
+			},
+			HeightSearchMethod(data){
+				console.log(data)
+				this.axios.post("",data).then((res)=>{
+					
+				}).catch((err)=>{
+					
+				})
 			},
 			onSearch(value, event) {
 				var patt = /^\d{1,}$/;

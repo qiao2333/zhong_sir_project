@@ -1,16 +1,24 @@
 <template>
 	<div>
-		<routerView @tip="tip"></routerView>
+		<keep-alive :exclude="/UnKeep$/">
+			<routerView :usertype="usertype" @tip="tip"></routerView>
+		</keep-alive>
 	</div>
 </template>
 
 <script>
 	export default {
+		props: {
+			usertype: {
+				type: Number,
+			},
+		},
 		data() {
-			return {}
+			return {
+				
+			}
 		},
 		mounted() {
-			
 		},
 		methods: {
 			tip(data) {
