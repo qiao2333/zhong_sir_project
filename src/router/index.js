@@ -26,6 +26,9 @@ import StuAttendanceCheck from '@/pages/stuAttendanceCheck/StuAttendanceCheck'
 import TeaAttendanceCheck from '@/pages/teaAttendanceCheck/TeaAttendanceCheck'
 
 
+//测试
+import MyTest from '@/pages/test/test'
+
 
 Vue.use(Router)
 
@@ -84,6 +87,12 @@ export default new Router({
 							component: ApplyRule
 						}
 					]
+				},
+					
+				{
+					path: 'MyTest',
+					name: 'MyTest',
+					component: MyTest
 				},
 				{
 					path: 'announcement',

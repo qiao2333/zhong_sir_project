@@ -109,6 +109,9 @@
 							title: '管理员设置'
 
 						}]
+					},{
+						key: 'MyTest',
+						title: '测试',
 					},
 					{
 						key: 'lessonAplay',

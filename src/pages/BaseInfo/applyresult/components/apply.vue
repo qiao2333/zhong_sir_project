@@ -3,10 +3,9 @@
 		<div style="width: auto;background: #fff;">
 			<!--<label><strong> 下拉选择业务类型：</strong></label>-->
 			<a-select  placeholder="点击选择搜索类型"  style="width: 15%" type="primary" size="large" @select="onSearch">
-				<a-select-option value="兰" >兰</a-select-option>
-				<a-select-option value="静">静</a-select-option>
-				<a-select-option value="disabled" disabled>Disabled</a-select-option>
-				<a-select-option value="Yiminghe">yiminghe</a-select-option>
+				<a-select-option value="0" >未审批</a-select-option>
+				<a-select-option value="1" >已通过</a-select-option>
+				<a-select-option value="2">未通过</a-select-option>
 			</a-select>
 		</div>
 		<a-table :columns="columns" :dataSource="datas1">
@@ -70,7 +69,7 @@
 		},
 		methods: {
 			fetch() {
-				this.axios.get('/json/userinfoApplyApproval/userinfoApplyApproval/listAll').then((res) => {
+				this.$axios.get('/json/userinfoApplyApproval/userinfoApplyApproval/listAll').then((res) => {
 					if (res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"获取成功"})
 						this.datas = res.data.userinfoApplyApprovals

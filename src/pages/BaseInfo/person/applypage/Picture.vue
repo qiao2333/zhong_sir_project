@@ -1,18 +1,15 @@
 <template>
 	<a-modal @cancel="handleCancel" :maskClosable="false" width="400px" :footer="null" :visible="modal.visible">
-		<span slot="title">申请修改学生头像信息页面</span>
-		<a-upload name="avatar" listType="picture-card" class="avatar-uploader" :showUploadList="false" action=""
-		 :beforeUpload="beforeUpload" @change="handleChange">
-				<div v-if="imageUrl">
-					<a-card>
-						<a-button slot="extra" type="danger" icon="close" @click.self.stop="deleteImage"></a-button>
-						<img style="height: 300px;width: 300px;" :src="imageUrl" alt="avatar" />
-					</a-card>
-				</div>
-				<div v-else>
-					<div style="height: 300px;width: 300px;"><a-icon :type="loading ? 'loading' : 'plus'" />Upload</div>
-				</div>
-		</a-upload>
+		<span slot="title">申请修改学生</span>
+		<div class="MyUpload">
+			<a-upload :beforeUpload="beforeUpload" :showUploadList="false" @change="handleChange">
+				<div v-if="imageUrl!=null">
+					<img  :src="imageUrl" />
+				</div >
+				<a-button v-else>上传图片</a-button>
+			</a-upload>
+		</div>
+		<br />
 		<a-button-group>
 			<a-button html-type="submit" type="primary">提交</a-button>
 			<a-button type="danger" @click="handleCancel">关闭</a-button>
@@ -32,7 +29,7 @@
 					visible:false
 				},
 				loading: false,
-				imageUrl: '',
+				imageUrl: null,
 			}
 		},
 		methods: {
@@ -43,7 +40,9 @@
 				this.imageUrl = null
 			},
 			submit(){
-				this.axios.post("").then((res)=>{
+				var formDate = new FormData()
+				formDate.append('file',)
+				this.axios.post("json/userinfoApply/applyModify").then((res)=>{
 					if(res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"修改申请提交成功"})
 					}else{
@@ -69,6 +68,15 @@
 		},
 	}
 </script>
-<style>
-
+<style scoped>
+img{
+	height: 100px;
+	width: 100px;
+}
+.MyUpload{
+	height: 120px;
+	width: 120px;
+	text-align: center;
+	border: 1px solid #0000FF;
+}
 </style>
