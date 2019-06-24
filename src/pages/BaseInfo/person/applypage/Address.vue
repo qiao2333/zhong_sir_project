@@ -3,7 +3,9 @@
 		<a-modal @cancel="handleCancel" :maskClosable="false" width="1000px" :footer="null" :visible="modal.visible">
 		<span slot="title">申请修改地址页面</span>
 		<a-form v-if="modal.visible" @submit="handleSubmit" :form="myform" >
-			<addressSelect :addressvalue="address"></addressSelect>
+			<a-form-item  label="地址选择">
+				<addressSelect @change="handleAddressChange" :addressvalue="address"></addressSelect>
+			</a-form-item>
 			<template>
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
@@ -27,6 +29,8 @@
 					visible:false
 				},
 				address:null,
+				flag:-1,
+				addresses:[],
 				forms: [
 					{
 						key:1,
@@ -89,12 +93,19 @@
 			addressSelect
 		},
 		methods:{
+			handleAddressChange(value){
+				this.addresses = value
+			},
 			showModal(info){
 				if(info!=null){
-					this.address = info.address
-					this.forms[0].rules.initialValue = info.detail
-					this.forms[1].rules.initialValue = info.zipCode
-					this.forms[2].rules.initialValue = info.telephone
+					this.flag = info.flag
+					if(info.address){
+						this.address = info.address
+						this.forms[0].rules.initialValue = info.detail
+						this.forms[1].rules.initialValue = info.zipCode
+						this.forms[2].rules.initialValue = info.telephone
+					}
+					
 				}
 				this.modal.visible = true
 			},
@@ -105,8 +116,42 @@
 				e.preventDefault();
 				this.myform.validateFields((err, values) => {
 					if (!err) {
-						console.log(this.myform.getFieldsValue())
-						// this.modal.visible = false
+						if(this.addresses.length < 5){
+							this.$emit('tip',{type:'error',text:'请选择到底'})
+							return
+						}
+						var address = this.addresses
+						var filevalue = this.myform.getFieldsValue()
+						
+						console.log(filevalue)
+						var obj = new Object()
+						obj.type = 1
+						obj.reason = filevalue.reason
+						obj.applyAddress = {
+							id:-1,
+							country: Number(address[0].split("|")[1]),
+							state: Number(address[1].split("|")[1]),
+							city: Number(address[2].split("|")[1]),
+							area: Number(address[3].split("|")[1]),
+							street: Number(address[4].split("|")[1]),
+							detail: filevalue.detail,
+							zipCode: Number(filevalue.zipCode),
+							telephone: Number(filevalue.telephone),
+							flag:this.flag
+							
+						}
+						this.axios.post("/json/userinfoApply/applyModifyNoneFile",obj).then((res)=>{
+							console.log(res.data)
+							if(res.data.code == 0){
+								this.$emit('tip',{type:'success',text:'申请修改地址信息成功'})
+							}else{
+								this.$emit('tip',{type:'error',text:'申请修改地址信息失败'})
+							}
+						}).catch((err)=>{
+							this.$emit('tip',{type:'warning',text:'发生未知错误'})
+						}).then(()=>{
+							this.modal.visible = false
+						})
 					}
 				});
 			}

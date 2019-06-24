@@ -13,8 +13,10 @@
 					<a-select-option value="6">学生信息</a-select-option>
 					<a-select-option value="7">教职工信息</a-select-option>
 					<a-select-option value="8">用户个人信息</a-select-option>
-					<a-select-option value="9">学生excel表</a-select-option>
-					<a-select-option value="10">职员excel表</a-select-option>
+					<a-select-option value="9">批量更新学生账号</a-select-option>
+					<a-select-option value="10">批量更新职员账号</a-select-option>
+					<a-select-option value="11">批量添加学生账号</a-select-option>
+					<a-select-option value="12">批量添加职员账号</a-select-option>
 				</a-select>
 				<a-select v-model="searchResult" style="width: 120px" defaultValue="" placeholder="请选择审批结果">
 					<a-select-option value="">未审批</a-select-option>
@@ -24,7 +26,7 @@
 				<a-button type="primary" @click="searchApproval()">搜索</a-button>
 				<a-table rowKey="id" :columns="columns" :dataSource="datas">
 					<template slot="result" slot-scope="text,record">
-						{{result==null?"未审批":(result==0?"不通过":"通过")}}
+						{{text==null?"未审批":(text==true?"通过":"不通过")}}
 					</template>
 					<template slot="name" slot-scope="text,record,index">
 						{{userNames[index]}}
@@ -36,7 +38,6 @@
 						{{infotypes[record.infoType]}}
 					</template>
 					<span slot="action" slot-scope="text, record">
-						<a-button size="small" @click="test(text)">测试</a-button>
 						<a-button size="small" @click="showApprovalModal(record)">明细</a-button>
 					</span>
 				</a-table>
@@ -69,11 +70,15 @@
 			title: '申请时间',
 			dataIndex:'datetime',
 		}, {
+			dataIndex: 'step',
+			key: 'step',
 			title: '第几步审核',
 			scopedSlots: {
 				customRender: 'step'
 			},
 		}, {
+			dataIndex: 'result',
+			key: 'result',
 			title: '审批结果',
 			scopedSlots: {
 				customRender: 'result'
@@ -101,7 +106,21 @@
 				userNames:[],
 				searchResult: "", //查询的业务名称
 				searchType: "", //查询的业务类型
-				infotypes: ["联系方式", "地址", "照片", "亲属", "学历", "简历", "学生信息", "教职工信息", "用户个人信息", "学生excel表", "职员excel表"],
+				infotypes: [
+					'联系方式',
+					'地址',
+					'照片',
+					'亲属',
+					'学历',
+					'简历',
+					'学生信息',
+					'教职工信息',
+					'用户个人信息',
+					'批量更新学生账号',
+					'批量更新职员账号',
+					'批量添加学生账号',
+					'批量添加职员账号',
+				],
 				columns,
 			}
 		},

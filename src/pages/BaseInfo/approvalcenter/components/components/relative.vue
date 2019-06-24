@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<p>亲属姓名{{info.relaName}}</p>
-		<p>亲属关系{{relations[info.relationship]}}</p>
+		<p>亲属姓名:{{info.relationName}}</p>
+		<p>亲属关系:{{info.relationType}}</p>
 	</div>
 </template>
 
@@ -14,9 +14,6 @@
 		},
 		data() {
 			return {
-				relations: [
-					"母", "父", "兄", "弟", "姐", "妹", "其他"
-				]
 			}
 		},
 	}

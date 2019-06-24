@@ -163,7 +163,7 @@
 			rolesOperation(roles) {
 				var obj = new Object()
 				for (var i = 0; i < roles.length; i++) {
-					obj[roles[i].id] = roles[i].description
+					obj[roles[i].id] = roles[i].name
 				}
 				this.rolesName = obj
 			},

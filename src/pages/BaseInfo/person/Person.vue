@@ -9,12 +9,19 @@
 			<Pictures @tip="tip"  :UserId="-1" :canUpdate="true"></Pictures>
 			<User @tip="tip"  :UserId="-1" :canUpdate="true"></User>
 			<Students @tip="tip"  :UserId="-1" :canUpdate="true"></Students>
-			<LearningDegree @tip="tip"  :UserId="-1" :canUpdate="true"/>
 			<Addresses @tip="tip" :UserId="-1" :canUpdate="true"></Addresses>
 			<Relation @tip="tip" :usertype="usertype" :UserId="-1" :canUpdate="true"></Relation>
 			<Ecomm @tip="tip" :UserId="-1" :canUpdate="true" ></Ecomm>
 		</div>
 		<div v-else-if="usertype ==2" style="height: 3000px;">
+			<Pictures @tip="tip"  :UserId="-1" :canUpdate="true"></Pictures>
+			<User @tip="tip"  :UserId="-1" :canUpdate="true"></User>
+			<Employee @tip="tip" :UserId="-1" :canUpdate="true" ></Employee>
+			<LearningDegree @tip="tip"  :UserId="-1" :canUpdate="true"/>
+			<Ecomm @tip="tip" :UserId="-1" :canUpdate="true" ></Ecomm>
+			<Addresses @tip="tip" :UserId="-1" :canUpdate="true" />
+		</div>
+		<div v-else-if="usertype ==6" style="height: 3000px;">
 			<Pictures @tip="tip"  :UserId="-1" :canUpdate="true"></Pictures>
 			<User @tip="tip"  :UserId="-1" :canUpdate="true"></User>
 			<Employee @tip="tip" :UserId="-1" :canUpdate="true" ></Employee>

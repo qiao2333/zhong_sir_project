@@ -72,7 +72,7 @@
 				this.forms[0].rules.initialValue = record.name
 				var arr = new Array()
 				for (var i = 0; i < this.roles.length; i++){
-					arr.push(new Object({key:i,name:this.roles[i].description,value:this.roles[i].id}))
+					arr.push(new Object({key:i,name:this.roles[i].name,value:this.roles[i].id}))
 				}
 				this.forms[1].rules.initialValue = record.roleId
 				this.forms[1].options = arr

@@ -1,15 +1,12 @@
 <template>
 	<div>
-		<div v-if="address == null">
-			地址信息获取失败
-		</div>
-		<div v-else>
+		<div>
 			<a-card title="地址信息">
 				<a-list bordered>
 					<a-list-item v-for="(item, index) in address" :key="index">
 							<a slot="actions" v-if="canUpdate" @click="showModal(item)">{{item[0]==null?'添加':'修改'}}</a>
 							<a-list-item-meta >
-								<a slot="title" v-html="flags[item.flag]"></a>
+								<a slot="title" >{{flags[item[8].flag]}}</a>
 								<div slot="description" v-if="item[0] == null">
 									没有该地址信息
 								</div>
@@ -45,12 +42,6 @@
 		data() {
 			return {
 				address:null,
-				addresses:null,
-				addrAreas:null,
-				addrStreets:null,
-				addrCities:null,
-				addrStates:null,
-				addrCountries:null,
 				count: 0,
 				hasload: false,
 				modal:{
@@ -74,15 +65,16 @@
 		methods: {	
 			fetch(id){
 				this.axios.get("json/address/getAddressInformation/" + id).then((res)=>{
+					var objs = [[],[],[],[],[]]
+					for (var i = 0; i < 5; i++){
+						objs[i][8] = {flag:i}
+					}
 					if(res.data.code == 0){
-						
-						var objs = [[],[],[],[],[]]
-						for (var i = 0; i < 5; i++){
-							objs[i][8] = {flag:i}
-						}
 						this.address = this.$lodash.unionWith(res.data.address,objs,function(value,other){
 							return value[8].flag == other[8].flag
 						})
+					}else{
+						this.address = objs
 					}
 				}).catch((err)=>{
 					
@@ -92,10 +84,15 @@
 				var object = null
 				if(item[0]!=null){
 					object = {
+						flag: item[8].flag,
 						address: [item[0].code, item[1].code, item[2].code, item[3].code, item[4].code],
 						detail: item[5].detail,
 						zipCode: item[6].zip_code,
 						telephone: item[7].telephone,
+					}
+				}else{
+					object = {
+						flag: item[8].flag,
 					}
 				}
 				this.$refs.addressModal.showModal(object)

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<keep-alive :exclude="/UnKeep$/">
-			<routerView :usertype="usertype" @tip="tip"></routerView>
+			<routerView ref="childrenComponent" :usertype="usertype" @tip="tip"></routerView>
 		</keep-alive>
 	</div>
 </template>
@@ -14,11 +14,7 @@
 			},
 		},
 		data() {
-			return {
-				
-			}
-		},
-		mounted() {
+			return {}
 		},
 		methods: {
 			tip(data) {

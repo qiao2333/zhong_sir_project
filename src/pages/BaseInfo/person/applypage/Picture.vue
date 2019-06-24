@@ -1,19 +1,26 @@
 <template>
 	<a-modal @cancel="handleCancel" :maskClosable="false" width="400px" :footer="null" :visible="modal.visible">
-		<span slot="title">申请修改学生</span>
-		<div class="MyUpload">
-			<a-upload :beforeUpload="beforeUpload" :showUploadList="false" @change="handleChange">
-				<div v-if="imageUrl!=null">
-					<img  :src="imageUrl" />
-				</div >
-				<a-button v-else>上传图片</a-button>
-			</a-upload>
+		<span slot="title">申请修改学生{{info?'生活照':'个人照'}}</span>
+		<div v-if="info != null">
+			<div class="MyUpload">
+				<a-upload :beforeUpload="beforeUpload" :showUploadList="false" @change="handleChange">
+					<div v-if="imageUrl!=null">
+						<img :src="imageUrl" />
+					</div >
+					<a-button v-else>上传图片</a-button>
+				</a-upload>
+			</div>
+			<div>
+				<a-form-item label="申请理由">
+					<a-textarea v-model="reason" />
+				</a-form-item>
+			</div>
+			<br />
+			<a-button-group>
+				<a-button html-type="submit" type="primary" @click="submit()">提交</a-button>
+				<a-button type="danger" @click="handleCancel">关闭</a-button>
+			</a-button-group>
 		</div>
-		<br />
-		<a-button-group>
-			<a-button html-type="submit" type="primary">提交</a-button>
-			<a-button type="danger" @click="handleCancel">关闭</a-button>
-		</a-button-group>
 	</a-modal>
 </template>
 <script>
@@ -28,8 +35,11 @@
 				modal:{
 					visible:false
 				},
+				reason:'',
 				loading: false,
 				imageUrl: null,
+				info:null,
+				file:null,
 			}
 		},
 		methods: {
@@ -41,8 +51,12 @@
 			},
 			submit(){
 				var formDate = new FormData()
-				formDate.append('file',)
-				this.axios.post("json/userinfoApply/applyModify").then((res)=>{
+				formDate.append('file',this.file)
+				formDate.append('flag',this.info.flag?1:0)
+				formDate.append('reason',this.reason)
+				formDate.append('id',this.info.id)
+				formDate.append('type',2)
+				this.axios.post("json/userinfoApply/applyModifyWithFile",formDate,{'Content-Type':'multipart/form-data'}).then((res)=>{
 					if(res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"修改申请提交成功"})
 					}else{
@@ -51,8 +65,11 @@
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
 				})
+				this.modal.visible = false
 			},
-			showModal(){
+			showModal(info){
+				console.log(info)
+				this.info = info
 				this.modal.visible = true
 			},
 			handleChange(info) {
@@ -63,6 +80,7 @@
 				})
 			},
 			beforeUpload(file) {
+				this.file = file
 				return false
 			},
 		},

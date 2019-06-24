@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<Apply></Apply>
+		<Apply @tip="tip"></Apply>
 	</div>
 </template>
 
@@ -11,7 +11,12 @@
 	export default{
 		components: {
 			Apply
-		}
+		},
+		methods: {
+			tip(data) {
+				this.$emit("tip",data)
+			}
+		},
 	}
 </script>
 

@@ -1,22 +1,30 @@
 <template>
 	<div>
 		<div v-if="headers == null">
-			获取头像数据失败
 		</div>
 		<div v-else>
 			<a-card title="用户头像">
-
 				<a-row v-if="headers != null">
-					<div v-for="(item, index) in headers" :key="item.id">
+					<div v-for="item in headers" :key="item.id">
 						<a-col span="12">
-							<a-card  :title="item.flag?'生活照':'个人照'">
-								<Imager  :MyStyle="'height: 300px;width: 300px;'" :filepath="item.pictureName" />
-								<div slot="extra">
-									<a-button v-if="canUpdate" type="primary" @click="showModal()">修改</a-button>
-								</div>
-							</a-card>
+							<div v-if="item.id != null">
+								<a-card :title="item.flag?'个人照':'生活照'">
+									<Imager :MyStyle="'height: 300px;width: 300px;'" :filepath="item.pictureName" />
+									<div slot="extra">
+										<a-button v-if="canUpdate" type="primary" @click="showModal(item)">修改</a-button>
+									</div>
+								</a-card>
+							</div v-else>
+							<div>
+								<a-card :title="item.flag?'个人照':'生活照'">
+									该照片为空
+									<div>
+										<a-button v-if="canUpdate" type="primary" @click="showModal({id:-1,flag:item.flag})">添加</a-button>
+									</div>
+								</a-card>
+							</div>
 						</a-col>
-						
+
 
 					</div>
 
@@ -62,7 +70,7 @@
 		},
 		methods: {
 			fetch(id) {
-				this.axios.get("json/picture/getImageInformation/" + id).then((res) => {
+				this.axios.get("/json/picture/getImageInformation/" + id).then((res) => {
 					if (res.data.code == 0) {
 						console.log(res.data)
 						var Pictures = [{
@@ -73,6 +81,7 @@
 						var fuck = this.$lodash.unionWith(res.data.pictures, Pictures, function(v, o) {
 							return o.flag == v.flag
 						})
+						this.old
 						this.headers = fuck
 					} else {
 						this.$emit("tip", {
@@ -88,8 +97,10 @@
 				})
 
 			},
-			showModal() {
-				this.$refs.picture.showModal()
+			showModal(item) {
+				var obj = new Object()
+				obj = item
+				this.$refs.picture.showModal(obj)
 			},
 		},
 	}

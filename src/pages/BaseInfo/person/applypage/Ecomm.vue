@@ -84,12 +84,28 @@
 			handleCancel(){
 				this.modal.visible = false
 			},
-			handleSubmit(){
+			handleSubmit(e){
 				e.preventDefault();
 				this.myform.validateFields((err, values) => {
 					if (!err) {
-						console.log(this.myform.getFieldsValue())
-						this.modal.visible = false
+						var obj = new Object()
+						var formvalue = this.myform.getFieldsValue()
+						obj.reason = formvalue.reason
+						obj.type = 0
+						obj.applyEcomm = {id:-1,content:formvalue.content,flag:this.flag}
+						this.axios.post("json/userinfoApply/applyModifyNoneFile",obj).then((res)=>{
+							if(res.data.code == 0){
+								console.log(res.data)
+								this.$emit("tip",{type:'success',text:'申请修改电子信息成功'})
+
+							}else{
+								this.$emit("tip",{type:'error',text:'申请修改电子信息失败'})
+							}
+						}).catch((err)=>{
+							this.$emit("tip",{type:'warning',text:'发生未知错误'})
+						}).then(()=>{
+							this.modal.visible = false
+						})
 					}
 				});
 			}

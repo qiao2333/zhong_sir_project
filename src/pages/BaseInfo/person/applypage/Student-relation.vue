@@ -40,6 +40,7 @@
 				parentOptionsFetch:false,
 				parentName:'',
 				myform: null,
+				id:-1,
 				objectflags:{
 					'母':0,
 					'父':1,
@@ -124,7 +125,8 @@
 				if(info!=null){
 					this.forms[0].rules.initialValue = this.objectflags[info.relationType]
 					this.parentOptions = [{value:info.relationUserId,label:info.relationName}]
-					this.parentName = info.relationUserId
+					this.parentName = info.relationUserId + "|" + info.relationName
+					this.id = info.id
 				}
 				setTimeout(()=>{
 					this.myform = this.$form.createForm(this)
@@ -140,7 +142,29 @@
 				this.myform.validateFields((err, values) => {
 					if (!err) {
 						console.log(this.myform.getFieldsValue())
-						// this.modal.visible = false
+						var formvalue = this.myform.getFieldsValue()
+						var rela = (formvalue.userName.split("|"))
+						var obj = new Object()
+						obj.type = 3
+						obj.reason = formvalue.reason
+						obj.applyStudentRelation = {
+							id: this.id,
+							relaName: rela[1],
+							relaId: Number(rela[0]),
+							relationship:formvalue.relationship,
+						}
+						this.axios.post("json/userinfoApply/applyModifyNoneFile",obj).then((res)=>{
+							console.log(res.data)
+							if(res.data.code == 0){
+								this.$emit('tip',{type:'success',text:'申请修改地址信息成功'})
+							}else{
+								this.$emit('tip',{type:'error',text:'申请修改地址信息失败'})
+							}
+						}).catch((err)=>{
+							this.$emit('tip',{type:'warning',text:'发生未知错误'})
+						}).then(()=>{
+							this.modal.visible = false
+						})
 					}
 				});
 				
@@ -160,17 +184,17 @@
 						var data = res.data.Tourist
 						for(var i = 0; i < data.length; i++){
 							console.log(data[i])
-							this.parentOptions.push({label:data[i].userName + '|' + data[i].identification,value:data[i].id})
+							this.parentOptions.push({label:data[i].userName + '|' + data[i].identification,value:data[i].id + "|" + data[i].userName})
 						}
 						console.log(this.parentOptions)
 					}else{
-						
 						this.$emit("tip",{type:"error",text:"获取游客失败"})
 					}
-					this.parentOptionsFetch = false
 				}).catch((err)=>{
 					console.log(err)
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
+				}).then(()=>{
+					this.parentOptionsFetch = false
 				})
 			},
 		},

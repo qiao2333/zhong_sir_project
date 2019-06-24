@@ -70,7 +70,7 @@
 				for(var i = 0; i < this.roles.length; i++){
 					var obj = new Object()
 					obj.key = i
-					obj.name=this.roles[i].description
+					obj.name=this.roles[i].name
 					obj.value=this.roles[i].id
 					arr.push(obj)
 				}

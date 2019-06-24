@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<div v-if="datas == null">
-			用户亲属信息获取失败
-		</div>
-		<div v-else>
+		<div>
 			<a-card title="用户亲属表">
 				<div slot="extra" v-if="canUpdate"><a-button type="primary" @click="showModal(null,2)">添加</a-button></div>
 				<a-list bordered itemLayout="horizontal" >
@@ -64,7 +61,6 @@
 			this.fetch(this.UserId)
 		},
 		methods: {
-			// 根据ecomm表的flag返回电子通讯的类型
 			fetch(id){
 				this.axios.get("/json/studentRelation/getStudentRelationInformation/" + id).then((res)=>{
 					if (res.data.code == 0){

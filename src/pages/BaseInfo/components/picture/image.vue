@@ -29,8 +29,9 @@
 			this.fetch(this.filepath)
 		},
 		methods:{
+			
 			fetch(path){
-				this.axios.get("json/picture/getImage/" + path,{responseType: "arraybuffer"}).then(async (res)=>{
+				this.axios.get("/json/picture/getImage/" + path,{responseType: "arraybuffer"}).then(async (res)=>{
 					var imagedata = res.data
 					var img  = 'data:image/png;base64,' + btoa (new Uint8Array(imagedata).reduce( (imagedata, byte) => imagedata + String.fromCharCode(byte), ''))
 					this.imagepath = img

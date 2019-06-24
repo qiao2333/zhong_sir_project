@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<p>用户名:{{info.userName}}</p>
-		<p>身份证号:{{info.indentification}}</p>
+		<p>身份证号:{{info.identification}}</p>
 		<p>性别:{{sexs[info.userSex]}}</p>
 		<p>出生日期:{{info.userBirthday}}</p>
 		<p>账号:{{info.name}}</p>

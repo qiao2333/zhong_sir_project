@@ -1,52 +1,62 @@
 <!--查看教师信息-->
 <template>
-	<div class="content" style="background-color: white;">
-		<a-spin v-if="hasload == false" />
-		<div v-else style="height: 1000px;">
-			<a-input-search @search="onSearch()" placeholder="输入学号或姓名搜索" style="width: 200px" />
-			<a-button type="primary" @click="showDrawer">高级筛选</a-button>
-			<a-table rowKey="employeeNo" :columns="columns" :dataSource="datas" :loading="loading" @change="handleTableChange()"
+	<div >
+		<div  style="height: 1000px;">
+			<div v-if="hasGetClass">
+				所教班级：
+				<a-select @change="handleChange" style="width: 100%" :options="options" allowClear></a-select>
+			</div>
+			<a-table rowKey="userId" :columns="columns" :dataSource="datas" :loading="loading" 
 			 bordered>
-				<a slot="employeeNo" slot-scope="text,record" >{{ text }}</a>
 			</a-table>
 		</div>
-		<TeacherHeightSearch @heightSearch="HeightSearchMethod" ref="heightSearch" />
 	</div>
 </template>
 <script>
-	import TeacherHeightSearch from './TeacherHeightSearch'
 	const columns = [{
-			title: '雇员编号',
-			scopedSlots: {
-				customRender: 'employeeNo'
-			},
-			dataIndex: 'employeeNo',
-			key: 'employeeNo'
+			title: '学生学号',
+			dataIndex: 'studentNo',
+			key: 'studentNo'
 		},
 		{
-			title: '用户名',
-			dataIndex: 'username',
-			key: 'username'
+			title: '学生姓名',
+			dataIndex: 'studentName',
+			key: 'studentName'
 		},
 		{
-			title: '学院',
-			dataIndex: 'universityName',
-			key: 'universityName'
+			title: '性别',
+			dataIndex: 'sex',
+			key: 'sex'
+		},
+		{
+			title: '年级',
+			dataIndex: 'grade',
+			key: 'grade'
+		},
+		{
+			title: '专业',
+			dataIndex: 'specialty',
+			key: 'specialty'
+		},
+		{
+			title: '政治面貌',
+			dataIndex: 'political',
+			key: 'political'
+		},
+		{
+			title: '班级',
+			dataIndex: 'className',
+			key: 'className'
 		},
 		{
 			title: '岗位',
-			dataIndex: 'positionName',
-			key: 'positionName'
+			dataIndex: 'position',
+			key: 'position'
 		},
 		{
-			title: '科室',
-			dataIndex: 'subDepartmentName',
-			key: 'subDepartmentName'
-		},
-		{
-			title: '学院',
-			dataIndex: 'departmentName',
-			key: 'departmentName'
+			title: '入学日期',
+			dataIndex: 'beginLearnDate',
+			key: 'beginLearnDate'
 		},
 	];
 	export default {
@@ -55,85 +65,61 @@
 				rows: 0,
 				datas: [],
 				columns,
-				hasload: false,
-				loading: true,
+				hasGetClass:false,
+				options:[],
+				searchInput: null,
+				searchText: '',
+				loading: false,
 				visible: false,
 			};
 		},
-		components: {
-			TeacherHeightSearch
-		},
 		mounted() {
-			// console.log(this.$route.query.code);
+			console.log('授课教师')
 			this.fetch();
 		},
 		methods: {
 			fetch() {
-				this.axios.post('/json/employee/filter/allemployees').then(res => {
+				this.axios.get('/json/class/employee/class/allClassmates').then((res) => {
 						console.log(res.data);
-						if(res.data.code ==0 ){
-							var newdatas = new Array();
-							for(var emp in res.data.employeeBean){
-								console.log(emp);
-								var obj = res.data.employeeBean[emp];
-								obj.id = emp;
-								newdatas.push(obj)
+						if(res.data.code == 0){
+							var options = new Array()
+							var data = res.data.classBeans
+							for(var i in data){
+								options.push({label:data[i].name, value:data[i].code})
 							}
-							this.datas = newdatas;
-							this.loading = false;
-							this.hasload = true;
-						}else{
+							this.options = options
+							this.$emit('tip',{type:"success",text:'获取班级成功'})
+							this.hasGetClass = true
+						}
+						else{
 							this.$emit('tip',{type:"error",text:'获取信息失败'})
 						}
-						// this.datas = res.data.classmateBeans;
-						
 					}).catch(err => {
 						this.$emit('tip',{type:"warning",text:'发生未知错误'})
 					});
 			},
-			handleTableChange() {
-				this.fetch();
+			async handleChange(value){
+				this.loading = true
+				if(value == undefined){
+					this.datas = null,
+					setTimeout(()=>{
+						this.loading = false
+					},1000)
+					return
+				}
+				await this.getClassmate(value)
 			},
-			showDrawer() {
-				this.$refs.heightSearch.opendrawer()
-			},
-			onClose() {
-				this.visible = false;
-			},
-			toStudentInfo(record) {
-				console.log(record)
-				this.$router.push({
-					name:'otherPerson',
-					params:{
-						OtherPersonType:1,
-						OtherPersonId:record.studentId
+			getClassmate(code){
+				this.axios.get("/json/student/student/allClassmates/" + code).then((res)=>{
+					if(res.data.code == 0){
+						this.datas = res.data.classmateBeans
 					}
-				});
-			},
-			HeightSearchMethod(data){
-				console.log(data)
-				this.axios.post("/json/employee/filter/allemployees",data).then((res)=>{
-					console.log(res)
 				}).catch((err)=>{
-					console.log(err)
+					this.$emit("tip",{type:error,text:"发生未知错误"})
+				}).then(()=>{
+					this.loading = false
 				})
 			},
-			onSearch(value, event) {
-				var patt = /^\d{1,}$/;
-				if (patt.test(value)) {
-					this.datas1 = this.datas.filter(item => {
-						if (item.studentNo.toString().includes(value)) {
-							return item;
-						}
-					});
-				} else {
-					this.datas1 = this.datas.filter(item => {
-						if (item.studentName.includes(value)) {
-							return item;
-						}
-					});
-				}
-			}
 		}
 	};
 </script>

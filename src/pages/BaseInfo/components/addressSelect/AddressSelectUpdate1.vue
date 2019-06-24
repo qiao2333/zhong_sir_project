@@ -1,9 +1,8 @@
 <template>
 	<div>
 		<a-spin :spinning="hasOk" size="large" >
-		<a-form-item  label="地址选择">
-			<a-cascader  :defaultValue="addressvalue==null?[]:addressvalue" style="width: 500px;" :options="options" @change="onChange" :loadData="loadData" placeholder="Please select" changeOnSelect />
-		</a-form-item>
+			
+			<a-cascader v-if="!hasOk"  :defaultValue="selectValue" style="width: 500px;" :options="options" @change="onChange" :loadData="loadData" placeholder="Please select" changeOnSelect />
 		</a-spin>
 	</div>
 </template>
@@ -17,6 +16,7 @@
 		},
 		data() {
 			return {
+				selectValue:[],
 				options: [],
 				hasOk: true,
 			}
@@ -30,18 +30,19 @@
 				const targetOption = selectedOptions[selectedOptions.length - 1];
 				targetOption.loading = true;
 				var data
+				var value = Number(targetOption.value.split("|")[0])
 				switch (selectedOptions.length - 1) {
 					case 0:
-						data = await this.getState(targetOption.value);
+						data = await this.getState(value);
 						break;
 					case 1:
-						data = await this.getCity(targetOption.value);
+						data = await this.getCity(value);
 						break;
 					case 2:
-						data = await this.getArea(targetOption.value);
+						data = await this.getArea(value);
 						break;
 					case 3:
-						data = await this.getStreet(targetOption.value);
+						data = await this.getStreet(value);
 						break;
 				}
 				setTimeout(function() {
@@ -55,10 +56,9 @@
 				await this.axios.get('/json/addrCountry/addrCountrys/listAll').then((res) => {
 					const countrys = res.data.addrCountrys
 					for (var i = 0; i < countrys.length; i++) {
-						
 						if(countrys[i].code!=null){
 							var data = new Object()
-							data.value = countrys[i].code
+							data.value = countrys[i].code + '|' + countrys[i].id
 							data.label = countrys[i].countryZh
 							data.isLeaf = false
 							datas.push(data)
@@ -77,7 +77,7 @@
 					var states = res.data.addrStates
 					for (var i = 0; i < states.length; i++) {
 						var data = new Object()
-						data.value = states[i].code
+						data.value = states[i].code + "|" + states[i].id
 						data.label = states[i].stateZh
 						data.isLeaf = false
 						datas.push(data)
@@ -94,7 +94,7 @@
 					var streets = res.data.addrStreets
 					for (var i = 0; i < streets.length; i++) {
 						var data = new Object()
-						data.value = streets[i].code
+						data.value = streets[i].code + "|" + streets[i].id
 						data.label = streets[i].streetZh
 						datas.push(data)
 					}
@@ -110,7 +110,7 @@
 					var areas = res.data.addrAreas
 					for (var i = 0; i < areas.length; i++) {
 						var data = new Object()
-						data.value = areas[i].code
+						data.value = areas[i].code + "|" + areas[i].id
 						data.label = areas[i].areaZh
 						data.isLeaf = false
 						datas.push(data)
@@ -127,7 +127,7 @@
 					var cities = res.data.addrCities
 					for (var i = 0; i < cities.length; i++) {
 						var data = new Object()
-						data.value = cities[i].code
+						data.value = cities[i].code + "|" + cities[i].id
 						data.label = cities[i].cityZh
 						data.isLeaf = false
 						datas.push(data)
@@ -143,11 +143,10 @@
 			},
 			connect(data1, childrenValue) {
 				var index = this.$lodash.findIndex(data1, function(data) {
-					return data.value == childrenValue
+					return childrenValue == Number( data.value.split("|")[0])
 				})
 				return index
 			},
-			
 			async updateinfo(selectinfos) {
 				var data1, data2, data3, data4, data5
 				data1 = await this.getStreet(selectinfos[3])
@@ -156,16 +155,24 @@
 				data4 = await this.getState(selectinfos[0])
 				data5 = await this.getCountry()
 				setTimeout(()=>{
+					var newSelect = new Array()
 					var index = 0
 					index = this.connect(data5, selectinfos[0])
+					newSelect.push(data5[index].value)
 					data5[index].children = data4
 					index = this.connect(data4, selectinfos[1])
+					newSelect.push(data4[index].value)
 					data4[index].children = data3
 					index = this.connect(data3, selectinfos[2])
+					newSelect.push(data3[index].value)
 					data3[index].children = data2
 					index = this.connect(data2, selectinfos[3])
+					newSelect.push(data2[index].value)
 					data2[index].children = data1
+					index = this.connect(data1, selectinfos[4])
+					newSelect.push(data1[index].value)
 					this.options = data5
+					this.selectValue = newSelect
 					setTimeout(()=>{
 						this.hasOk = false
 					},3000)
@@ -179,7 +186,7 @@
 		async mounted() {
 			if (this.addressvalue == null) {
 				var data =  await this.getCountry()
-				
+				this.selectValue = []
 				setTimeout(()=>{
 					this.options = data;
 					this.hasOk = false

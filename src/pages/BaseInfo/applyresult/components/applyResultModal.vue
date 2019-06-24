@@ -26,31 +26,6 @@
 					</template>
 
 				</a-row>
-				<a-card title="申请人信息">
-					<a-row>
-						<a-col :span="12">
-							<p>用户名:{{moreData.user_info.userName}}</p>
-							<p>身份证号:{{moreData.user_info.identification}}</p>
-							<p>用户性别:{{sexs[moreData.user_info.userSex]}}</p>
-							<p>出生日期:{{moreData.user_info.userBirthday}}</p>
-						</a-col>
-						<a-col :span="12">
-							<p>学校:{{moreData.user_info.universityId}}</p>
-							<p>用户类型:{{types[moreData.user_info.userType]}}</p>
-							<p>状态:{{states[moreData.user_info.status]}}</p>
-							<p>注册日期:{{moreData.user_info.regist}}</p>
-						</a-col>
-
-						<a-col :span="24">
-							<br />
-							<hr />
-							<div style="text-align: center;">
-								申请原因:<br />
-								{{moreData.reason}}
-							</div>
-						</a-col>
-					</a-row>
-				</a-card>
 				<a-card title="审批记录">
 					<a-list :dataSource="moreData.apply_approval">
 						<a-list-item slot="renderItem" slot-scope="item, index">
@@ -65,34 +40,23 @@
 						</a-list-item>
 					</a-list>
 				</a-card>
-				<a-card title="审批" v-if="modal.canPass">
-					<a-row>
-						<a-col span="20">
-							<a-textarea v-model="postMessage.Reason" style="height: 64px;" placeholder="请输入通过或不通过的理由" :autosize="{ minRows: 2, maxRows: 6 }" />
-						</a-col>
-						<a-col span="4">
-							<a-button type="danger" @click="approvalSubmit(true)" block>不通过</a-button>
-							<a-button type="primary" @click="approvalSubmit(false)" block>通过</a-button>
-						</a-col>
-					</a-row>
-				</a-card>
 			</div>
 		</a-modal>
 	</div>
 </template>
 
 <script>
-	import addressInfo from './components/address'
-	import ecommInfo from './components/ecomm'
-	import employeeInfo from './components/employee'
-	import employeeExcelInfo from './components/employeeExcel'
-	import employeeHistoryInfo from './components/employeeHistory'
-	import learning_degreeInfo from './components/learning_degree'
-	import personInfo from './components/person'
-	import pictrueInfo from './components/pictrue'
-	import relativeInfo from './components/relative'
-	import studentInfo from './components/student'
-	import studentExcelInfo from './components/studentExcel'
+	import addressInfo from '@/pages/BaseInfo/approvalcenter/components/components/address'
+	import ecommInfo from '@/pages/BaseInfo/approvalcenter/components/components/ecomm'
+	import employeeInfo from '@/pages/BaseInfo/approvalcenter/components/components/employee'
+	import employeeExcelInfo from '@/pages/BaseInfo/approvalcenter/components/components/employeeExcel'
+	import employeeHistoryInfo from '@/pages/BaseInfo/approvalcenter/components/components/employeeHistory'
+	import learning_degreeInfo from '@/pages/BaseInfo/approvalcenter/components/components/learning_degree'
+	import personInfo from '@/pages/BaseInfo/approvalcenter/components/components/person'
+	import pictrueInfo from '@/pages/BaseInfo/approvalcenter/components/components/pictrue'
+	import relativeInfo from '@/pages/BaseInfo/approvalcenter/components/components/relative'
+	import studentInfo from '@/pages/BaseInfo/approvalcenter/components/components/student'
+	import ExcelUpload from '@/pages/BaseInfo/approvalcenter/components/components/ExcelUpload'
 		
 	export default {
 		components: {
@@ -106,7 +70,7 @@
 			pictrueInfo,
 			relativeInfo,
 			studentInfo,
-			studentExcelInfo
+			ExcelUpload
 		},
 		data() {
 			return {
@@ -119,11 +83,6 @@
 					Name: [],
 					
 				},
-				postMessage:{
-					Reason: "",
-					flag:0,
-					approval_id:0,
-				},
 				mouduls: [
 					"ecommInfo",
 					"addressInfo",
@@ -134,11 +93,12 @@
 					"studentInfo",
 					"employeeInfo",
 					"personInfo",
-					"studentExcelInfo",
-					"employeeExcelInfo",
+					"ExcelUpload",
+					"ExcelUpload",
+					"ExcelUpload",
+					"ExcelUpload",
 				],
 				modal:{
-					canPass:false,
 					visible: false,
 				},
 				infoget: false,
@@ -150,9 +110,9 @@
 			}
 		},
 		methods: {
-			getMore(record) { //获取详细信息（新旧信息（如果旧信息没有就不显示）
-				this.axios.get("/json/userinfoApplyApproval/getOldInfoAndNewInfoByApply/" + record.userinfoApplyId).then((
-					res) => {
+			getMore(record) {
+				console.log(record)
+				this.axios.get("/json/userinfoApplyApproval/getOldInfoAndNewInfoByApply/" + record.id).then((res) => {
 					if (res.data.code == 0){
 						this.moreData = res.data
 						this.infoget = true
@@ -169,28 +129,7 @@
 			},
 			showModal(code) {
 				console.log(code)
-				if(code.result){
-					this.modal.canPass = false
-				}else{
-					this.modal.canPass = true
-				}
-				this.postMessage.approval_id = code.id
 				this.getMore(code)
-			},
-			approvalSubmit(ok) {
-				this.postMessage.flag = ok?1:0
-				this.axios.put("/json/userinfoApply/judgeApply", this.postMessage).then((res) => {
-					console.log(this.postMessage)
-					if (res.data.code == 0){
-						this.$emit("tip",{type:"success",text:"审批提交完毕"})
-						this.$emit("reload")
-					}else{
-						this.$emit("tip",{type:"warning",text:"审批提交失败"})
-					}
-				}).catch((err) => {
-					this.$emit("tip",{type:"warning",text:"发生未知错误"})
-				})
-				this.hideModal()
 			},
 			hideModal() {
 				this.modal.visible = false
