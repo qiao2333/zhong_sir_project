@@ -1,58 +1,86 @@
 <template>
 	<div>
-		<a-spin v-if="hasload == false" />
-		<a-list v-else bordered>
-			<div slot="地址信息">Header</div>
-			<a-list-item v-for="(item, index) in address" :key="index">
-				<a slot="actions" @click="showModal(addresses[index])">修改</a>
-				<a-list-item-meta :description="item.description">
-					<a slot="title" v-html="item.title"></a>
-				</a-list-item-meta>
-			</a-list-item>
-		</a-list>
-		<a-modal @cancel="handleCancel" :maskClosable="false" width="1000px" :footer="null" :visible="modal.visible">
-			<Address @submit="handleOk" @close="handleCancel" v-if="visible" :oldvalue="oldvalue"></Address>
-		</a-modal>
+		<a-spin v-if="address == null" />
+		<div v-else>
+			<a-list bordered>
+				<div slot="地址信息">Header</div>
+				<a-list-item v-for="(item, index) in address" :key="index">
+					<a slot="actions" v-if="canUpdate" @click="showModal(addresses[index])">修改</a>
+					<a-list-item-meta :description="item.description">
+						<a slot="title" v-html="item.title"></a>
+					</a-list-item-meta>
+				</a-list-item>
+			</a-list>
+			<Address v-if="canUpdate" @tip="tip" ref="addressModal"></Address>
+		</div>
 	</div>
 </template>
 
 <script>
 	import Address from "@/pages/Baseinfo/person/applypage/Address"
 	export default {
-		props: ['addresses', 'addrAreas', 'addrStreets', 'addrCities', 'addrStates', 'addrCountries'],
+		props: {
+			UserId:{
+				type: Number,
+				default:0
+			},
+			canUpdate: {
+				type: Boolean,
+			},
+		},
 		data() {
 			return {
-				address: [],
+				address:null,
+				addresses:null,
+				addrAreas:null,
+				addrStreets:null,
+				addrCities:null,
+				addrStates:null,
+				addrCountries:null,
 				count: 0,
 				hasload: false,
 				modal:{
 					visible: false,
 				},
-				oldvalue: null,
+				flags:[
+					'当前住址',
+					'收件地址',
+					'曾经住址',
+					'通信地址',
+					'办公地址',
+				]
 			}
 		},
 		components: {
 			Address
 		},
 		mounted() {
-			for (var add of this.addresses) {
-				var country = this.Countries(add.country)
-				var state = this.States(add.state)
-				var city = this.Cities(add.city)
-				var area = this.Areas(add.area)
-				var street = this.Streets(add.street)
-				var adds = [add.country, add.state, add.city, add.area, add.street]
-				var ad = {
-					title: this.flag(add.flag),
-					description: '地址：' + country + state + city + area + street + '  邮政编码：' + add.zipCode +
-						'    手机号码：' +
-						add.telephone
-				}
-				this.address.push(ad)
-				this.hasload = true
-			}
+			this.fetch(this.UserId)
+			
 		},
-		methods: {
+		methods: {	
+			fetch(id){
+				this.axios.get("/json/address/getOwnAddress/" + -1).then((res)=>{
+					for (var add of this.addresses) {
+						var country = this.Countries(add.country)
+						var state = this.States(add.state)
+						var city = this.Cities(add.city)
+						var area = this.Areas(add.area)
+						var street = this.Streets(add.street)
+						var adds = [add.country, add.state, add.city, add.area, add.street]
+						var ad = {
+							title: this.flags[add.flag],
+							description: '地址：' + country + state + city + area + street + '  邮政编码：' + add.zipCode +
+								'    手机号码：' +
+								add.telephone
+						}
+						this.address.push(ad)
+						this.hasload = true
+					}
+				}).catch((err)=>{
+					
+				})
+			},
 			showModal(item) {
 				var object = {
 					address: [item.country, item.state, item.city, item.area, item.street],
@@ -60,8 +88,7 @@
 					zipCode: item.zipCode,
 					telephone: item.telephone,
 				}
-				this.oldvalue = object
-				this.visible = true
+				this.$refs.addressModal.showModal(object)
 			},
 			handleCancel() {
 				this.visible = false
@@ -104,29 +131,8 @@
 					}
 				}
 			},
-			// 0: 当前住址  1: 收件地址\\n2: 曾经住址  3: 通信地址\\n4: 办公地址
-			flag(id) {
-				var s = ''
-				switch (id) {
-					case 0:
-						s = '当前住址';
-						break;
-					case 1:
-						s = '收件地址';
-						break;
-					case 2:
-						s = '曾经住址';
-						break;
-					case 3:
-						s = '通信地址';
-						break;
-					case 4:
-						s = '办公地址';
-						break;
-				}
-				return s
-
-
+			tip(data){
+				this.$emit("tip",data)
 			},
 		},
 	}

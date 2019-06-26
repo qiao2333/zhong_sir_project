@@ -49,7 +49,7 @@
 				}, 2000)
 			},
 			getCountry() {
-				this.$axios.get('/json/addrCountry/addrCountrys/listAll').then((res) => {
+				this.axios.get('/json/addrCountry/addrCountrys/listAll').then((res) => {
 					var datas = new Array()
 					const countrys = res.data.addrCountrys
 					for (var i = 0; i < countrys.length; i++) {
@@ -67,7 +67,7 @@
 			},
 			getCountryData(code, children) {
 				var datas = new Array()
-				this.$axios.get('/json/addrCountry/addrCountrys/listAll').then((res) => {
+				this.axios.get('/json/addrCountry/addrCountrys/listAll').then((res) => {
 					var countrys = res.data.addrCountrys
 					for (var i = 0; i < countrys.length; i++) {
 						var data = new Object()
@@ -84,7 +84,7 @@
 			getState(targetOption) {
 				
 				var url = "/json/address/address/addrState/" + targetOption.value
-				this.$axios.get(url).then((res) => {
+				this.axios.get(url).then((res) => {
 					var datas = new Array()
 					var states = res.data.addrStates
 					for (var i = 0; i < states.length; i++) {
@@ -104,7 +104,7 @@
 			getStateData(code) {
 				var datas = new Array()
 				var url = "/json/address/address/addrState/" + code
-				this.$axios.get(url).then((res) => {
+				this.axios.get(url).then((res) => {
 					var states = res.data.addrStates
 					for (var i = 0; i < states.length; i++) {
 						var data = new Object()
@@ -120,7 +120,7 @@
 			},
 			getStreet(targetOption) {
 				var url = "/json/address/address/addrStreet/" + targetOption.value
-				this.$axios.get(url).then((res) => {
+				this.axios.get(url).then((res) => {
 					var datas = new Array()
 					var streets = res.data.addrStreets
 					for (var i = 0; i < streets.length; i++) {
@@ -138,7 +138,7 @@
 			getStreetData(code) {
 				var datas = new Array()
 				var url = "/json/address/address/addrStreet/" + code
-				this.$axios.get(url).then((res) => {
+				this.axios.get(url).then((res) => {
 					var streets = res.data.addrStreets
 					for (var i = 0; i < streets.length; i++) {
 						var data = new Object()
@@ -153,7 +153,7 @@
 			},
 			getArea(targetOption) {
 				var url = "/json/address/address/addrArea/" + targetOption.value
-				this.$axios.get(url).then((res) => {
+				this.axios.get(url).then((res) => {
 					var datas = new Array()
 					var areas = res.data.addrAreas
 					for (var i = 0; i < areas.length; i++) {
@@ -172,7 +172,7 @@
 			getAreaData(code) {
 				var datas = new Array()
 				var url = "/json/address/address/addrArea/" + code
-				this.$axios.get(url).then((res) => {
+				this.axios.get(url).then((res) => {
 					var areas = res.data.addrAreas
 					for (var i = 0; i < areas.length; i++) {
 						var data = new Object()
@@ -188,7 +188,7 @@
 			getCity(targetOption) {
 				var datas = new Array()
 				var url = "/json/address/address/addrCity/" + targetOption.value
-				this.$axios.get(url).then((res) => {
+				this.axios.get(url).then((res) => {
 					var cities = res.data.addrCities
 					for (var i = 0; i < cities.length; i++) {
 						var data = new Object()
@@ -208,7 +208,7 @@
 			getCityData(code) {
 				var datas = new Array()
 				var url = "/json/address/address/addrCity/" + code
-				this.$axios.get(url).then((res) => {
+				this.axios.get(url).then((res) => {
 					var cities = res.data.addrCities
 					for (var i = 0; i < cities.length; i++) {
 						var data = new Object()

@@ -1,30 +1,29 @@
 <template>
 	<div>
-		<a-card title="申请修改用户主信息页面">
-		<a-form @submit="handleSubmit"  :form="myform" >
+		<a-modal :maskClosable="false" width="1000px" :footer="null" @cancel="handleCancel" :visible="modal.visible">
+		<span slot="title">申请修改用户主信息页面</span>
+		<a-form v-if="modal.visible" @submit="handleSubmit"  :form="myform" >
 			<template>
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
 			<a-button-group>
 				<a-button html-type="submit" type="primary">提交</a-button>
-				<a-button type="danger" @click="close">关闭</a-button>
+				<a-button type="danger" @click="handleCancel">关闭</a-button>
 			</a-button-group>
 		</a-form>
-		</a-card>
+		</a-modal>
 	</div>
 </template>
 
 <script>
 	import AutoInput from '@/pages/Baseinfo/components/autoCreateForm/AutoCreateForm'
 	export default {
-		props: {
-			oldvalue: {
-				type: Object,
-			},
-		},
 		data() {
 			return {
-				myform: this.$form.createForm(this),
+				myform: null,
+				modal:{
+					visible:false
+				},
 				forms: [
 					{
 						key:1,
@@ -34,11 +33,12 @@
 						rules:{
 							rules:[{
 								required: true,
-								
+								message:"用户名不能为空"
 							}],
-							initialValue: this.oldvalue.userName
+							initialValue: null,
 						},
 					},
+					
 					{
 						key:2,
 						label: "性别",
@@ -47,9 +47,9 @@
 						rules:{
 							rules:[{
 								required: true,
-								
+								message:"请至少选择一个性别"
 							}],
-							initialValue: this.oldvalue.userSex
+							initialValue: null,
 						},
 						options:[
 							{key:1,name:"女",value:0},
@@ -75,8 +75,11 @@
 			}
 		},
 		methods: {
-			close(){
-				this.$emit("close")
+			showModal(info){
+				this.forms[0].rules.initialValue = info.userName
+				this.forms[1].rules.initialValue = info.userSex
+				this.myform = this.$form.createForm(this)
+				this.modal.visible = true
 			},
 			handleSubmit(e) {
 				e.preventDefault();
@@ -86,6 +89,9 @@
 					}
 				});
 			},
+			handleCancel(){
+				this.modal.visible = false
+			}
 		},
 		components: {
 			AutoInput

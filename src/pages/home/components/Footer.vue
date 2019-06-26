@@ -1,3 +1,10 @@
+<!--
+ * @Author: 林嘉锋
+ * @LastEditors: 林嘉锋
+ * @Date: 2019-04-12
+ * @LastEditTime: 2019-04-12
+ * @function: 底部布局
+ -->
 <template>
   <div class="footer">
     footer

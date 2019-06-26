@@ -1,7 +1,8 @@
 <template>
 	<div>
-		<a-card title="申请添加职员页面">
-			<a-form  :form="myform" @submit="handleSubmit">
+		<a-modal @cancel="handleCancel" :maskClosable="false" width="1000px" :footer="null" :visible="modal.visible">
+		<span slot="title">申请添加职员页面</span>
+			<a-form v-if="modal.visible" :form="myform" @submit="handleSubmit">
 				<a-form-item :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" label="职员账户信息表">
 					<a-upload v-decorator="['upload', { }]" name="logo">
 						<a-button>
@@ -10,9 +11,12 @@
 					</a-upload>
 				</a-form-item>
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
-				<a-button type="primary" html-type="submit">提交</a-button>
+				<a-button-group>
+					<a-button html-type="submit" type="primary">提交</a-button>
+					<a-button type="danger" @click="handleCancel">关闭</a-button>
+				</a-button-group>
 			</a-form>
-		</a-card>
+		</a-modal>
 	</div>
 </template>
 
@@ -26,6 +30,9 @@
 				// 联系方式类型
 				// 申请理由
 				myform: this.$form.createForm(this),
+				modal:{
+					visible:false
+				},
 				forms: [{
 						key: 1,
 						label: "文件用途说明",
@@ -62,8 +69,20 @@
 			AutoInput
 		},
 		methods: {
-			handleSubmit() {
-
+			showModal(){
+				this.modal.visible = true
+			},
+			handleCancel(){
+				this.modal.visible = false
+			},
+			handleSubmit(){
+				e.preventDefault();
+				this.myform.validateFields((err, values) => {
+					if (!err) {
+						console.log(this.myform.getFieldsValue())
+						this.modal.visible = false
+					}
+				});
 			}
 		},
 

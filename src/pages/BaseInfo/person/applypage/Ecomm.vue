@@ -1,27 +1,23 @@
 <template>
 	<div>
-		<a-card title="申请修改电子通信方式页面">
-			<a-form @submit="handleSubmit" :form="myform">
+		<a-modal @cancel="handleCancel" :maskClosable="false" width="1000px" :footer="null" :visible="modal.visible">
+		<span slot="title">申请修改电子通信方式页面</span>
+			<a-form v-if="modal.visible" @submit="handleSubmit" :form="myform">
 				<template>
 					<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 				</template>
 				<a-button-group>
 					<a-button html-type="submit" type="primary">提交</a-button>
-					<a-button type="danger" @click="close">关闭</a-button>
+					<a-button type="danger" @click="handleCancel">关闭</a-button>
 				</a-button-group>
 			</a-form>
-		</a-card>
+		</a-modal>
 	</div>
 </template>
 
 <script>
 	import AutoInput from '@/pages/Baseinfo/components/autoCreateForm/AutoCreateForm'
 	export default {
-		props: {
-			oldvalue: {
-				type: Object,
-			},
-		},
 		data() {
 			return {
 				// 业务名称
@@ -29,6 +25,9 @@
 				// 联系方式类型
 				// 申请理由
 				myform: this.$form.createForm(this),
+				modal:{
+					visible:false
+				},
 				forms: [{
 						key: 1,
 						label: "联系方式类型",
@@ -39,7 +38,6 @@
 								required: true,
 
 							}],
-							initialValue: this.oldvalue.flag
 						},
 						options: [{
 								key: 1,
@@ -86,7 +84,6 @@
 								min: 1,
 
 							}],
-							initialValue: this.oldvalue.content
 						},
 					},
 					{
@@ -110,17 +107,23 @@
 			AutoInput
 		},
 		methods: {
-			close(){
-				this.$emit("close")
+			showModal(info){
+				this.forms[0].rules.initialValue = info.flag
+				this.forms[1].rules.initialValue = info.content
+				this.modal.visible = true
 			},
-			handleSubmit(e) {
+			handleCancel(){
+				this.modal.visible = false
+			},
+			handleSubmit(){
 				e.preventDefault();
 				this.myform.validateFields((err, values) => {
 					if (!err) {
-						this.$emit("submit", this.myform.getFieldsValue())
+						console.log(this.myform.getFieldsValue())
+						this.modal.visible = false
 					}
 				});
-			},
+			}
 		}
 
 	}

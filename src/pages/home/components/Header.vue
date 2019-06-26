@@ -1,7 +1,14 @@
+<!--
+ * @Author: 林嘉锋
+ * @LastEditors: 林嘉锋
+ * @Date: 2019-04-12
+ * @LastEditTime: 2019-04-12
+ * @function: 头部布局
+ -->
 <template>
   <div class="header">
     <div class="info">
-      <p class="name"><span>name{{this.$root.userName}}</span> | <a>注销</a></p>
+      <p class="name"><span>name</span> | <a>注销</a></p>
       <ul>
         <li>
           <a-badge dot>

@@ -1,3 +1,11 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: 林嘉锋
+ * @LastEditors: 林嘉锋
+ * @Date: 2019-04-12
+ * @LastEditTime: 2019-04-13
+ * @function: 登录
+ -->
 <template>
   <div class="login-wrapper">
     <div class="login-content">
@@ -63,7 +71,16 @@
         
       },
       userLogin() {
+        let user = {//用户对象
+        uname:this.username,
+        pwd:this.password
+      }
+      console.log(user)
+      this.axios.post('/json/auth/login',this.$qs.stringify(user)).then(res=>{
+        console.log(res);
         this.$router.push('/home/announcement');
+      });
+      // this.$router.push('/home/announcement');
       }
     },
 
@@ -107,8 +124,8 @@
 
   .username,
   .password {
-    height: 36px;
-    line-height: 36px;
+    height: 40px;
+    line-height: 40px;
     border: 1px solid #ddd;
   }
 
@@ -134,7 +151,7 @@
     float: left;
     color: #333;
     width: 240px;
-    padding: 5px;
+    padding: 8px;
   }
 
   .login-btn {

@@ -1,9 +1,16 @@
+<!--
+ * @Author: 林嘉锋
+ * @LastEditors: 林嘉锋
+ * @Date: 2019-04-12
+ * @LastEditTime: 2019-04-12
+ * @function: 整个页面的
+ -->
 <template>
   <div class="home">
     <Nav></Nav>
     <Header></Header>
     <routerView></routerView>
-    <Footer></Footer>
+    <!-- <Footer></Footer> -->
   </div>
 </template>
 
@@ -17,6 +24,7 @@
         Header,
         Footer
       }
+
   }
 
 </script>

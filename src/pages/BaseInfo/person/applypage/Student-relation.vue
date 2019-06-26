@@ -1,19 +1,25 @@
 <template>
 	<div>
-		<a-card title="申请修改学生亲属页面">
-			<a-form :form="myform">
-				<a-form-item label="选择游客用户" >
-					<a-select showSearch placeholder="搜索游客用户，根据姓名和身份证" :showArrow="false" :notFoundContent="null" @search="handleSearch" @change="handleChange">
-						<a-select-option v-for="d in data" :key="d.value">{{d.text}}</a-select-option>
+		<a-modal :maskClosable="false" width="1000px" :footer="null" @cancel="handleCancel" :visible="modal.visible">
+			<span slot="title">申请修改学生亲属页面</span>
+			<a-form @submit="handleSubmit" v-if="modal.visible" :form="myform">
+				<a-form-item label="选择游客用户">
+					<a-select allowClear showSearch :filterOption="false" placeholder="搜索游客用户，根据姓名和身份证" @search="handleSearch"
+					v-decorator="['userName',{rules: [{ required: true, message: '亲属名称不能为空' }],initialValue:parentName}]" :options="parentOptions">
+					<a-spin v-if="parentOptionsFetch" slot="notFoundContent" size="small"/>
 					</a-select>
 				</a-form-item>
 				<template>
 					<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 				</template>
+				<a-button-group>
+					<a-button html-type="submit" type="primary">提交</a-button>
+					<a-button type="danger" @click="handleCancel()">关闭</a-button>
+				</a-button-group>
 			</a-form>
-		</a-card>
+		</a-modal>
 	</div>
-</template>
+</template> 
 
 <script>
 	import AutoInput from '@/pages/Baseinfo/components/autoCreateForm/AutoCreateForm'
@@ -24,9 +30,16 @@
 			},
 		},
 		data() {
+			this.handleSearch = this.$lodash.debounce(this.handleSearch, 800)
 			return {
 				data: [],
-				myform: this.$form.createForm(this),
+				modal:{
+					visible:false,
+				},
+				parentOptions:[],
+				parentOptionsFetch:false,
+				parentName:'',
+				myform: null,
 				forms: [{
 						key: 1,
 						label: "关系",
@@ -35,8 +48,9 @@
 						rules: {
 							rules: [{
 								required: true,
+								message:"请选择你与亲属的关系"
 							}],
-							initialValue: this.oldvalue.relationship
+							initialValue: null
 						},
 						options: [{
 								key: 1,
@@ -96,12 +110,45 @@
 			AutoInput
 		},
 		methods: {
-			handleSearch() {
-
+			showModal(info){
+				this.forms[0].rules.initialValue = info.relationship
+				this.parentName = info.relaName
+				this.myform = this.$form.createForm(this)
+				this.modal.visible = true
 			},
-			handleChange() {
+			handleCancel() {
+				this.modal.visible = false
+			},
+			handleSubmit(e){
+				e.preventDefault();
+				this.myform.validateFields((err, values) => {
+					if (!err) {
+						console.log(this.myform.getFieldsValue())
+						this.modal.visible = false
+					}
+				});
+				
+			},
+			handleSearch(value){
+				this.parentOptionsFetch = true
+				this.parentOptions = []
+				if (/\d+/.test(value)){
+					console.log("是身份证")
+				}else{
+					console.log("是人名")
+				}
+				
+				this.axios.post("").then((res)=>{
+					if(res.data.code == 0){
 
-			}
+					}else{
+						this.$emit("tip",{type:"error",text:"获取游客失败"})
+					}
+					this.parentOptionsFetch = false
+				}).catch((err)=>{
+					this.$emit("tip",{type:"warning",text:"发生未知错误"})
+				})
+			},
 		},
 
 	}
