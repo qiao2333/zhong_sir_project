@@ -69,8 +69,6 @@
 							return value.flag == other.flag
 						})
 						
-					}else{
-						this.$emit("tip",{type:"error",text:"学生信息修改申请失败"})
 					}
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})

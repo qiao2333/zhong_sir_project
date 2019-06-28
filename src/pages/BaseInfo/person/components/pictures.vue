@@ -14,8 +14,8 @@
 										<a-button v-if="canUpdate" type="primary" @click="showModal(item)">修改</a-button>
 									</div>
 								</a-card>
-							</div v-else>
-							<div>
+							</div >
+							<div v-else>
 								<a-card :title="item.flag?'个人照':'生活照'">
 									该照片为空
 									<div>

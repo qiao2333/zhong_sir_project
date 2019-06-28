@@ -16,9 +16,6 @@
 					<a-col :span="8">当前主修专业:{{studentInfo.specialty}}</a-col>
 					<a-col :span="8">政治面貌:{{studentInfo.political}}</a-col>
 				</a-row>
-				<a-row>
-					<a-col :span="8">宿舍:{{studentInfo.dormitory}}</a-col>
-				</a-row>
 			</a-card>
 			<StudentModal v-if="studentmodalreload&&canUpdate" @tip="tip" ref="studentModal" />
 		</div>
@@ -53,12 +50,7 @@
 			StudentModal
 		},
 		mounted(){
-			if(this.isOther){
-				this.fetch(this.UserId)
-			}else{
-				this.fetch(-1)
-			}
-			
+			this.fetch(this.UserId)
 		},
 		methods: {
 			tip(data){

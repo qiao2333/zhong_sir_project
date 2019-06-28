@@ -10,7 +10,7 @@
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
 			<a-button-group>
-				<a-button html-type="submit" type="primary">提交</a-button>
+				<a-button :loading="IsAxios" html-type="submit" type="primary">提交</a-button>
 				<a-button type="danger" @click="handleCancel">关闭</a-button>
 			</a-button-group>
 		</a-form>
@@ -29,6 +29,7 @@
 					visible:false
 				},
 				address:null,
+				IsAxios:false,
 				flag:-1,
 				addresses:[],
 				forms: [
@@ -120,6 +121,7 @@
 							this.$emit('tip',{type:'error',text:'请选择到底'})
 							return
 						}
+						this.IsAxios = true
 						var address = this.addresses
 						var filevalue = this.myform.getFieldsValue()
 						
@@ -150,6 +152,7 @@
 						}).catch((err)=>{
 							this.$emit('tip',{type:'warning',text:'发生未知错误'})
 						}).then(()=>{
+							this.IsAxios = false
 							this.modal.visible = false
 						})
 					}

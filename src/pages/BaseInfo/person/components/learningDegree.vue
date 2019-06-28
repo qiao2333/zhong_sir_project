@@ -64,7 +64,7 @@
 				
 			},
 			showModal() {
-				this.$refs.learningDegreeModal.showModal(this.infoBase)
+				this.$refs.learningDegreeModal.showModal(this.infoBase,this.info)
 			}
 		},
 	}

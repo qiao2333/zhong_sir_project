@@ -71,7 +71,7 @@
 		},
 		methods: {
 			opendrawer() {
-				this.axios.get("/json/employee/filter/all?userId=" + 2106).then((res) => {
+				this.axios.get("/json/employee/filter/classmates/all").then((res) => {
 					this.forms.pliticalOptions = res.data.filterMessage.politicalName
 					this.forms.positionOptions = res.data.filterMessage.positionName
 					this.forms.classNameOptions = res.data.filterMessage.className
@@ -94,6 +94,7 @@
 						}
 						obj = this.$lodash.omitBy(obj, this.$lodash.isEmpty)
 						console.log(obj)
+						this.onClose()
 						this.$emit("heightSearch",obj)
 					}
 				});

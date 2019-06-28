@@ -133,10 +133,10 @@
 			},
 			HeightSearchMethod(data){
 				console.log(data)
-				this.axios.post("",data).then((res)=>{
-					
+				this.axios.post("/json/employee/filter/allClassmates",data).then((res)=>{
+					console.log(res.data)
 				}).catch((err)=>{
-					
+					console.log(err)
 				})
 			},
 			onSearch(value, event) {

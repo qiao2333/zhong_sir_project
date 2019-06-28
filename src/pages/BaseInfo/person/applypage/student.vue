@@ -31,12 +31,6 @@
 					<a-spin v-if="forms.politicalOptionsFetch" slot="notFoundContent" size="small"/>
 					</a-select>
 				</a-form-item>
-				<a-form-item label="宿舍">
-					<a-select allowClear v-decorator="['liveRoom',{rules: [{ required: true, message: '宿舍不能为空' }],initialValue:initValue.liveRoom}]"
-					:options="forms.live_roomOptions">
-					<a-spin v-if="forms.live_roomOptionsFetch" slot="notFoundContent" size="small"/>
-					</a-select>
-				</a-form-item>
 				<a-form-item label="申请理由">
 					<a-input type="textarea" v-decorator="['reason',{rules: [{ required: true, message: '请输入申请理由' }]}]"/>
 				</a-form-item>
@@ -52,12 +46,11 @@
 <script>
 	export default{
 		data() {
-			this.searchLiveRoom = this.$lodash.debounce(this.searchLiveRoom, 800)
 			this.searchSpecialty = this.$lodash.debounce(this.searchSpecialty, 800)
 			this.handleChange = this.$lodash.debounce(this.handleChange, 800)
 			return {
 				myform: this.$form.createForm(this),
-				studentId:0,
+				studentInfo:null,
 				initValue:{
 					begin_learn_date:null,
 					grade:0,
@@ -65,17 +58,14 @@
 					specialtyId:0,
 					class_id:0,
 					political_id:0,
-					live_room:0
 				},
 				modal:{
 					visible:false,
 				},
 				forms:{
 					politicalOptionsFetch:false,
-					live_roomOptionsFetch:false,
 					specialtyOptionsFetch:false,
 					classOptionsFetch:false,
-					live_roomOptions:[],
 					politicalOptions:[],
 					specialtyOptions:[],
 					classOptions:[]
@@ -87,14 +77,7 @@
 			fetch(){
 				this.axios.get("/json/student/getSometimeInfoForApply").then((res)=>{
 					if(res.data.code == 0){
-						this.forms.live_roomOptionsFetch = true
-						var arr1 = res.data.Dormitories
-						var live_roomOptions = new Array()
-						for (var i = 0; i < arr1.length; i++){
-							live_roomOptions.push({label:arr1[i].name , value:arr1[i].id })
-						}
-						this.forms.live_roomOptions = live_roomOptions
-						this.forms.live_roomOptionsFetch = false
+						console.log(res.data)
 						this.forms.politicalOptionsFetch = true
 						var arr2 = res.data.political
 						var politicalOptions = new Array()
@@ -113,8 +96,10 @@
 			},
 			showModal(student,info){
 				this.fetch()
+				console.log(student)
+				console.log(info)
 				this.initValue = {...student}
-				this.studentId = student.id
+				this.studentInfo = student
 				this.forms.specialtyOptions.push({label:info.specialty,value:student.specialtyId})
 				this.forms.classOptions.push({label:info.class,value:student.classId})
 				this.initValue.beginLearnDate = this.$moment(student.beginLearnDate,'YYYY-MM-DD')
@@ -122,20 +107,7 @@
 			},
 			handleChange(){
 				this.forms.classOptions = []
-				this.myform.setFields( {class_id: { value: null, errors: [{ "message": "修改班级和专业后请重新选择","field": "class_id"}] } })
-			},
-			getPolitical(){	//获取政治面貌
-				this.axios.get("").then((res)=>{
-					if(res.data.code == 0){
-						
-
-					}else{
-						this.$emit("tip",{type:"error",text:"获取政治面貌失败"})
-					}
-					this.forms.classOptionsFetch = false
-				}).catch((err)=>{
-					this.$emit("tip",{type:"warning",text:"发生未知错误"})
-				})
+				this.myform.setFields( {classId: { value: null, errors: [{ "message": "修改班级和专业后请重新选择","field": "class_id"}] } })
 			},
 			getClass(open){
 				if(open){
@@ -143,7 +115,7 @@
 						return;
 					}
 					var grade = this.myform.getFieldValue("grade")
-					var specialtyId = this.myform.getFieldValue("specialty_id")
+					var specialtyId = this.myform.getFieldValue("specialtyId")
 					
 					console.log(grade)
 					console.log(specialtyId)
@@ -173,20 +145,6 @@
 					})
 				}
 			},
-			searchLiveRoom(value){
-				this.forms.specialtyOptionsFetch = true
-				this.forms.specialtyOptions = []
-				this.axios.post("").then((res)=>{
-					if(res.data.code == 0){
-						
-					}else{
-						this.$emit("tip",{type:"error",text:"获取宿舍失败"})
-
-					}
-				}).catch((err)=>{
-					this.$emit("tip",{type:"warning",text:"发生未知错误"})
-				})
-			},
 			searchSpecialty(value) {
 				this.forms.specialtyOptionsFetch = true
 				this.forms.specialtyOptions = []
@@ -214,24 +172,33 @@
 				this.myform.validateFields((err, values) => {
 					if (!err) {
 						console.log(values)
-						var obj = this.$lodash.pick(values,['grade','beginLearnDate'])
-						var reason = values.reason
-						var data = this.$lodash.omit(values,['reason'])
-						var applyStudent = {...data}
-						applyStudent.grade = Number(obj.grade)
-						applyStudent.beginLearnDate = obj.beginLearnDate._i
-						applyStudent.id = this.studentId
-						console.log(applyStudent)
-						this.axios.post("/json/student/applyModifyStudent",{applyStudent:applyStudent,reason:reason}).then((res)=>{
+						var obj = new Object()
+						obj.type = 6
+						obj.reason = values.reason
+						obj.modifiedUserId = this.studentInfo.userId
+						obj.applyStudent = {
+							id: this.studentInfo.id,
+							stuNo: values.stuNo,
+							universityId:this.studentInfo.universityId,
+							beginLearnDate:values.beginLearnDate.format('YYYY-MM-DD hh:mm:ss'),
+							grade:values.grade,
+							specialtyId:values.specialtyId,
+							classId:values.classId,
+							politicalId:values.politicalId,
+						}
+						this.axios.post("/json/userinfoApply/applyModifyNoneFile",obj).then((res)=>{
+							console.log(res.data)
 							if(res.data.code == 0){
-								this.$emit("tip",{type:"success",text:"学生信息修改申请成功"})
+								this.$emit('tip',{type:'success',text:'申请修改学历信息成功'})
 							}else{
-								this.$emit("tip",{type:"error",text:"学生信息修改申请失败"})
+								this.$emit('tip',{type:'error',text:'申请修改学历信息失败'})
 							}
 						}).catch((err)=>{
-							this.$emit("tip",{type:"warning",text:"发生未知错误"})
+							this.$emit('tip',{type:'warning',text:'发生未知错误'})
+						}).then(()=>{
+							this.isAxios = false
+							this.modal.visible = false
 						})
-						this.modal.visible = false
 					}
 				});
 			},

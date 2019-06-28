@@ -1,12 +1,13 @@
 <!--院长查看院级信息-->
 <template>
-	<div class="content" style="background-color: white;">
+	<div>
 		<a-spin v-if="hasload == false" />
 		<div v-else>
 			<a-input-search @search="onSearch()" placeholder="输入学号或姓名搜索" style="width: 200px" />
 			<a-button type="primary" @click="showDrawer">高级筛选</a-button>
-			<a-table rowKey="studentNo" :columns="columns" :dataSource="datas1" :loading="loading" @change="handleTableChange()"
-			 bordered>
+			<a-button type="primary" @click="fileUpload({type:11})" >批量添加学生</a-button>
+			<a-button type="primary" @click="fileUpload({type:9})">批量修改学生</a-button>
+			<a-table rowKey="studentNo" :columns="columns" :dataSource="datas" :loading="loading"  bordered>
 				<a slot="studentNo" slot-scope="text1,record" @click="toStudentInfo(record)">{{ text1 }}</a>
 				<span slot="action" slot-scope="text, record">
 					<a-button size="small">学业成绩</a-button>
@@ -17,9 +18,11 @@
 			</a-table>
 		</div>
 		<StudentHeightSearch @heightSearch="HeightSearchMethod" ref="heightSearch" />
+		<ExcelUploadApply ref="ExcelUpload" />
 	</div>
 </template>
 <script>
+	import ExcelUploadApply from './ExcelUploadApply'
 	import StudentHeightSearch from './StudentHeightSearch'
 	const columns = [{
 			title: '学号',
@@ -53,11 +56,6 @@
 			title: '性别',
 			dataIndex: 'sex',
 			key: 'sex'
-		},
-		{
-			title: '联系电话',
-			dataIndex: 'phone',
-			key: 'phone'
 		},
 		{
 			title: '政治面貌',
@@ -95,7 +93,8 @@
 			};
 		},
 		components: {
-			StudentHeightSearch
+			StudentHeightSearch,
+			ExcelUploadApply
 		},
 		mounted() {
 			// console.log(this.$route.query.code);
@@ -103,17 +102,22 @@
 		},
 		methods: {
 			fetch() {
-				this.axios.get('/json/employee/student/allClassmates/2106').then(res => {
-						console.log(res.data.classmateBeans);
-						this.datas = res.data.classmateBeans;
-						this.loading = false;
-						this.hasload = true;
-					}).catch(err => {
-						console.log(err);
-					});
+				this.loading = false;
+				this.hasload = true;
+				// this.axios.get('/json/employee/filter/classmates/all').then(res => {
+				// 		console.log(res.data.classmateBeans);
+				// 		this.datas = res.data.classmateBeans;
+				// 		this.loading = false;
+				// 		this.hasload = true;
+				// 	}).catch(err => {
+				// 		console.log(err);
+				// 	});
 			},
 			handleTableChange() {
 				this.fetch();
+			},
+			fileUpload(info){
+				this.$refs.ExcelUpload.showModal(info)
 			},
 			showDrawer() {
 				this.$refs.heightSearch.opendrawer()
@@ -127,16 +131,48 @@
 					name:'otherPerson',
 					params:{
 						OtherPersonType:1,
-						OtherPersonId:record.studentId
+						OtherPersonId:record.userId,
+						MyPersonType:2
 					}
 				});
 			},
 			HeightSearchMethod(data){
 				console.log(data)
-				this.axios.post("",data).then((res)=>{
-					
+				var parms = new URLSearchParams()
+				if(data.studentName){
+					parms.append('studentName',data.studentName)
+				}
+				if(data.studentNo){
+					parms.append('studentNo',data.studentName)
+				}
+				if(data.className){
+					parms.append('classNames',data.className)
+				}
+				if(data.grade){
+					parms.append('cyears',data.grade)
+				}
+				if(data.political){
+					parms.append('politicals',data.political)
+				}
+				if(data.position){
+					parms.append('positions',data.position)
+				}
+				if(data.specialty){
+					parms.append('specialtys',data.specialty)
+				}
+				if(data.user_sex){
+					parms.append('user_sex',data.user_sex)
+				}
+				console.log(data)
+				this.axios.post("/json/employee/filter/allClassmates",parms).then((res)=>{
+					console.log(res)
+					var classmateBeans = res.data.classmateBeans
+					var evens = this.$lodash.remove(classmateBeans, function(value) {
+					  return value.userId == null
+					});
+					this.datas = res.data.classmateBeans
 				}).catch((err)=>{
-					
+					console.log(err)
 				})
 			},
 			onSearch(value, event) {

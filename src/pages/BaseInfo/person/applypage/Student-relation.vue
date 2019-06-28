@@ -13,7 +13,7 @@
 					<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 				</template>
 				<a-button-group>
-					<a-button html-type="submit" type="primary">提交</a-button>
+					<a-button :loading="isAxios" html-type="submit" type="primary">提交</a-button>
 					<a-button type="danger" @click="handleCancel()">关闭</a-button>
 				</a-button-group>
 			</a-form>
@@ -33,6 +33,7 @@
 			this.handleSearch = this.$lodash.debounce(this.handleSearch, 2000)
 			return {
 				data: [],
+				isAxios:false,
 				modal:{
 					visible:false,
 				},

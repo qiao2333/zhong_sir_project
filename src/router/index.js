@@ -7,6 +7,7 @@ import StudentLeave from '@/pages/studentLeave/StudentLeave'
 import Test from '@/pages/BaseInfo/test/Test'
 import Person from '@/pages/BaseInfo/person/Person'
 import Classmessage from '@/pages/BaseInfo/classmessage/Classmessage'
+import Employee from '@/pages/BaseInfo/employee/employee'
 import Applyresult from '@/pages/BaseInfo/applyresult/Applyresult'
 import Chouti from '@/pages/BaseInfo/chouti/Chouti'
 import Approvalcenter from '@/pages/BaseInfo/approvalcenter/Approvalcenter'
@@ -24,7 +25,6 @@ import LeaveRecord2 from '@/pages/leaveRecord/LeaveRecord2'
 import LeaveRecord3 from '@/pages/leaveRecord/LeaveRecord3'
 import StuAttendanceCheck from '@/pages/stuAttendanceCheck/StuAttendanceCheck'
 import TeaAttendanceCheck from '@/pages/teaAttendanceCheck/TeaAttendanceCheck'
-
 
 //测试
 import MyTest from '@/pages/test/test'
@@ -60,6 +60,11 @@ export default new Router({
 							path: 'otherPerson',
 							name: 'otherPerson',
 							component: OtherPerson
+						},
+						{
+							path: 'employee',
+							name: 'employee',
+							component: Employee
 						},
 						{
 							path: 'test',

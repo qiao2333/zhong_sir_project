@@ -7,7 +7,7 @@
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
 			<a-button-group>
-				<a-button html-type="submit" type="primary">提交</a-button>
+				<a-button :loading="isAxios" html-type="submit" type="primary">提交</a-button>
 				<a-button type="danger" @click="handleCancel">关闭</a-button>
 			</a-button-group>
 		</a-form>
@@ -20,6 +20,7 @@
 	export default {
 		data() {
 			return {
+				isAxios:false,
 				myform: null,
 				modal:{
 					visible:false
@@ -85,7 +86,22 @@
 				e.preventDefault();
 				this.myform.validateFields((err, values) => {
 					if (!err) {
-						this.$emit("submit", this.myform.getFieldsValue())
+						console.log(this.myform.getFieldsValue())
+						var fromvalue = this.myform.getFieldsValue()
+						var obj = new Object()
+						this.axios.post("/json/userinfoApply/applyModifyNoneFile",obj).then((res)=>{
+							console.log(res.data)
+							if(res.data.code == 0){
+								this.$emit('tip',{type:'success',text:'申请修改学历信息成功'})
+							}else{
+								this.$emit('tip',{type:'error',text:'申请修改学历信息失败'})
+							}
+						}).catch((err)=>{
+							this.$emit('tip',{type:'warning',text:'发生未知错误'})
+						}).then(()=>{
+							this.isAxios = false
+							this.modal.visible = false
+						})
 					}
 				});
 			},

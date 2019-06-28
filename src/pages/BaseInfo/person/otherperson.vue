@@ -3,29 +3,36 @@
 		<a-spin v-if="load" />
 		<div v-else >
 			<div v-if="OtherPersonType==0">
-				<User @tip="tip"  :UserId="UserId" :canUpdate="false"></User>
+				<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></User>
 			</div>
 			<div v-else-if="OtherPersonType==1">
 				<div v-if="MyPersonType == 1">
-					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></User>
-					<Students @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Students>
+					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></User>
+					<Students @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Students>
 				</div>
 				<div v-else-if="MyPersonType == 2">
-					<Pictures @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Pictures>
-					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></User>
-					<Students @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Students>
-					<LearningDegree @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"/>
-					<Addresses @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Addresses>
-					<Relation @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Relation>
-					<Ecomm @tip="tip"  :UserId="OtherPersonId" :canUpdate="false" ></Ecomm>
+					<Pictures @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Pictures>
+					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></User>
+					<Students @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Students>
+					<Addresses @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Addresses>
+					<Relation @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Relation>
+					<Ecomm @tip="tip"  :UserId="OtherPersonId" :canUpdate="true" ></Ecomm>
 				</div>
 				<div v-else-if="MyPersonType == 4">
-					<Pictures @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Pictures>
-					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></User>
-					<Students @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Students>
+					<Pictures @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Pictures>
+					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></User>
+					<Students @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Students>
 				</div>
 			</div>
 			<div v-else-if="OtherPersonType==2">
+				<div v-if="MyPersonType == 2">
+					<Pictures @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Pictures>
+					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></User>
+					<Employee @tip="tip"  :UserId="OtherPersonId" :canUpdate="true" ></Employee>
+					<LearningDegree @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"/>
+					<Addresses @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Addresses>
+					<Ecomm @tip="tip"  :UserId="OtherPersonId" :canUpdate="true" ></Ecomm>
+				</div>
 				<div v-if="MyPersonType == 6">
 					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></User>
 					<Employee @tip="tip"  :UserId="OtherPersonId" :canUpdate="false" ></Employee>
@@ -45,16 +52,6 @@
 			<div v-else-if="OtherPersonType==6">
 				
 			</div>
-			<!-- <div>
-				<Pictures @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Pictures>
-				<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></User>
-				<Employee @tip="tip" :UserId="OtherPersonId" :canUpdate="false" ></Employee>
-				<Students @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Students>
-				<LearningDegree @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"/>
-				<Addresses @tip="tip" :UserId="OtherPersonId" :canUpdate="false"></Addresses>
-				<Relation @tip="tip" :UserId="OtherPersonId" :canUpdate="false"></Relation>
-				<Ecomm @tip="tip" :UserId="OtherPersonId" :canUpdate="false" ></Ecomm>
-			</div> -->
 		</div>
 	</div>
 </template>
@@ -85,6 +82,7 @@
 		},
 		mounted(){
 			console.log(this.$route.params)
+			console.log("别人的页面")
 			this.OtherPersonType = this.$route.params.OtherPersonType
 			this.OtherPersonId = this.$route.params.OtherPersonId
 			this.MyPersonType = this.$route.params.MyPersonType

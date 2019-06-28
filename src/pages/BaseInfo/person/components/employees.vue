@@ -19,7 +19,6 @@
 						<a-row>
 							<a-col :span="8">主修专业:{{employees.discipline.name}}</a-col>
 							<a-col :span="8">政治面貌:{{employees.political.political}}</a-col>
-							<a-col :span="8">行政岗位:{{employees.position|politicals(this.$lodash)}}</a-col>
 						</a-row>
 					</a-card>
 				</a-row>
@@ -60,6 +59,7 @@
 		data() {
 			return {
 				employees:null,
+				employeeBase:null,
 			}
 		},
 		mounted(){
@@ -71,9 +71,10 @@
 		},
 		methods: {
 			fetch(id){
-				this.axios.get("/json/employee/getEmployeeInformation/-1").then((res)=>{
+				this.axios.get("/json/employee/getEmployeeInformation/" + id).then((res)=>{
 					if (res.data.code == 0){
 						this.employees = res.data.employee
+						this.employeeBase = res.data.employeeBase
 					}else{
 						this.$emit("tip",{type:"error",text:"获取职员主信息失败"})
 					}
@@ -83,7 +84,7 @@
 				
 			},
 			showModal(){
-				this.$refs.employeeModal.showModal(this.employees)
+				this.$refs.employeeModal.showModal(this.employees,this.employeeBase)
 			},
 			tip(data){
 				this.$emit("tip",data)

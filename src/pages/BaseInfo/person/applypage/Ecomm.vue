@@ -9,7 +9,7 @@
 					<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 				</template>
 				<a-button-group>
-					<a-button html-type="submit" type="primary">提交</a-button>
+					<a-button :loading="isAxios" html-type="submit" type="primary">提交</a-button>
 					<a-button type="danger" @click="handleCancel">关闭</a-button>
 				</a-button-group>
 			</a-form>
@@ -28,6 +28,7 @@
 				// 申请理由
 				myform: this.$form.createForm(this),
 				flag:null,
+				isAxios:false,
 				flags:[
 					"QQ号",
 					"微信号",
@@ -88,6 +89,7 @@
 				e.preventDefault();
 				this.myform.validateFields((err, values) => {
 					if (!err) {
+						this.IsAxios = true
 						var obj = new Object()
 						var formvalue = this.myform.getFieldsValue()
 						obj.reason = formvalue.reason
@@ -104,6 +106,7 @@
 						}).catch((err)=>{
 							this.$emit("tip",{type:'warning',text:'发生未知错误'})
 						}).then(()=>{
+							this.isAxios = false
 							this.modal.visible = false
 						})
 					}

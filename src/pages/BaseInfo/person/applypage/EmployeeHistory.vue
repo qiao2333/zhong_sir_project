@@ -7,7 +7,7 @@
 				<AutoInput v-for="form in forms" :key="form.key" :Autoform="form"></AutoInput>
 			</template>
 			<a-button-group>
-				<a-button html-type="submit" type="primary">提交</a-button>
+				<a-button :loading="isAxios" html-type="submit" type="primary">提交</a-button>
 				<a-button type="danger" @click="handleCancel">关闭</a-button>
 			</a-button-group>
 		</a-form>
@@ -20,7 +20,9 @@
 	export default {
 		data() {
 			return {
+				info:null,
 				myform: this.$form.createForm(this),
+				isAxios:false,
 				modal:{
 					visible:false
 				},
@@ -93,6 +95,7 @@
 		
 		methods:{
 			showModal(info){
+				this.info = info
 				this.forms[0].rules.initialValue = this.changeDate(info.beginTime)
 				this.forms[1].rules.initialValue = this.changeDate(info.endTime)
 				this.forms[2].rules.initialValue = info.descript
@@ -108,15 +111,18 @@
 				e.preventDefault();
 				this.myform.validateFields((err, values) => {
 					if (!err) {
+						this.isAxios = true
 						console.log(this.myform.getFieldsValue())
 						var formvalue = this.myform.getFieldsValue()
+						console.log(this.info)
 						var obj = new Object()
 						obj.type = 5
 						obj.reason = formvalue.reason
+						obj.modifiedUserId = this.info.userId
 						obj.applyEmployeeHistory = {
-							id:-1,
-							beginTime:formvalue.beginTime,
-							endTime:formvalue.endTime,
+							id: this.info.id,
+							beginTime:formvalue.beginTime.format('YYYY-MM-DD hh:mm:ss'),
+							endTime:formvalue.endTime.format('YYYY-MM-DD hh:mm:ss'),
 							descript:formvalue.descript,
 						}
 						this.axios.post("/json/userinfoApply/applyModifyNoneFile",obj).then((res)=>{
@@ -129,6 +135,7 @@
 						}).catch((err)=>{
 							this.$emit('tip',{type:'warning',text:'发生未知错误'})
 						}).then(()=>{
+							this.isAxios = false
 							this.modal.visible = false
 						})
 					}

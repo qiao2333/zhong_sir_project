@@ -17,7 +17,7 @@
 			</div>
 			<br />
 			<a-button-group>
-				<a-button html-type="submit" type="primary" @click="submit()">提交</a-button>
+				<a-button :loading="waitAxios" html-type="submit" type="primary" @click="submit()">提交</a-button>
 				<a-button type="danger" @click="handleCancel">关闭</a-button>
 			</a-button-group>
 		</div>
@@ -36,6 +36,7 @@
 					visible:false
 				},
 				reason:'',
+				waitAxios:false,
 				loading: false,
 				imageUrl: null,
 				info:null,
@@ -50,6 +51,7 @@
 				this.imageUrl = null
 			},
 			submit(){
+				this.waitAxios = true
 				var formDate = new FormData()
 				formDate.append('file',this.file)
 				formDate.append('flag',this.info.flag?1:0)
@@ -64,8 +66,10 @@
 					}
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
+				}).then(()=>{
+					this.waitAxios = false
+					this.modal.visible = false
 				})
-				this.modal.visible = false
 			},
 			showModal(info){
 				console.log(info)
