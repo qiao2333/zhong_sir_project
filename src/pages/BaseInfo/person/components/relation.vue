@@ -2,7 +2,7 @@
 	<div>
 		<div>
 			<a-card title="用户亲属表">
-				<div slot="extra" v-if="canUpdate"><a-button type="primary" @click="showModal(null,2)">添加</a-button></div>
+				<div slot="extra" v-if="canUpdate"><a-button :loading="applyreload" type="primary" @click="showModal(null,2)">添加</a-button></div>
 				<a-list bordered itemLayout="horizontal" >
 					<div slot="header">亲属信息</div>
 					<a-list-item v-for="(item, index) in datas" :key="index">
@@ -20,7 +20,10 @@
 					</a-list-item>
 				</a-list>
 			</a-card>
-			<StudentRelation v-if="canUpdate" @tip="tip" ref="StudentRelation" />
+			<div v-if="canUpdate">
+				<StudentRelation v-if="!applyreload" @tip="tip" ref="StudentRelation" />
+
+			</div>
 		</div>
 	</div>
 </template>
@@ -44,6 +47,7 @@
 		},
 		data() {
 			return {
+				applyreload:false,
 				datas:null,
 				flags:[
 					"母",
@@ -80,11 +84,19 @@
 				this.$emit("tip",data)
 			},
 			showModal(value,chioce){
-				if(chioce == 1){
-					this.$refs.StudentRelation.showModal(value)
-				}else{
-					this.$refs.StudentRelation.showModal(null)
-				}
+				this.applyreload = true
+				setTimeout(()=>{
+					this.applyreload = false
+					setTimeout(()=>{
+						if(chioce == 1){
+							this.$refs.StudentRelation.showModal(value)
+						}else{
+							this.$refs.StudentRelation.showModal(null)
+						}
+					},500)
+					
+				},1000)
+				
 			},
 		},
 	}

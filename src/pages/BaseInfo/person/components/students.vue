@@ -2,7 +2,7 @@
 	<div>
 		<div>
 			<a-card title="学生主要信息">
-				<a-button v-if="canUpdate" :loading="updateLoading" @click="showModal" slot="extra">修改</a-button>
+				<a-button v-if="canUpdate" :loading="applyreload" @click="showModal" slot="extra">修改</a-button>
 				<a-row>
 					<a-col :span="8">学号:{{studentInfo.student_no}}</a-col>
 					<a-col :span="8">入学日期:{{studentInfo.begin_learn}}</a-col>
@@ -14,7 +14,9 @@
 					<a-col :span="8">政治面貌:{{studentInfo.political}}</a-col>
 				</a-row>
 			</a-card>
-			<StudentModal v-if="studentmodalreload&&canUpdate" @tip="tip" ref="studentModal" />
+			<div v-if="canUpdate">
+				<StudentModal v-if="!applyreload" @tip="tip" ref="studentModal" />
+			</div>
 		</div>
 		
 	</div>
@@ -25,8 +27,7 @@
 	export default{
 		data() {
 			return {
-				updateLoading:false,
-				studentmodalreload:true,
+				applyreload:false,
 				studentInfo:null,
 				students:null,
 			}
@@ -68,17 +69,13 @@
 				
 			},
 			showModal(){
-				this.studentmodalreload = false
+				this.applyreload = true
 				setTimeout(()=>{
-					this.studentmodalreload = true
-				},500)
-				this.updateLoading = true
-				setTimeout(()=>{
-					this.updateLoading = false
-					this.$refs.studentModal.showModal(this.student,this.studentInfo)
-				},500)
-
-				
+					this.applyreload = false
+					setTimeout(()=>{
+						this.$refs.studentModal.showModal(this.student,this.studentInfo)
+					},500)
+				},1000)
 			},
 		},
 	}

@@ -2,12 +2,15 @@
 	<div>
 		<div>
 			<a-card title="雇员简历信息">
-				<a-button v-if="canUpdate" slot="extra" @click="showModal" >修改</a-button>
+				<a-button v-if="canUpdate" :loading="applyreload" slot="extra" @click="showModal" >修改</a-button>
 				<a-col :span="12">入职时间:{{employeeHistory.BeginTime}}</a-col>
 				<a-col :span="12">离职时间:{{employeeHistory.EndTime}}</a-col>
 				<a-col>简述:{{employeeHistory.Discript}}</a-col>
 			</a-card>
-			<EmployeeHistoryModal v-if="canUpdate" @tip="tip" ref="employeeHistoryModal" />
+			<div v-if="canUpdate">
+				<EmployeeHistoryModal v-if="!applyreload" @tip="tip" ref="employeeHistoryModal" />
+
+			</div>
 		</div>
 	</div>
 </template>
@@ -30,6 +33,7 @@
 		},
 		data() {
 			return {
+				applyreload:false,
 				employeeHistory:null,
 				employeeHistoryBase:null,
 			}
@@ -52,7 +56,13 @@
 				
 			},
 			showModal(){
-				this.$refs.employeeHistoryModal.showModal(this.employeeHistoryBase)
+				this.applyreload = true
+				setTimeout(()=>{
+					this.applyreload = false
+					setTimeout(()=>{
+						this.$refs.employeeHistoryModal.showModal(this.employeeHistoryBase)
+					},500)
+				},1000)
 			},
 			tip(data){
 				this.$emit("tip",data)

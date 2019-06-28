@@ -9,7 +9,7 @@
 								<a-card :title="item.flag?'个人照':'生活照'">
 									<Imager :MyStyle="'height: 300px;width: 300px;'" :filepath="item.pictureName" />
 									<div slot="extra">
-										<a-button v-if="canUpdate" type="primary" @click="showModal(item)">修改</a-button>
+										<a-button v-if="canUpdate" :loading="applyreload" type="primary" @click="showModal(item)">修改</a-button>
 									</div>
 								</a-card>
 							</div >
@@ -17,7 +17,7 @@
 								<a-card :title="item.flag?'个人照':'生活照'">
 									该照片为空
 									<div>
-										<a-button v-if="canUpdate" type="primary" @click="showModal({id:-1,flag:item.flag})">添加</a-button>
+										<a-button v-if="canUpdate" :loading="applyreload" type="primary" @click="showModal({id:-1,flag:item.flag})">添加</a-button>
 									</div>
 								</a-card>
 							</div>
@@ -29,10 +29,13 @@
 
 				</a-row>
 				<div v-else style="height: 300px;width: 300px;text-align: center;">
-					用户暂时没有头像<a-button v-if="canUpdate" slot="extra" @click="showModal">上传</a-button>
+					用户暂时没有头像<a-button v-if="canUpdate" :loading="applyreload" slot="extra" @click="showModal">上传</a-button>
 				</div>
 			</a-card>
-			<Picture v-if="canUpdate" ref="picture" />
+			<div  v-if="canUpdate" >
+				<Picture ref="picture" v-if="!applyreload" />
+
+			</div>
 		</div>
 	</div>
 </template>
@@ -52,6 +55,7 @@
 		},
 		data() {
 			return {
+				applyreload:false,
 				headers: null,
 				modal: {
 					visible: false,
@@ -96,9 +100,17 @@
 
 			},
 			showModal(item) {
-				var obj = new Object()
-				obj = item
-				this.$refs.picture.showModal(obj)
+				this.applyreload = true
+				setTimeout(()=>{
+					this.applyreload = false
+					setTimeout(()=>{
+						var obj = new Object()
+						obj = item
+						this.$refs.picture.showModal(obj)
+					},500)
+					
+				},1000)
+				
 			},
 		},
 	}

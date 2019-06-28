@@ -4,7 +4,7 @@
 			<a-card title="地址信息">
 				<a-list bordered>
 					<a-list-item v-for="(item, index) in address" :key="index">
-							<a slot="actions" v-if="canUpdate" @click="showModal(item)">{{item[0]==null?'添加':'修改'}}</a>
+							<a-button slot="actions" type="primary" :loading="applyreload" v-if="canUpdate" @click="showModal(item)">{{item[0]==null?'添加':'修改'}}</a-button>
 							<a-list-item-meta >
 								<a slot="title" >{{flags[item[8].flag]}}</a>
 								<div slot="description" v-if="item[0] == null">
@@ -21,8 +21,9 @@
 					</a-list-item>
 				</a-list>
 			</a-card>
-			
-			<Address v-if="canUpdate" @tip="tip" ref="addressModal"></Address>
+			<div v-if="canUpdate">
+				<Address v-if="!applyreload"  @tip="tip" ref="addressModal"></Address>
+			</div>
 		</div>
 	</div>
 </template>
@@ -44,6 +45,7 @@
 				address:null,
 				count: 0,
 				hasload: false,
+				applyreload:false,
 				modal:{
 					visible: false,
 				},
@@ -81,21 +83,27 @@
 				})
 			},
 			showModal(item) {
-				var object = null
-				if(item[0]!=null){
-					object = {
-						flag: item[8].flag,
-						address: [item[0].code, item[1].code, item[2].code, item[3].code, item[4].code],
-						detail: item[5].detail,
-						zipCode: item[6].zip_code,
-						telephone: item[7].telephone,
+				this.applyreload = true
+				setTimeout(()=>{
+					this.applyreload = false
+					var object = null
+					if(item[0]!=null){
+						object = {
+							flag: item[8].flag,
+							address: [item[0].code, item[1].code, item[2].code, item[3].code, item[4].code],
+							detail: item[5].detail,
+							zipCode: item[6].zip_code,
+							telephone: item[7].telephone,
+						}
+					}else{
+						object = {
+							flag: item[8].flag,
+						}
 					}
-				}else{
-					object = {
-						flag: item[8].flag,
-					}
-				}
-				this.$refs.addressModal.showModal(object)
+					setTimeout(()=>{
+						this.$refs.addressModal.showModal(object)
+					},500)
+				},1000)
 			},
 			handleCancel() {
 				this.visible = false

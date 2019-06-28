@@ -7,7 +7,7 @@
 			<a-card title="职员主要信息">
 				<a-row>
 					<a-card title="职员信息">
-						<a-button v-if="canUpdate" slot="extra" @click="showModal" >修改</a-button>
+						<a-button v-if="canUpdate" slot="extra" :loading="applyreload" @click="showModal" >修改</a-button>
 						<a-row>
 							<a-col :span="8">职员编号:{{employees.employee_no}}</a-col>
 							<a-col :span="8">所属学院:{{employees.department.name}}</a-col>
@@ -20,8 +20,10 @@
 					</a-card>
 				</a-row>
 			</a-card>
-			<EmployeeModal v-if="canUpdate" @tip="tip" ref="employeeModal" />
-			<EmployeeHistory  @tip="tip" :UserId="UserId" :canUpdate="true" />
+			<EmployeeHistory  @tip="tip" :UserId="UserId" :canUpdate="canUpdate" />
+			<div v-if="canUpdate">
+				<EmployeeModal v-if="!applyreload"  @tip="tip" ref="employeeModal" />
+			</div>
 		</div>
 		
 	</div>
@@ -55,6 +57,7 @@
 		},
 		data() {
 			return {
+				applyreload:false,
 				employees:null,
 				employeeBase:null,
 			}
@@ -81,7 +84,13 @@
 				
 			},
 			showModal(){
-				this.$refs.employeeModal.showModal(this.employees,this.employeeBase)
+				this.applyreload = true
+				setTimeout(()=>{
+					this.applyreload = false
+					setTimeout(()=>{
+						this.$refs.employeeModal.showModal(this.employees,this.employeeBase)
+					},500)
+				},1000)
 			},
 			tip(data){
 				this.$emit("tip",data)

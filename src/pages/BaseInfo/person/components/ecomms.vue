@@ -5,8 +5,8 @@
 				<a-list bordered>
 					<div slot="通信信息">Header</div>
 					<a-list-item v-for="(item, index) in ecomms" :key="index">
-						<a slot="actions" v-if="canUpdate&&item.id!=null" @click="showModal(ecomms[index])">修改</a>
-						<a slot="actions" v-if="canUpdate&&item.id==null" @click="showModal(ecomms[index])">添加</a>
+						<a-button slot="actions" v-if="canUpdate&&item.id!=null" :loading="applyreload" @click="showModal(ecomms[index])">修改</a-button>
+						<a-button slot="actions" v-if="canUpdate&&item.id==null" :loading="applyreload" @click="showModal(ecomms[index])">添加</a-button>
 						<a-list-item-meta>
 							<span slot="description">
 								{{item.content==null?'未完善':item.content}}
@@ -16,7 +16,9 @@
 					</a-list-item>
 				</a-list>
 			</a-card>
-			<Ecomm v-if="canUpdate" @tip="tip" ref="EcommModal"></Ecomm>
+			<div v-if="canUpdate">
+				<Ecomm v-if="!applyreload"  @tip="tip" ref="EcommModal"></Ecomm>
+			</div>
 		</div>
 	</div>
 </template>
@@ -37,6 +39,7 @@
 		},
 		data() {
 			return {
+				applyreload:false,
 				ecomms:null,
 				hasload: false,
 				modal: {
@@ -73,7 +76,14 @@
 				})
 			},
 			showModal(value) {
-				this.$refs.EcommModal.showModal(value)
+				this.applyreload = true
+				setTimeout(()=>{
+					this.applyreload = false
+					setTimeout(()=>{
+						this.$refs.EcommModal.showModal(value)
+					},500)
+				},1000)
+
 			},
 			handleCancel() {
 				this.modal.visible = false
@@ -86,7 +96,6 @@
 					type: "success",//success   error   warning
 					text: "提交电子信息申请表成功！" 
 				})
-				console.log(data)
 				this.modal.visible = false
 			}
 		},

@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<a-spin :spinning="hasOk" size="large" >
-			
 			<a-cascader v-if="!hasOk"  :defaultValue="selectValue" style="width: 500px;" :options="options" @change="onChange" :loadData="loadData" placeholder="Please select" changeOnSelect />
 		</a-spin>
 	</div>
@@ -186,8 +185,8 @@
 		async mounted() {
 			if (this.addressvalue == null) {
 				var data =  await this.getCountry()
-				this.selectValue = []
 				setTimeout(()=>{
+					this.selectValue = []
 					this.options = data;
 					this.hasOk = false
 				},1000)

@@ -2,7 +2,7 @@
 	<div>
 		<div>
 			<a-card title="用户主信息表">
-				<a-button v-if="canUpdate" slot="extra" @click="showModal" >修改</a-button>
+				<a-button v-if="canUpdate" :loading="applyreload" slot="extra" @click="showModal" >修改</a-button>
 				<a-row>
 					<a-col :span="8">用户名:{{users.userName}}</a-col>
 					<a-col :span="8">身份证:{{users.identification}}</a-col>
@@ -17,7 +17,10 @@
 					<a-col :span="8">用户类型:{{userTypes[users.userType]}}</a-col>
 				</a-row>
 			</a-card>
-			<UserInfo v-if="canUpdate" @tip="tip" ref="UserInfo" ></UserInfo>
+			<div v-if="canUpdate">
+				<UserInfo v-if="!applyreload" @tip="tip" ref="UserInfo" ></UserInfo>
+
+			</div>
 		</div>
 	</div>
 </template>
@@ -37,6 +40,7 @@
 		data() {
 			return {
 				users:null,
+				applyreload:false,
 				userTypes:[
 					'游客',
 					'学生',
@@ -68,7 +72,13 @@
 				})
 			},
 			showModal(){
-				this.$refs.UserInfo.showModal(this.users)
+				this.applyreload = true
+				setTimeout(()=>{
+					this.applyreload = false
+					setTimeout(()=>{
+						this.$refs.UserInfo.showModal(this.users)
+					},500)
+				},1000)
 			},
 			tip(data){
 				this.$emit("tip",data)
