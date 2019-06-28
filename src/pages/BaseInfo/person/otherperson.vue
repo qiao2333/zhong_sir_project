@@ -7,8 +7,8 @@
 			</div>
 			<div v-else-if="OtherPersonType==1">
 				<div v-if="MyPersonType == 1">
-					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></User>
-					<Students @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Students>
+					<User @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></User>
+					<Students @tip="tip"  :UserId="OtherPersonId" :canUpdate="false"></Students>
 				</div>
 				<div v-else-if="MyPersonType == 2">
 					<Pictures @tip="tip"  :UserId="OtherPersonId" :canUpdate="true"></Pictures>

@@ -79,6 +79,7 @@
 		},
 		methods: {
 			fetch() {
+				this.$emit("reload",true)
 				this.axios.get('/json/class/employee/class/allClassmates').then((res) => {
 						console.log(res.data);
 						if(res.data.code == 0){
@@ -96,7 +97,9 @@
 						}
 					}).catch(err => {
 						this.$emit('tip',{type:"warning",text:'发生未知错误'})
-					});
+					}).then(()=>{
+						this.$emit("reload",false)
+					})
 			},
 			async handleChange(value){
 				this.loading = true
@@ -110,6 +113,7 @@
 				await this.getClassmate(value)
 			},
 			getClassmate(code){
+				this.$emit("reload",true)
 				this.axios.get("/json/student/student/allClassmates/" + code).then((res)=>{
 					if(res.data.code == 0){
 						this.datas = res.data.classmateBeans
@@ -118,6 +122,7 @@
 					this.$emit("tip",{type:error,text:"发生未知错误"})
 				}).then(()=>{
 					this.loading = false
+					this.$emit("reload",false)
 				})
 			},
 		}

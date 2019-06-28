@@ -65,7 +65,6 @@
 		},
 		methods: {
 			handleSearch(selectedKeys, confirm) {
-				console.log(selectedKeys)
 				confirm()
 				this.searchText = selectedKeys[0]
 			},
@@ -74,8 +73,8 @@
 				this.searchText = ''
 			},
 			fetch() {
+				this.$emit("reload",true)
 				this.axios.post('/json/student/student/allClassmates').then((res) => {
-					console.log(res.data.code)
 					if (res.data.code == 0) {
 						var datas = new Array()
 						var data = res.data.classmateMessages
@@ -98,20 +97,10 @@
 						type: "warning",
 						text: '发生未知错误'
 					})
-				});
+				}).then(()=>{
+					this.$emit("reload",false)
+				})
 			},
-			onSearch(value, event) {
-				var patt = /^\d{1,}$/;
-				if (patt.test(value)) {
-					this.datas1 = this.datas.filter(item => {
-						if (item.studentNo.toString().includes(value)) {
-							return item;
-						} else if (item.userName.toString().includes(value)) {
-							return item;
-						}
-					});
-				}
-			}
 		}
 	};
 </script>

@@ -163,7 +163,7 @@
 				if(data.user_sex){
 					parms.append('user_sex',data.user_sex)
 				}
-				console.log(data)
+				this.$emit("reload",true)
 				this.axios.post("/json/employee/filter/allClassmates",parms).then((res)=>{
 					console.log(res)
 					var classmateBeans = res.data.classmateBeans
@@ -173,24 +173,10 @@
 					this.datas = res.data.classmateBeans
 				}).catch((err)=>{
 					console.log(err)
+				}).then(()=>{
+					this.$emit("reload",false)
 				})
 			},
-			onSearch(value, event) {
-				var patt = /^\d{1,}$/;
-				if (patt.test(value)) {
-					this.datas1 = this.datas.filter(item => {
-						if (item.studentNo.toString().includes(value)) {
-							return item;
-						}
-					});
-				} else {
-					this.datas1 = this.datas.filter(item => {
-						if (item.studentName.includes(value)) {
-							return item;
-						}
-					});
-				}
-			}
 		}
 	};
 </script>

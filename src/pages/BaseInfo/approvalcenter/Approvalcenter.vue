@@ -1,7 +1,7 @@
 <template>
 	<div class="content">
 		<div style="height: 1000px;">
-			<div>
+			<a-spin :spinning="reloading">
 				<a-select v-model="searchType" defaultValue="" style="width: 120px" placeholder="请选择审批类型">
 					<a-select-option value="">所有</a-select-option>
 					<a-select-option value="0">联系方式</a-select-option>
@@ -41,7 +41,7 @@
 						<a-button size="small" @click="showApprovalModal(record)">明细</a-button>
 					</span>
 				</a-table>
-			</div>
+			</a-spin>
 			<ApprovalModal @reload="reload" @tip="tip" ref="approvalModal" />
 		</div>
 	</div>
@@ -99,6 +99,7 @@
 		},
 		data() {
 			return {
+				reloading:false,
 				sexs: ["女", "男", "不详"],
 				types: ["游客（已注册，但身份未确认", "学生", "教职员工", "校外职员", "学生亲属", "系统运营者", "学校信息主管"],
 				states: ["正常", "锁定", "作废"],
@@ -127,9 +128,9 @@
 		mounted() {
 			this.fetch({})
 		},
-		
 		methods: {
 			fetch(obj){
+				this.reloading = true
 				this.axios.post("/json/userinfoApplyApproval/getByRoleName", obj).then((res) => {
 					console.log(res.data.apply_list)
 					this.datas = res.data.apply_list
@@ -137,10 +138,15 @@
 					this.$emit("tip",{type:"success",text:"获取成功"})
 				}).catch((err) => {
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
+				}).then(()=>{
+					this.reloading = false
 				})
 			},
-			reload(){
-				this.searchApproval()
+			reload(value){
+				if(value){
+					this.searchApproval()
+				}
+				this.reloading = value
 			},
 			tip(data){
 				this.$emit("tip",data)

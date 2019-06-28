@@ -67,7 +67,7 @@
 						console.log(res.data)
 						this.datas = res.data.Relation.relationList
 					}else{
-						this.$emit("tip",{type:"error",text:"获取学生亲属信息失败"})
+						this.$emit("tip",{type:"error",text:"获取亲属信息失败"})
 					}
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})

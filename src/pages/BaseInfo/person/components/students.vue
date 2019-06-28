@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<div v-if="studentInfo==null">
-			获取学生主要信息失败
-		</div>
-		<div v-else>
+		<div>
 			<a-card title="学生主要信息">
 				<a-button v-if="canUpdate" :loading="updateLoading" @click="showModal" slot="extra">修改</a-button>
 				<a-row>

@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<div v-if="employeeHistory == null">
-			雇员简历信息获取失败
-		</div>
-		<div v-else>
+		<div>
 			<a-card title="雇员简历信息">
 				<a-button v-if="canUpdate" slot="extra" @click="showModal" >修改</a-button>
 				<a-col :span="12">入职时间:{{employeeHistory.BeginTime}}</a-col>
@@ -47,7 +44,7 @@
 						this.employeeHistory = res.data.employeeHistory
 						this.employeeHistoryBase = res.data.employeeHistoryBase
 					}else{
-						this.$emit("tip",{type:"error",text:"获取学生主信息失败"})
+						this.$emit("tip",{type:"error",text:"获取简历信息失败"})
 					}
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})

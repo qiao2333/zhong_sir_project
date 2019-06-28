@@ -3,10 +3,7 @@
 	雇员简历，主修专业，政治面貌，行政岗位，
 	当前住址，通信地址，学历 -->
 	<div>
-		<div v-if="employees == null">
-			职员信息获取失败
-		</div>
-		<div v-else>
+		<div>
 			<a-card title="职员主要信息">
 				<a-row>
 					<a-card title="职员信息">

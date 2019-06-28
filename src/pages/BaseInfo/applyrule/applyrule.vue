@@ -1,42 +1,45 @@
 <template>
 	<div class="content">
-		<div style="height: 1000px;">
-			<a-row>
-				<a-col span="6">
-					<a-input v-model="searchMessage.name">
-						<span slot="addonBefore">
-							<a-icon type="user" />业务名称：</span>
-					</a-input>
-				</a-col>
-				<a-col span="6">
-					<a-input v-model="searchMessage.type">
-						<span slot="addonBefore">
-							<a-icon type="user" />业务类型：</span>
-					</a-input>
-				</a-col>
-				<a-col>
-					<a-button icon="search" type="primary" @click="search">搜索</a-button>
-					<a-button  type="primary" @click="showAddRuler">添加</a-button>
-				</a-col>
-			</a-row>
-			<a-row>
-				<a-table rowKey="id" :columns="columns" :dataSource="data" bordered>
-					<template slot="operation" slot-scope="text, record, index">
-						<a-button-group>
-							<a-button @click="showDetial(record.id)">详细</a-button>
-							<a-button @click="showUpdate(record,index)">编辑</a-button>					
-							<a-popconfirm cancelText="取消" okText="确定" @confirm="deleterule(record.id,index)" title="确定删除？">
-								<a-icon slot="icon" type="question-circle-o" style="color: red" />
-								<a-button type="danger">删除</a-button>
-							</a-popconfirm>
-						</a-button-group>
-					</template>
-				</a-table>
-			</a-row>
-			<AddRulerModal @submit="addRuler" ref="addrulermodal"/>
-			<DetailModal @reload="reload" @tip="tip" ref="detailmodal" />
-			<UpdateModal @update="updateRuler" @tip="tip" ref="updatemodal" />
-		</div>
+		<a-spin :spinning="reloading">
+			<div style="height: 1000px;">
+				<a-row>
+					<a-col span="6">
+						<a-input v-model="searchMessage.name">
+							<span slot="addonBefore">
+								<a-icon type="user" />业务名称：</span>
+						</a-input>
+					</a-col>
+					<a-col span="6">
+						<a-input v-model="searchMessage.type">
+							<span slot="addonBefore">
+								<a-icon type="user" />业务类型：</span>
+						</a-input>
+					</a-col>
+					<a-col>
+						<a-button icon="search" type="primary" @click="search">搜索</a-button>
+						<a-button  type="primary" @click="showAddRuler">添加</a-button>
+					</a-col>
+				</a-row>
+				<a-row>
+					<a-table rowKey="id" :columns="columns" :dataSource="data" bordered>
+						<template slot="operation" slot-scope="text, record, index">
+							<a-button-group>
+								<a-button @click="showDetial(record.id)">详细</a-button>
+								<a-button @click="showUpdate(record,index)">编辑</a-button>					
+								<a-popconfirm cancelText="取消" okText="确定" @confirm="deleterule(record.id,index)" title="确定删除？">
+									<a-icon slot="icon" type="question-circle-o" style="color: red" />
+									<a-button type="danger">删除</a-button>
+								</a-popconfirm>
+							</a-button-group>
+						</template>
+					</a-table>
+				</a-row>
+				<AddRulerModal @submit="addRuler" ref="addrulermodal"/>
+				<DetailModal @reload="reload" @tip="tip" ref="detailmodal" />
+				<UpdateModal @update="updateRuler" @tip="tip" ref="updatemodal" />
+			</div>
+		</a-spin>
+		
 	</div>
 </template>
 
@@ -75,6 +78,7 @@
 		data() {
 			return {
 				data: [],
+				reloading:false,
 				columns,
 				searchMessage:{
 					type:'',
@@ -96,6 +100,8 @@
 					}
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
+				}).then(()=>{
+					this.reloading = false
 				})
 			},
 			tip(data){
@@ -111,7 +117,9 @@
 				this.$refs.updatemodal.showModel(record,index)
 			},
 			reload(){
+				this.reloading = true
 				this.search()
+				
 			},
 			deleterule(id,index){
 				this.axios.delete("/json/approvalMain/approvalMain/" + id).then((res)=>{
@@ -127,6 +135,7 @@
 			},
 			updateRuler(data,id,index){
 				data.id = id
+				this.reloading = true
 				this.axios.put("/json/approvalMain/approvalMain",data).then((res)=>{
 					if(res.data.code == 0){
 						this.$emit("tip",{type:"success",text:"修改成功"})
@@ -136,6 +145,8 @@
 					}
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
+				}).then(()=>{
+					this.reloading = false
 				})
 			},
 			search(){
@@ -146,9 +157,11 @@
 				if (this.searchMessage.type != ""){
 					obj.type = this.searchMessage.type
 				}
+				this.reloading = true
 				this.fetch(obj)
 			},
 			addRuler(data){
+				this.reloading = true
 				this.axios.post("/json/approvalMain/approvalMain",data).then((res)=>{
 					switch (res.data.code){
 						case 0:{
@@ -161,6 +174,8 @@
 					}
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
+				}).then(()=>{
+					this.reloading = false
 				})
 			}
 		},

@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<div v-if="ecomms == null">
-			通信信息获取失败
-		</div>
-		<div v-else>
+		<div>
 			<a-card title="通信方式表">
 				<a-list bordered>
 					<div slot="通信信息">Header</div>
@@ -68,7 +65,8 @@
 						this.ecomms = this.$lodash.unionWith(datas,arr1,function(value,other){
 							return value.flag == other.flag
 						})
-						
+					}else{
+						this.ecomms= [{flag:0},{flag:1},{flag:2},{flag:3},{flag:4},{flag:5}]
 					}
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})

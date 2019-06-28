@@ -97,7 +97,7 @@
 						this.onClose()
 						this.$emit("heightSearch",obj)
 					}
-				});
+				})
 			}
 
 		},

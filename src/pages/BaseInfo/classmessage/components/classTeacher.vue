@@ -109,17 +109,9 @@
 			};
 		},
 		mounted() {
-			console.log('班主任')
 			this.fetch();
 		},
 		methods: {
-			test() {
-				this.axios.get("/json/employee/employee/allClassmates").then((res) => {
-					console.log(res.data)
-				}).catch((err) => {
-					console.log(err)
-				})
-			},
 			handleSearch(selectedKeys, confirm) {
 				confirm()
 				this.searchText = selectedKeys[0]
@@ -130,8 +122,8 @@
 				this.searchText = ''
 			},
 			fetch() {
+				this.$emit("reload",true)
 				this.axios.get('/json/class/employee/class/allClassmates').then((res) => {
-					console.log(res.data);
 					if (res.data.code == 0) {
 						var options = new Array()
 						var data = res.data.classBeans
@@ -158,7 +150,9 @@
 						type: "warning",
 						text: '发生未知错误'
 					})
-				});
+				}).then(()=>{
+					this.$emit("reload",false)
+				})
 			},
 			async handleChange(value) {
 				this.loading = true
@@ -183,6 +177,7 @@
 				});
 			},
 			getClassmate(code) {
+				this.$emit("reload",true)
 				this.axios.get("/json/student/student/allClassmates/" + code).then((res) => {
 					if (res.data.code == 0) {
 						this.datas = res.data.classmateBeans
@@ -193,6 +188,7 @@
 						text: "发生未知错误"
 					})
 				}).then(() => {
+					this.$emit("reload",false)
 					this.loading = false
 				})
 			},

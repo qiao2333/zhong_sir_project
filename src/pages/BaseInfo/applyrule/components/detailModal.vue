@@ -169,7 +169,7 @@
 			},
 			handleCancel() {
 				if (this.needReload){
-					this.$emit("reload")
+					this.$emit("reload",true)
 				}
 				this.modal.visible = false
 			},

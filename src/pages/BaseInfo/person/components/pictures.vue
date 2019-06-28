@@ -1,8 +1,6 @@
 <template>
 	<div>
-		<div v-if="headers == null">
-		</div>
-		<div v-else>
+		<div>
 			<a-card title="用户头像">
 				<a-row v-if="headers != null">
 					<div v-for="item in headers" :key="item.id">

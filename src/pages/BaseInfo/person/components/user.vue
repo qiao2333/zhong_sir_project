@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<div v-if="users == null">
-			用户主信息获取失败
-		</div>
-		<div v-else>
+		<div>
 			<a-card title="用户主信息表">
 				<a-button v-if="canUpdate" slot="extra" @click="showModal" >修改</a-button>
 				<a-row>

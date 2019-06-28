@@ -111,6 +111,7 @@
 					this.forms.fileInfo.text = '文件说明不能为空'
 					return;
 				}
+				this.$emit("reload",true)
 				var formDate = new FormData();
 				formDate.append('file',this.filedate)
 				formDate.append('reason',this.forms.reason.value)
@@ -123,6 +124,7 @@
 					console.log(err)
 				}).then(()=>{
 					this.handleCancel()
+					this.$emit("reload",false)
 				})
 			}
 		}

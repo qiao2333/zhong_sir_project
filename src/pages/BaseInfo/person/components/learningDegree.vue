@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<div v-if="info==null">
-			学历信息获取失败
-		</div>
-		<div v-else>
+		<div>
 			<a-card title="学历信息表">
 				<a-button slot="extra" v-if="canUpdate" @click="showModal" >修改</a-button>
 				<a-row>
@@ -56,7 +53,7 @@
 						this.info = res.data.learningDegree
 						this.infoBase = res.data.learningDegreeBase
 					}else{
-						this.$emit("tip",{type:"error",text:"获取学生主信息失败"})
+						this.$emit("tip",{type:"error",text:"获取学历失败"})
 					}
 				}).catch((err)=>{
 					this.$emit("tip",{type:"warning",text:"发生未知错误"})
